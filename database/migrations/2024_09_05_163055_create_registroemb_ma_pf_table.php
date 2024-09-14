@@ -1,0 +1,51 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('registroemb_ma_pf', function (Blueprint $table) {
+            $table->id();
+            $table->string('nombre_emb_ma');
+            $table->string('captura_rnpa');
+            $table->string('matricula');
+            $table->string('puerto_base');
+            $table->string('año_construccion');
+            $table->unsignedBigInteger('tipo_cubierta');
+            $table->unsignedBigInteger('material_casco');
+            $table->string('tipo_actividad_pesca');
+            $table->integer('cantidad_patrones');
+            $table->integer('cantidad_motoristas');
+            $table->integer('cant_pescadores');
+            $table->integer('cantpesc_especializados');
+            $table->float('medida_eslora');
+            $table->float('medida_manga');
+            $table->float('medida_puntal');
+            $table->float('medida_decalado');
+            $table->float('medida_arqueo_neto');
+            $table->float('capacidad_bodega');
+            $table->float('capacidad_carga');
+            $table->float('capacidad_tanque');
+            $table->string('certificado_seguridad');
+
+            $table->foreign('tipo_cubierta_id')->references('id')->on('tipo_cubierta');
+            $table->foreign('maerial_casco_id')->references('id')->on('material_casco');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('registroemb_ma_pf');
+    }
+};

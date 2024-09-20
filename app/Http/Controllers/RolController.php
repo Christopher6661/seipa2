@@ -12,7 +12,7 @@ use Illuminate\Validation\ValidationException;
 class RolController extends Controller
 {
     /**
-     * Mostrar roles
+     * Mostrar lista de roles
      */
     public function index()
     {
@@ -64,7 +64,8 @@ class RolController extends Controller
             $rol = rol::findOrFail($id);
             $result = [
                 'id' => $rol->id,
-                'tipo_rol' => $rol->created_at,
+                'tipo_rol' => $rol->tipo_rol,
+                'created_at' => $rol->created_at,
                 'updated_at' => $rol->updated_at,
             ];
             return ApiResponse::success('Rol obtenido exitosamente', 200, $result);
@@ -99,11 +100,11 @@ class RolController extends Controller
         } catch (ValidationException $e) {
             return ApiResponse::error('Error de validación: ' .$e->getMessage(), 422, $e->errors());
         } catch (Exception $e) {
-            return ApiResponse::error('Error al actualiar el rol: ' .$e->getMessage(), 500);
+            return ApiResponse::error('Error al actualizar el rol: ' .$e->getMessage(), 500);
         }
     }
 
-    /**
+    /** 
      * borrar rol
      */
     public function destroy($id)

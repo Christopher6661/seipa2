@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('vida_util_anio');
             $table->string('doc_propiedad');
 
-            $table->foreign('emb_pertenece_id')->references('id')->on('registroemb_ma_pf');
+            $table->foreign('emb_pertenece_id')->references('id')->on('registroemb_ma_pm');
             $table->timestamps();
         });
     }

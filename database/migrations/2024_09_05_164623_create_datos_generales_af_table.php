@@ -21,10 +21,10 @@ return new class extends Migration
             $table->string('telefono')->unique();
             $table->string('email');
             $table->string('domicilio');
-            $table->unsignedBigInteger('region_id');
-            $table->unsignedBigInteger('distrito_id');
-            $table->unsignedBigInteger('municipio_id');
             $table->unsignedBigInteger('localidad_id');
+            $table->unsignedBigInteger('municipio_id');
+            $table->unsignedBigInteger('distrito_id');
+            $table->unsignedBigInteger('region_id');
             $table->string('grupo_sanguineo');
             $table->string('especies_producen');
             $table->unsignedBigInteger('etnia_id');

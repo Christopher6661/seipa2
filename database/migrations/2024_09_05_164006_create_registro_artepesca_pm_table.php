@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('registro_artepesca_pm', function (Blueprint $table) {
             $table->id();
-            $table->string('especie_objetivo');
-            $table->float('altura');
             $table->unsignedBigInteger('tipo_artepesca_id');
+            $table->float('medida_largo');
+            $table->float('medida_ancho');
             $table->string('material');
-            $table->float('longitud');
             $table->float('luz_malla');
-
+            $table->string('especie_objetivo');          
+          
             $table->foreign('tipo_artepesca_id')->references('id')->on('tipo_artepesca');
             $table->timestamps();
         });

@@ -31,7 +31,7 @@ return new class extends Migration
             $table->integer('eqmanejo_cant');
             $table->string('eqmanejo_tipo');
     
-            $table->foreign('emb_pertenece_id')->references('id')->on('registroemb_ma_pf');
+            $table->foreign('emb_pertenece_id')->references('id')->on('registroemb_ma_pm');
             $table->timestamps();
         });
     }

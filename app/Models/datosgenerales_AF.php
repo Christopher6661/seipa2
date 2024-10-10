@@ -19,10 +19,10 @@ class datosgenerales_AF extends Model
         'telefono',
         'email',
         'domicilio',
-        'region',
-        'distrito',
-        'municipio',
-        'localidad_id',      
+        'localidad_id', 
+        'municipio_id',
+        'distrito_id',
+        'region_id',
         'grupo_sanguineo',
         'etnia_id',
         'especies_producen',
@@ -31,20 +31,20 @@ class datosgenerales_AF extends Model
     ];
     public $timestamps = true;
 
-    public function Region(){
-        return $this->belongsTo(region::class, 'region_id', 'id');
-    }
-
-    public function Distrito(){
-        return $this->belongsTo(distrito::class, 'distrito_id', 'id');
+    public function Localidad(){
+        return $this->belongsTo(localidad::class, 'localidad_id', 'id');
     }
 
     public function Municipio(){
         return $this->belongsTo(municipio::class, 'municipio_id', 'id');
     }
 
-    public function Localidad(){
-        return $this->belongsTo(localidad::class, 'localidad_id', 'id');
+    public function Distrito(){
+        return $this->belongsTo(distrito::class, 'distrito_id', 'id');
+    }
+
+    public function Region(){
+        return $this->belongsTo(region::class, 'region_id', 'id');
     }
 
     public function Etnia(){

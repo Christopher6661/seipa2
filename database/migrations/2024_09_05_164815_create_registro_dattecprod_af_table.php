@@ -31,7 +31,7 @@ return new class extends Migration
             $table->boolean('otro')->default(false);
             $table->string('especificar_otro');
             $table->enum('forma_alimentacion', ['bombeo', 'pozo']);
-            $table->decimal('aliment_agua_caudad', 2,8);
+            $table->decimal('aliment_agua_caudad', 10,2);
             $table->string('desc_equip_acuicola');
             $table->enum('tipo_asistenciatec', ['pagado', 'otorgado por institucion']);
             $table->boolean('organismo_laboratorio')->default(false);

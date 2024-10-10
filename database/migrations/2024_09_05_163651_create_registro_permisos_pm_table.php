@@ -17,13 +17,10 @@ return new class extends Migration
             $table->string('pesqueria');
             $table->date('vigencia_permiso_ini');
             $table->date('vigencia_permiso_fin');
-            $table->string('cantidad_emb');
-            $table->string('tipos_emb');
-            $table->string('cantidad_motores');
-            $table->unsignedBigInteger('tipo_permiso_id');
-            $table->string('tipos_motores');
             $table->string('RNPA');
-            $table->string('cantidad_artpesca');
+            $table->unsignedBigInteger('tipo_permiso_id');
+            $table->boolean('tipo_emb')->default(false);
+            
 
             $table->foreign('tipo_permiso_id')->references('id')->on('tipo_permisos');
             $table->timestamps();

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('socios', function (Blueprint $table) {
             $table->id();
             $table->string('CURP');
-            $table->enum('tipo', ['pescador', 'acuacultor']);
+            $table->boolean('tipo')->default(false);
             $table->timestamps();
         });
     }

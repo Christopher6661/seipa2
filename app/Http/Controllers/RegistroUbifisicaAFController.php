@@ -39,9 +39,9 @@ class RegistroUbifisicaAFController extends Controller
                     'updated_at' => $item->updated_at,
                 ];
             });
-            return ApiResponse::success('Lista de los datos de las ubicaciones fisicos del acuicultor fisico', 200, $result);
+            return ApiResponse::success('Lista de los datos de las ubicaciones fisicas de los acuicultores fisicos', 200, $result);
         } catch (Exception $e) {
-            return ApiResponse::error('Error al obtener la lista de los datos generales de las ubicaciones fisicas: ' .$e->getMessage(), 500);
+            return ApiResponse::error('Error al obtener la lista de los datos de las ubicaciones fisicas: ' .$e->getMessage(), 500);
         }
     }
 
@@ -113,7 +113,7 @@ class RegistroUbifisicaAFController extends Controller
                 'created_at' => $UbicacionFisicaAF->created_at,
                 'updated_at' => $UbicacionFisicaAF->updated_at,
             ];
-            return ApiResponse::success('Datos generales obtenidos exitosamente', 200, $result);
+            return ApiResponse::success('Datos de la ubicación fisica obtenidos exitosamente', 200, $result);
         } catch (ModelNotFoundException $e) {
             return ApiResponse::error('Datos generales no encontrado', 404);
         } catch (Exception $e) {
@@ -144,7 +144,7 @@ class RegistroUbifisicaAFController extends Controller
                 'fuente_agua' => 'required|string|max:40',
             ]);
 
-            $existeUbFisicaAF= registro_ubifisica_AF::where('id', '!=', $id)
+            $existeUbFisicaAF = registro_ubifisica_AF::where('id', '!=', $id)
             ->where(function ($query) use ($data) {
                 $query->where('nombres', $data['nombres']);
             })

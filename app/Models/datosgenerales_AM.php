@@ -16,16 +16,36 @@ class datosgenerales_AM extends Model
         'CURP',
         'telefono',
         'domicilio',
-        'local_id',
-        'muni_id',
-        'distrito_id',
         'region_id',
+        'distrito_id',
+        'muni_id',
+        'local_id',        
         'email',
         'especies_producen',
-        'socios',
         'etnia_id',
-        'cuenca_siscuarente',
+        'socios',
+        'cuenta_siscuarente',
         'motivo_no_cuenta'
     ];
     public $timestamps = true;
+
+    public function Region(){
+        return $this->belongsTo(region::class, 'region_id', 'id');
+    }
+
+    public function Distrito(){
+        return $this->belongsTo(distrito::class, 'distrito_id', 'id');
+    }
+
+    public function Municipio(){
+        return $this->belongsTo(municipio::class, 'muni_id', 'id');
+    }
+
+    public function Localidad(){
+        return $this->belongsTo(localidad::class, 'local_id', 'id');
+    }
+
+    public function Etnia(){
+        return $this->belongsTo(etnia::class, 'etnia_id', 'id');
+    }
 }

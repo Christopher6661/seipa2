@@ -18,15 +18,22 @@ return new class extends Migration
             $table->string('CURP');
             $table->string('telefono');
             $table->string('domicilio');
-            $table->unsignedBigInteger('local_id');
-            $table->unsignedBigInteger('muni_id');
-            $table->unsignedBigInteger('distrito_id');
             $table->unsignedBigInteger('region_id');
+            $table->unsignedBigInteger('distrito_id');
+            $table->unsignedBigInteger('muni_id');
+            $table->unsignedBigInteger('local_id');           
             $table->string('email');
             $table->string('especies_producen');
-            $table->string('socios');
             $table->unsignedBigInteger('etnia_id');
-            $table->boolean('cuenca_siscuarente')->default(false);
+            $table->string('socios');
+            $table->boolean('cuenta_siscuarente')->default(false);
+            $table->string('motivo_no_cuenta');
+
+            $table->foreign('region_id')->references('id')->on('regiones');
+            $table->foreign('distrito_id')->references('id')->on('distritos');
+            $table->foreign('muni_id')->references('id')->on('municipios');
+            $table->foreign('local_id')->references('id')->on('localidades');
+            $table->foreign('etnia_id')->references('id')->on('etnias');
             $table->timestamps();
         });
     }

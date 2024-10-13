@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('registro_adminprod_am', function (Blueprint $table) {
             $table->id();
-            $table->string('num_familias');
-            $table->string('num_mujeres');
-            $table->string('num_hombres');
-            $table->string('total_integrantes');
+            $table->integer('num_familias');
+            $table->integer('num_mujeres');
+            $table->integer('num_hombres');
+            $table->integer('total_integrantes');
             $table->string('tipo_tenencia_ua');
             $table->timestamps();
         });

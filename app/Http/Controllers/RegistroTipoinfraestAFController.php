@@ -56,7 +56,7 @@ class RegistroTipoinfraestAFController extends Controller
     }
 
     /**
-     * Crea un registro del tipo de infraestructura del acuicultor fisico.
+     * Crea un registro del tipo de infraestructura de un acuicultor fisico.
      */
     public function store(Request $request)
     {

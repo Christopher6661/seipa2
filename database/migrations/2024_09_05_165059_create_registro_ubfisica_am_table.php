@@ -19,18 +19,19 @@ return new class extends Migration
             $table->string('domicilio');
             $table->string('codigo_postal');
             $table->string('telefono');
-            $table->unsignedBigInteger('local_id');
-            $table->unsignedBigInteger('muni_id');
-            $table->unsignedBigInteger('distr_id');
             $table->unsignedBigInteger('region_id');
+            $table->unsignedBigInteger('distr_id');
+            $table->unsignedBigInteger('muni_id');
+            $table->unsignedBigInteger('local_id');
             $table->date('inicio_operacion');
             $table->date('fin_operacion');
             $table->string('coordenadas_map');
+            $table->string('fuente_agua');
 
-            $table->foreign('local_id')->references('id')->on('localidades');
-            $table->foreign('muni_id')->references('id')->on('municipios');
-            $table->foreign('distr_id')->references('id')->on('distritos');
             $table->foreign('region_id')->references('id')->on('regiones');
+            $table->foreign('distr_id')->references('id')->on('distritos');
+            $table->foreign('muni_id')->references('id')->on('municipios');
+            $table->foreign('local_id')->references('id')->on('localidades');
             $table->timestamps();
         });
     }

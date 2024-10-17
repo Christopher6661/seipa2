@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('reportepesca_arribo', function (Blueprint $table) {
             $table->id();
-            $table->string('día');
+            $table->string('dia');
             $table->string('mes');
             $table->string('anio');
             $table->string('especie');
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('arte_pesca');
             $table->string('metodo_traslado');
             $table->boolean('pesca_accidental')->default(false);
-            $table->enum('quien_hizo_reporte', ['representante', 'socio']);
+            $table->boolean('quien_hizo_reporte')->default(false);
             $table->string('nombre_hizo_rep');
             $table->timestamps();
         });

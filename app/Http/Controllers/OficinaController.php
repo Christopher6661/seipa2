@@ -56,6 +56,9 @@ class OficinaController extends Controller
 
             if ($existeOficina) {
                 $errors = [];
+                if ($existeOficina->nombre_oficina === $data['nombre_oficina']) {
+                    $errors['nombre_oficina'] = 'el nombre de la oficina ya esta registrado.';
+                }
                 if ($existeOficina->telefono === $data['telefono']) {
                     $errors['telefonlo'] = 'el número de telefono ya esta registrado.';
                 }
@@ -126,9 +129,9 @@ class OficinaController extends Controller
                 }
                 return ApiResponse::error('La oficina ya existe', 422, $errors);
             }
+
             $oficina = oficina::findOrFail($id);
             $oficina->update($data);
-
             return ApiResponse::success('Oficina actualizada exitosamente', 200, $oficina);
         } catch (ModelNotFoundException $e) {
             return ApiResponse::error('Oficina no encontrada', 404);

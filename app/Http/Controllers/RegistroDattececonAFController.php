@@ -65,12 +65,12 @@ class RegistroDattececonAFController extends Controller
         try {
             $data = $request->validate([
                 'prodprom_x_mes' => 'required|float',
-                'prodpromx_mes_peso' => 'required|string|max:13',
+                'prodpromx_mes_peso' => 'required|in:Kilogramo,Tonelada',
                 'prodprom_mes_talla' => 'required|float', 
                 'ciclocultivoultimo_anio' => 'required|string|max:30',
                 'ciclocult_ultanio_mes' => 'required|string|max:30',
                 'capturacosecha_anio' => 'required|string|max:30',
-                'capturacos_anio_peso' => 'required|string|max:13',
+                'capturacos_anio_peso' => 'required|in:Kilogramo,Tonelada',
                 'captcosanio_mortalidad' => 'required|float',
                 'destino_autoconsimo' => 'required|float',
                 'destino_comercializacio' => 'required|float',
@@ -155,12 +155,12 @@ class RegistroDattececonAFController extends Controller
         try {
             $data = $request->validate([
                 'prodprom_x_mes' => 'required|float',
-                'prodpromx_mes_peso' => 'required|string|max:13',
+                'prodpromx_mes_peso' => 'required|in:Kilogramo,Tonelada',
                 'prodprom_mes_talla' => 'required|float', 
                 'ciclocultivoultimo_anio' => 'required|string|max:30',
                 'ciclocult_ultanio_mes' => 'required|string|max:30',
                 'capturacosecha_anio' => 'required|string|max:30',
-                'capturacos_anio_peso' => 'required|string|max:13',
+                'capturacos_anio_peso' => 'required|in:Kilogramo,Tonelada',
                 'captcosanio_mortalidad' => 'required|float',
                 'destino_autoconsimo' => 'required|float',
                 'destino_comercializacio' => 'required|float',

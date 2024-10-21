@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('registro_dattececon_af', function (Blueprint $table) {
             $table->id();
             $table->float('prodprom_x_mes');
-            $table->enum('prodpromx_mes_peso', ['kilogramo', 'tonelada']);
+            $table->enum('prodpromx_mes_peso', ['Kilogramo', 'Tonelada']);
             $table->float('prodprom_mes_talla');
             $table->string('ciclocultivoultimo_anio');
             $table->string('ciclocult_ultanio_mes');
             $table->string('capturacosecha_anio');
-            $table->enum('capturacos_anio_peso', ['kilogramo', 'tonelada']);
+            $table->enum('capturacos_anio_peso', ['Kilogramo', 'Tonelada']);
             $table->float('captcosanio_mortalidad');
             $table->float('destino_autoconsimo');
             $table->float('destino_comercializacio');

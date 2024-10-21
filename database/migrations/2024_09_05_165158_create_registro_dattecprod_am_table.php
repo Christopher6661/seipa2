@@ -30,10 +30,10 @@ return new class extends Migration
             $table->boolean('arroyo_manantial')->default(false);
             $table->boolean('otro')->default(false);
             $table->string('especificar_otro');
-            $table->enum('forma_alimentacion', ['bombeo', 'pozo']);
+            $table->enum('forma_alimentacion', ['Bombeo', 'Pozo']);
             $table->decimal('aliment_agua_caudad', 2,8);
             $table->string('desc_equip_acuicola');
-            $table->enum('tipo_asistenciatec', ['pagado', 'otorgado por institucion']);
+            $table->enum('tipo_asistenciatec', ['Asesor pagado', 'Otorgado por institucion']);
             $table->boolean('organismo_laboratorio')->default(false);
             $table->boolean('hormonados_genetica')->default(false);
             $table->boolean('medicam_quimicos')->default(false);

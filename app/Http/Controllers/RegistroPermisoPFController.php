@@ -51,7 +51,7 @@ class RegistroPermisoPFController extends Controller
                 'vigencia_permiso_fin' => 'required|date',
                 'RNPA' => 'required|string|max:50',
                 'permiso_id' => 'required|exists:tipo_permisos,id',
-                'tipo_embarcacion' => 'required|boolean'
+                'tipo_embarcacion' => 'required|in:Mayor,Menor'
             ]);
 
             $existepermisoPF = registro_permiso_PF::where('folio', $data['folio'])->first();
@@ -112,7 +112,7 @@ class RegistroPermisoPFController extends Controller
                 'vigencia_permiso_fin' => 'required|date',
                 'RNPA' => 'required|string|50',
                 'permiso_id' => 'required',
-                'tipo_embarcacion' => 'required|boolean'
+                'tipo_embarcacion' => 'required|in:Mayor,Menor'
             ]);
 
             $existepermisoPF = registro_permiso_PF::where('folio_permiso', $request->folio_permiso)->first();

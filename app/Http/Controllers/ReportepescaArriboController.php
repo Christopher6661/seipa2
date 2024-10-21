@@ -33,7 +33,7 @@ class ReportepescaArriboController extends Controller
                     'arte_pesca' => $item->arte_pesca,
                     'metodo_traslado' => $item->metodo_traslado,
                     'pesca_accidental' => $item->pesca_accidental ? 'Sí' : 'No',
-                    'quien_hizo_reporte' => $item->quien_hizo_reporte ? 'Representante' : 'Socio',
+                    'quien_hizo_reporte' => $item->quien_hizo_reporte,
                     'nombre_hizo_rep' => $item->nombre_hizo_reporte,
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at
@@ -64,7 +64,7 @@ class ReportepescaArriboController extends Controller
                 'arte_pesca' => 'required|string|max:50',
                 'metodo_traslado' => 'required|string|max:50',
                 'pesca_accidental' => 'required|boolean',
-                'quien_hizo_reporte' => 'required|boolean',
+                'quien_hizo_reporte' => 'required|in:Representante,Socio',
                 'nombre_hizo_rep' => 'required|string|max:50'
             ]);
 
@@ -118,7 +118,7 @@ class ReportepescaArriboController extends Controller
                 'arte_pesca' => $ReportesPescaArribo->arte_pesca,
                 'metodo_traslado' => $ReportesPescaArribo->metodo_traslado,
                 'pesca_accidental' => $ReportesPescaArribo->pesca_accidental ? 'Sí' : 'No',
-                'quien_hizo_reporte' => $ReportesPescaArribo->quien_hizo_reporte ? 'Representante' : 'Socio',
+                'quien_hizo_reporte' => $ReportesPescaArribo->quien_hizo_reporte,
                 'nombre_hizo_rep' => $ReportesPescaArribo->nombre_hizo_reporte
             ];
             return ApiResponse::success('Reporte de pesca de arribo obtenido exitosamente', 200, $result);
@@ -148,7 +148,7 @@ class ReportepescaArriboController extends Controller
                 'arte_pesca' => 'required|string|max:50',
                 'metodo_traslado' => 'required|string|max:50',
                 'pesca_accidental' => 'required|boolean',
-                'quien_hizo_reporte' => 'required|boolean',
+                'quien_hizo_reporte' => 'required|in:Representante,Socio',
                 'nombre_hizo_rep' => 'required|string|max:50'
             ]);
 

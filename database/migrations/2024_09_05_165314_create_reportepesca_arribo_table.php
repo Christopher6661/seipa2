@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('arte_pesca');
             $table->string('metodo_traslado');
             $table->boolean('pesca_accidental')->default(false);
-            $table->boolean('quien_hizo_reporte')->default(false);
+            $table->enum('quien_hizo_reporte', ['Representante', 'Socio']);
             $table->string('nombre_hizo_rep');
             $table->timestamps();
         });

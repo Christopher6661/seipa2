@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('vigencia_permiso_fin');
             $table->string('RNPA');
             $table->unsignedBigInteger('permiso_id');
-            $table->boolean('tipo_embarcacion')->default(false);
+            $table->enum('tipo_embarcacion', ['Mayor', 'Menor']);
 
             $table->foreign('permiso_id')->references('id')->on('tipo_permisos');
             $table->timestamps();

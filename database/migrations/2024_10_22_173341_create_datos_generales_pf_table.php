@@ -46,8 +46,8 @@ return new class extends Migration
             
             $table->foreign('localidad_id')->references('id')->on('localidades');
             $table->foreign('municipio_id')->references('id')->on('municipios');
-            $table->foreign('distrito_id')->references('id')->on('distrito');
-            $table->foreign('region_id')->references('id')->on('region');
+            $table->foreign('distrito_id')->references('id')->on('distritos');
+            $table->foreign('region_id')->references('id')->on('regiones');
             $table->foreign('etnia_id')->references('id')->on('etnias');
             $table->timestamps();
         });

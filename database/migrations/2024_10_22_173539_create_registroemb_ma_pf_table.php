@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('matricula');
             $table->string('puerto_base');
             $table->string('año_construccion');
-            $table->unsignedBigInteger('tipo_cubierta');
-            $table->unsignedBigInteger('material_casco');
+            $table->unsignedBigInteger('tipo_cubierta_id');
+            $table->unsignedBigInteger('material_casco_id');
             $table->string('tipo_actividad_pesca');
             $table->integer('cantidad_patrones');
             $table->integer('cantidad_motoristas');

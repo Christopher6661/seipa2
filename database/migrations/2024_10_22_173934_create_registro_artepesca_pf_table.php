@@ -20,7 +20,7 @@ return new class extends Migration
             $table->float('longitud');
             $table->float('luz_malla');
 
-            $table->foreign('tipo_artepesca_id')->references('id')->on('tipo_artepesca');
+            $table->foreign('tipo_artepesca_id')->references('id')->on('arte_pesca');
             $table->timestamps();
         });
     }

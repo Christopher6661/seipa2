@@ -34,15 +34,16 @@ class reporteacui_csopcs extends Model
         'certificado_sanitario',
         'guia_pesca',
         'valor_lote',
+        'metodo_traslado',
         'criasemilla_dia',
         'criasemilla_mes',
         'criasemilla_anio',
-        'numero_organismos',
+        'num_organismosem',
         'periodo_prod_ini',
         'periodo_prod_fin',
         'estadio_salida',
         'talla_salida',
-        'detino_produccion',
+        'detino_prod',
         'valor_produccion'
     ];
     public $timestamps = true;

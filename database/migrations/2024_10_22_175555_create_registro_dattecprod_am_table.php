@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('registro_dattecprod_am', function (Blueprint $table) {
             $table->id();
-            $table->float('area_total');
-            $table->float('area_total_actacu');
-            $table->float('uso_arearestante');
+            $table->float('area_total', 8, 2);
+            $table->float('area_total_actacu', 8, 2);
+            $table->float('uso_arearestante', 8, 2);
             $table->boolean('modelo_extensivo')->default(false);
             $table->boolean('modelo_intensivo')->default(false);
             $table->boolean('modelo_semintensivo')->default(false);
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->boolean('otro')->default(false);
             $table->string('especificar_otro');
             $table->enum('forma_alimentacion', ['Bombeo', 'Pozo']);
-            $table->decimal('aliment_agua_caudad', 2,8);
+            $table->decimal('aliment_agua_caudad', 8, 2);
             $table->string('desc_equip_acuicola');
             $table->enum('tipo_asistenciatec', ['Asesor pagado', 'Otorgado por institucion']);
             $table->boolean('organismo_laboratorio')->default(false);

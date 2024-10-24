@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('RNPA');
             $table->unsignedBigInteger('tipo_permiso_id');
             $table->boolean('tipo_emb')->default(false);
-            
 
             $table->foreign('tipo_permiso_id')->references('id')->on('tipo_permisos');
             $table->timestamps();

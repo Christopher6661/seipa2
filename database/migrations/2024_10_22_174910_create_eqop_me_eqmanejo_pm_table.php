@@ -11,21 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('motormenor_pm', function (Blueprint $table) {
+        Schema::create('eqop_me_eqmanejo_pm', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('emb_pertenece_id');
-            $table->string('marca_motor');
-            $table->string('modelo_motor');
-            $table->string('potencia');
-            $table->string('num_serie');
-            $table->string('tiempo');
-            $table->enum('tipo_combustible', ['Magna', 'Premium', 'Diesel']);
-            $table->boolean('fuera_borda')->default(false);
-            $table->string('vida_util_anio');
-            $table->string('doc_propiedad');
+            $table->boolean('cuenta_eqmanejo')->default(false);
+            $table->string('equipo_manejo');
+            $table->integer('eqmanejo_cant');
+            $table->unsignedBigInteger('eqmanejo_tipo_id');
 
             $table->foreign('emb_pertenece_id')->references('id')->on('registroemb_me_pm');
-
+            $table->foreign('eqmanejo_tipo_id')->references('id')->on('tipo_equipo_manejo');
             $table->timestamps();
         });
     }
@@ -35,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('motormenor_pm');
+        Schema::dropIfExists('eqop_me_eqmanejo_pm');
     }
 };

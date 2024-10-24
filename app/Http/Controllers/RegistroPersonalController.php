@@ -113,7 +113,7 @@ class RegistroPersonalController extends Controller
                 'telefono_secun' => 'required|string|max:10',
                 'email' => 'required|string|max:40',
                 'password' => 'required|string|max:8',
-                'rol_id' => 'required|exists:roles,id'
+                'rol_id' => 'required'
             ]);
 
             $existePersonal = registro_personal::where($data)->exists();

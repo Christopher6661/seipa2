@@ -36,7 +36,7 @@ return new class extends Migration
             $table->string('certificado_seguridad');
 
             $table->foreign('tipo_cubierta_id')->references('id')->on('tipo_cubierta');
-            $table->foreign('maerial_casco_id')->references('id')->on('material_casco');
+            $table->foreign('material_casco_id')->references('id')->on('material_casco');
             $table->timestamps();
         });
     }

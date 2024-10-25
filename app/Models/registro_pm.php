@@ -23,7 +23,7 @@ class registro_pm extends Model
     ];
     public $timestamps = true;
 
-    public function OficinaRegistro(){
+    public function Oficinas(){
         return $this->belongsTo(oficina::class, 'ofregistro_id', 'id');
     }
 }

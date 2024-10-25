@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('registro_pf', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('oficregis_id');
-            $table->string('nombres')->unique();
-            $table->string('apellido_pa')->unique();
-            $table->string('apellido_ma')->unique();
+            $table->string('nombres');
+            $table->string('apellido_pa');
+            $table->string('apellido_ma');
             $table->string('usuario')->unique();
             $table->string('password');
             $table->string('email')->unique();

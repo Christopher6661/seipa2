@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('razon_social');
             $table->string('RFC');
             $table->string('CURP');
-            $table->string('usuario');
+            $table->string('usuario')->unique();
             $table->string('password');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->boolean('tipo_actividad')->default(false);
             $table->boolean('tipo_persona')->default(false);
 

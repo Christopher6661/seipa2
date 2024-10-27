@@ -11,7 +11,7 @@ class registro_am extends Model
     protected $table = 'registro_pm';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'ofregistro_id',
+        'oficregis_id',
         'razon_social',
         'RFC',
         'CURP',
@@ -24,6 +24,6 @@ class registro_am extends Model
     public $timestamps = true;
 
     public function Oficinas(){
-        return $this->belongsTo(oficina::class, 'ofregistro_id', 'id');
+        return $this->belongsTo(oficina::class, 'oficregis_id', 'id');
     }
 }

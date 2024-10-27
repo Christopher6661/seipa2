@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('registro_pm', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('ofregistro_id');
+            $table->unsignedBigInteger('oficregis_id');
             $table->string('razon_social');
             $table->string('RFC');
             $table->string('CURP');
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->boolean('tipo_actividad')->default(false);
             $table->boolean('tipo_persona')->default(false);
 
-            $table->foreign('ofregistro_id')->references('id')->on('oficinas');
+            $table->foreign('oficregis_id')->references('id')->on('oficinas');
             $table->timestamps();
         });
     }

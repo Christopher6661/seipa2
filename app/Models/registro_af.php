@@ -11,7 +11,7 @@ class registro_af extends Model
     protected $table = 'registro_af';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'ofregistro_id',
+        'oficregis_id',
         'nombres',
         'apellido_pa',
         'apellido_ma',
@@ -24,6 +24,6 @@ class registro_af extends Model
     public $timestamps = true;
 
     public function Oficinas(){
-        return $this->belongsTo(oficina::class, 'ofregistro_id', 'id');
+        return $this->belongsTo(oficina::class, 'oficregis_id', 'id');
     }
 }

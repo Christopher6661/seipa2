@@ -35,14 +35,14 @@ return new class extends Migration
             $table->string('motivo_no_cuenta');
             $table->boolean('cuenta_emb_mayor')->default(false);
             $table->string('motino_cuenta_embma');
-            $table->integer('cant_emb_ma');
-            $table->integer('cant_motores_ma');
-            $table->string('tipos_motores_ma');
+            $table->integer('cant_emb_ma')->nullable();
+            $table->integer('cant_motores_ma')->nullable();
+            $table->string('tipos_motores_ma')->nullable();
             $table->boolean('cuenta_emb_menores')->default(false);
             $table->string('motino_cuenta_embme');
-            $table->integer('cant_emb_me');
-            $table->integer('cant_motores_me');
-            $table->string('tipos_motores_me');
+            $table->integer('cant_emb_me')->nullable();
+            $table->integer('cant_motores_me')->nullable();
+            $table->string('tipos_motores_me')->nullable();
             
             $table->foreign('localidad_id')->references('id')->on('localidades');
             $table->foreign('municipio_id')->references('id')->on('municipios');

@@ -90,14 +90,14 @@ class DatosgeneralesPFController extends Controller
                 'motivo_no_cuenta' => 'required|string|max:200',
                 'cuenta_emb_mayor' => 'required|boolean',
                 'motino_cuenta_embma' => 'required|string|max:200',
-                'cant_emb_ma' => 'required|integer',
-                'cant_motores_ma' => 'required|integer',
-                'tipos_motores_ma' => 'required|string|max:30',
+                'cant_emb_ma' => 'integer',
+                'cant_motores_ma' => 'integer',
+                'tipos_motores_ma' => 'string|max:30',
                 'cuenta_emb_menores' => 'required|boolean',
                 'motino_cuenta_embme' => 'required|string|max:200',
-                'cant_emb_me' => 'required|integer',
-                'cant_motores_me' => 'required|integer',
-                'tipos_motores_me' => 'required|string|max:30',
+                'cant_emb_me' => 'integer',
+                'cant_motores_me' => 'integer',
+                'tipos_motores_me' => 'string|max:30',
             ]);
 
             $existeDatosGeneralesPF = datosgenerales_PF::where('nombres', $data['nombres'])
@@ -206,14 +206,14 @@ class DatosgeneralesPFController extends Controller
                 'motivo_no_cuenta' => 'required|string|max:200',
                 'cuenta_emb_mayor' => 'required|boolean',
                 'motino_cuenta_embma' => 'required|string|max:200',
-                'cant_emb_ma' => 'required|integer',
-                'cant_motores_ma' => 'required|integer',
-                'tipos_motores_ma' => 'required|string|max:30',
+                'cant_emb_ma' => 'integer',
+                'cant_motores_ma' => 'integer',
+                'tipos_motores_ma' => 'string|max:30',
                 'cuenta_emb_menores' => 'required|boolean',
                 'motino_cuenta_embme' => 'required|string|max:200',
-                'cant_emb_me' => 'required|integer',
-                'cant_motores_me' => 'required|integer',
-                'tipos_motores_me' => 'required|string|max:30',
+                'cant_emb_me' => 'integer',
+                'cant_motores_me' => 'integer',
+                'tipos_motores_me' => 'string|max:30',
             ]);
 
             $existeDatosGeneralesPF = datosgenerales_PF::where('id', '!=', $id)

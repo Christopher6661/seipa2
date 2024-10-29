@@ -84,14 +84,14 @@ class DatosgeneralesPMController extends Controller
                 'motivo_no_cuenta' => 'required|string|max:200',
                 'cuentaemb_ma' => 'required|boolean',
                 'motivono_cuenta_embma' => 'required|string|max:200',
-                'cant_emb_ma' => 'required|integer',
-                'cant_motor_ma' => 'required|integer',
-                'tipos_motores_ma' => 'required|string|max:50',
+                'cant_emb_ma' => 'integer',
+                'cant_motor_ma' => 'integer',
+                'tipos_motores_ma' => 'string|max:50',
                 'cuentaemb_me' => 'required|boolean',
                 'motivono_cuenta_embme' => 'required|string|max:200',
-                'cant_emb_me' => 'required|integer',
-                'cant_motor_me' => 'required|integer',
-                'tipos_motores_me' => 'required|string|max:50',
+                'cant_emb_me' => 'integer',
+                'cant_motor_me' => 'integer',
+                'tipos_motores_me' => 'string|max:50',
             ]);
 
             $existeDatosGeneralesPM = datosgenerales_PM::where('razon_social', $data['razon_social'])
@@ -194,14 +194,14 @@ class DatosgeneralesPMController extends Controller
                 'motivo_no_cuenta' => 'required|string|max:200',
                 'cuentaemb_ma' => 'required|boolean',
                 'motivono_cuenta_embma' => 'required|string|max:200',
-                'cant_emb_ma' => 'required|integer',
-                'cant_motor_ma' => 'required|integer',
-                'tipos_motores_ma' => 'required|string|max:50',
+                'cant_emb_ma' => 'integer',
+                'cant_motor_ma' => 'integer',
+                'tipos_motores_ma' => 'string|max:50',
                 'cuentaemb_me' => 'required|boolean',
                 'motivono_cuenta_embme' => 'required|string|max:200',
-                'cant_emb_me' => 'required|integer',
-                'cant_motor_me' => 'required|integer',
-                'tipos_motores_me' => 'required|string|max:50',
+                'cant_emb_me' => 'integer',
+                'cant_motor_me' => 'integer',
+                'tipos_motores_me' => 'string|max:50',
             ]);
 
             $existeDatosGeneralesPM = datosgenerales_PM::where('id', '!=', $id)

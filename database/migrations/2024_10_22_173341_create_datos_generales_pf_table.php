@@ -34,12 +34,12 @@ return new class extends Migration
             $table->boolean('cuenta_permiso')->default(false);
             $table->string('motivo_no_cuenta');
             $table->boolean('cuenta_emb_mayor')->default(false);
-            $table->string('motino_cuenta_embma');
+            $table->string('motino_cuenta_embma')->nullable();
             $table->integer('cant_emb_ma')->nullable();
             $table->integer('cant_motores_ma')->nullable();
             $table->string('tipos_motores_ma')->nullable();
             $table->boolean('cuenta_emb_menores')->default(false);
-            $table->string('motino_cuenta_embme');
+            $table->string('motino_cuenta_embme')->nullable();
             $table->integer('cant_emb_me')->nullable();
             $table->integer('cant_motores_me')->nullable();
             $table->string('tipos_motores_me')->nullable();

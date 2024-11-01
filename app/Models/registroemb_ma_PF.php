@@ -23,6 +23,8 @@ class registroemb_ma_PF extends Model
         'cantidad_motoristas',
         'cantidad_pescadores',
         'cantpesc_especializados',
+        'cant_tripulacion',
+        'costo_avituallamiento',
         'medida_eslora',
         'medida_manga',
         'medida_puntal',

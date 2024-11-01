@@ -25,6 +25,8 @@ return new class extends Migration
             $table->integer('cantidad_motoristas');
             $table->integer('cant_pescadores');
             $table->integer('cantpesc_especializados');
+            $table->integer('cant_tripulacion');
+            $table->float('costo_avituallamiento');
             $table->float('medida_eslora');
             $table->float('medida_manga');
             $table->float('medida_puntal');

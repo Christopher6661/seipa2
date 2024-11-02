@@ -188,12 +188,18 @@ class RegistroembMaPFController extends Controller
                 'certificado_seguridad' => 'required|string|max:100'
             ]);
 
-            $existeEmbMayorPF = registroemb_ma_PF::where('nombre_emb_ma', $request->nombre_emb_ma)
+            /*$existeEmbMayorPF = registroemb_ma_PF::where('nombre_emb_ma', $request->nombre_emb_ma)
             ->orwhere('matricula', $request->matricula)
             ->orwhere('captura_rnpa', $request->captura_rnpa)
             ->first();
             if ($existeEmbMayorPF) {
                 return ApiResponse::error('Esta embarcación mayor ya existe', 422);
+            }*/
+
+            $existeEmbMayorPF = registroemb_ma_PF::where('nombre_emb_ma', $request->nombre_emb_ma)
+            ->where('id', '!=', $id) ->first();
+            if ($existeEmbMayorPF) {
+                return ApiResponse::error('Este nombre de embarcación ya existe', 422);
             }
 
             $embMayorPF = registroemb_ma_PF::findOrFail($id);

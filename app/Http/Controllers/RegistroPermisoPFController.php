@@ -87,7 +87,7 @@ class RegistroPermisoPFController extends Controller
                 'vigencia_permiso_fin' => $permisosPF->vigencia_permiso_fin,
                 'RNPA' => $permisosPF->RNPA,
                 'permiso_id' => $permisosPF->tipo_permiso->nombre_permiso,
-                'tipo_embarcacion' => $permisosPF->tipo_embarcacion ? 'Mayor' : 'Menor',
+                'tipo_embarcacion' => $permisosPF->tipo_embarcacion == 'Mayor' ? 'Mayor' : 'Menor',
                 'created_at' => $permisosPF->created_at,
                 'updated_at' => $permisosPF->updated_at,
             ];
@@ -115,9 +115,15 @@ class RegistroPermisoPFController extends Controller
                 'tipo_embarcacion' => 'required|in:Mayor,Menor'
             ]);
 
-            $existepermisoPF = registro_permiso_PF::where('folio_permiso', $request->folio_permiso)->first();
+            /*$existepermisoPF = registro_permiso_PF::where('folio_permiso', $request->folio_permiso)->first();
             if ($existepermisoPF) {
                 return ApiResponse::error('Este permiso para pescador fisico ya existe', 422);
+            } */
+
+            $existepermisoPF = registro_permiso_PF::where('folio_permiso', $request->folio_permiso)
+            ->where('id', '!=', $id)->first();
+            if ($existepermisoPF) {
+                return ApiResponse::error('Este permiso para el pescador fisico ya existe', 422);
             }
 
             $permisosPF = registro_permiso_PF::findOrFail($id);

@@ -156,12 +156,18 @@ class RegistroembMePFController extends Controller
                 'movilidad_emb' => 'required|string|max:50'
             ]);
 
-            $existeEmbMenorPF = registroemb_me_PF::where('nombre_emb', $request->nombre_emb)
+            /*$existeEmbMenorPF = registroemb_me_PF::where('nombre_emb', $request->nombre_emb)
             ->orwhere('matricula', $request->matricula)
             ->orwhere('RNP', $request->RNP)
             ->first();
             if ($existeEmbMenorPF) {
                 return ApiResponse::error('Esta embarcación menor ya existe', 422);
+            }*/
+
+            $existeEmbMenorPF = registroemb_me_PF::where('nombre_emb', $request->nombre_emb)
+            ->where('id', '!=', $id) ->first();
+            if ($existeEmbMenorPF) {
+                return ApiResponse::error('Este nombre de embarcación ya existe', 422);
             }
 
             $embarcacionMePF = registroemb_me_PF::findOrFail($id);

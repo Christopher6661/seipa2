@@ -196,10 +196,16 @@ class RegistroembMaPFController extends Controller
                 return ApiResponse::error('Esta embarcación mayor ya existe', 422);
             }*/
 
-            $existeEmbMayorPF = registroemb_ma_PF::where('nombre_emb_ma', $request->nombre_emb_ma)
-            ->where('id', '!=', $id) ->first();
+            $existeEmbMayorPF = registroemb_ma_PF::where(function($query) use ($request) {
+                $query->where('nombre_emb_ma', $request->nombre_emb_ma)
+                ->orWhere('matricula', $request->matricula)
+                ->orWhere('captura_rnpa', $request->captura_rnpa);
+            })
+            ->where('id', '!=', $id) 
+            ->first();
+
             if ($existeEmbMayorPF) {
-                return ApiResponse::error('Este nombre de embarcación ya existe', 422);
+                return ApiResponse::error('Este embarcación mayor ya existe', 422);
             }
 
             $embMayorPF = registroemb_ma_PF::findOrFail($id);

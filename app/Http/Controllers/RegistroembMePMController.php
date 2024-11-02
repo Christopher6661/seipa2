@@ -164,10 +164,16 @@ class RegistroembMePMController extends Controller
                 return ApiResponse::error('Esta embarcación menor ya existe', 422);
             }*/
 
-            $existeEmbMenorPM = registroemb_me_PM::where('nombre_emb', $request->nombre_emb)
-            ->where('id', '!=', $id) ->first();
+            $existeEmbMenorPM = registroemb_me_PM::where(function($query) use ($request) {
+                $query->where('nombre_emb', $request->nombre_emb)
+                ->orWhere('matricula', $request->matricula)
+                ->orWhere('RNP', $request->RNP);
+            })
+            ->where('id', '!=', $id) 
+            ->first();
+
             if ($existeEmbMenorPM) {
-                return ApiResponse::error('Este nombre de embarcación ya existe', 422);
+                return ApiResponse::error('Este embarcación menor ya existe', 422);
             }
 
             $embarcacionMePM = registroemb_me_PM::findOrFail($id);

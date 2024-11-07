@@ -21,7 +21,7 @@ class MotorMenorPMController extends Controller
             $result = $motorMenor_PM->map(function ($item){
                 return [
                     'id' => $item->id,
-                    'emb_pertenece_id' => $item->registroemb_me_pm->id,
+                    'emb_pertenece_id' => $item->registroemb_me_pm->nombre_emb,
                     'marca_motor' => $item->marca_motor,
                     'modelo_motor' => $item->modelo_motor,
                     'potencia' => $item->potencia,
@@ -54,7 +54,7 @@ class MotorMenorPMController extends Controller
             'potencia' => 'required|string|max:20',
             'num_serie' => 'required|string|max:10',
             'tiempo' => 'required|string|max:13',
-            'tipo_combustible' => 'required|in:Magna, Premium, Diesel',
+            'tipo_combustible' => 'required|in:Magna,Premium,Diesel',
             'fuera_borda' => 'required|boolean',
             'vida_util_anio' => 'required|string|max:10',
             'doc_propiedad' => 'required|string|max:255'
@@ -87,7 +87,7 @@ class MotorMenorPMController extends Controller
             $motorMenor_PM = MotorMenor_PM::findOrFail($id);
             $result = [
                 'id' => $motorMenor_PM->id,
-                'emb_pertenece_id' => $motorMenor_PM->registroemb_me_pm->id,
+                'emb_pertenece_id' => $motorMenor_PM->registroemb_me_pm->nombre_emb,
                 'marca_motor' => $motorMenor_PM->marca_motor,
                 'modelo_motor' => $motorMenor_PM->modelo_motor,
                 'potencia' => $motorMenor_PM->potencia,
@@ -121,7 +121,7 @@ class MotorMenorPMController extends Controller
                 'potencia' => 'required|string|max:20',
                 'num_serie' => 'required|string|max:10',
                 'tiempo' => 'required|string|max:13',
-                'tipo_combustible' => 'required|in:Magna, Premium, Diesel',
+                'tipo_combustible' => 'required|in:Magna,Premium,Diesel',
                 'fuera_borda' => 'required|boolean',
                 'vida_util_anio' => 'required|string|max:10',
                 'doc_propiedad' => 'required|string|max:255'

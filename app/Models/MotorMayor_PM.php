@@ -24,7 +24,7 @@ class MotorMayor_PM extends Model
     ];
     public $timestamps = true;
 
-    public function EmbarcacionPertenece(){
+    public function registroemb_ma_pm(){
         return $this->belongsTo(registroemb_ma_PM::class, 'emb_pertenece_id', 'id');
     }
 }

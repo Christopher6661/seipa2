@@ -19,11 +19,11 @@ class EqOpMaManejoPf extends Model
     ];
     public $timestamps = true;
 
-    public function EmbarcacionPertenece(){
+    public function registroemb_ma_pf(){
         return $this->belongsTo(registroemb_ma_PF::class, 'emb_pertenece_id', 'id');
     }
 
-    public function TipoEquipoManejo(){
-        return $this->belongsTo(TipoEqManejo::class, 'eqmanejo_tipo_id', 'id');
+    public function tipoeqmanejo(){
+        return $this->belongsTo(tipoeqmanejo::class, 'eqmanejo_tipo_id', 'id');
     }
 }

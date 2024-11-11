@@ -17,8 +17,8 @@ return new class extends Migration
             $table->boolean('cuenta_eqradiocom')->default(false);
             $table->string('equipo_radiocomun');
             $table->integer('eqradiocom_cant');
-            $table->unsignedBigInteger('eqradiocom_tipo_id');  
-
+            $table->unsignedBigInteger('eqradiocom_tipo_id'); 
+            
             $table->foreign('emb_pertenece_id')->references('id')->on('registroemb_me_pm');
             $table->foreign('eqradiocom_tipo_id')->references('id')->on('tipo_equipo_radcom');
             $table->timestamps();

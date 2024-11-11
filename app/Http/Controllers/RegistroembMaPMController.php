@@ -86,22 +86,18 @@ class RegistroembMaPMController extends Controller
                 'certificado_seg_mar' => 'required|string|max:100'
             ]);
 
-            $existeEmbMayorPM = registroemb_ma_PM::where('nombre_emb_ma', $data['nombre_emb_ma'])
-            ->orwhere('matricula', $data['matricula'])
-            ->orwhere('captura_rnpa', $data['captura_rnpa'])
-            ->first();
-            if ($existeEmbMayorPM) {
-                $errors = [];
-                if ($existeEmbMayorPM->nombre_emb_ma === $data['nombre_emb_ma']) {
-                    $errors['nombre_emb_ma'] = 'Este nombre ya esta registrado';
-                }
-                if ($existeEmbMayorPM->matricula === $data['matricula']) {
-                    $errors['matricula'] = 'Esta matricula ya esta registrada';
-                }
-                if ($existeEmbMayorPM->captura_rnpa === $data['captura_rnpa']) {
-                    $errors['captura_rnpa'] = 'Esta captura de RNPA ya esta registrada';
-                }
-                return ApiResponse::error('Esta embarcación mayor ya existe', 422, $errors);
+
+            $existeNombre = registroemb_ma_PM::where('nombre_emb_ma', $data['nombre_emb_ma'])->first();
+            if ($existeNombre) {
+                return ApiResponse::error('Este nombre ya esta registrado', 422);
+            }
+            $existeMatricula = registroemb_ma_PM::where('matricula', $data['matricula'])->first();
+            if ($existeMatricula) {
+                return ApiResponse::error('Esta matricula ya esta registrada', 422);
+            }
+            $existeMatricula = registroemb_ma_PM::where('captura_rnpa', $data['captura_rnpa'])->first();
+            if ($existeMatricula) {
+                return ApiResponse::error('Esta captura de RNPA ya esta registrada', 422);
             }
 
             $embMayorPM = registroemb_ma_PM::create($data);

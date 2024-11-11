@@ -11,16 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('registro_artepesca_pm', function (Blueprint $table) {
+        Schema::create('registro_artepesca_pf', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('tipo_artepesca_id');
-            $table->float('medida_largo');
-            $table->float('medida_ancho');
+            $table->numeric('medidas_metros');
+            $table->numeric('longitud');
             $table->string('material');
-            $table->float('luz_malla');
-            $table->string('especie_objetivo');          
-          
+            $table->numeric('luz_malla');
+            $table->unsignedBigInteger('especie_obj_id');         
+
             $table->foreign('tipo_artepesca_id')->references('id')->on('arte_pesca');
+            $table->foreign('especie_obj_id')->references('id')->on('especies');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('registro_artepesca_pm');
+        Schema::dropIfExists('registro_artepesca_pf');
     }
 };

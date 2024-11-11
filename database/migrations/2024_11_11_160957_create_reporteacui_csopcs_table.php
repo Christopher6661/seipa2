@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('mes');
             $table->string('anio');
             $table->string('especie');
-            $table->float('volumen_prodkg', 8, 2);
-            $table->float('talla_promedio', 8, 2);
+            $table->float('volumen_prodkg');
+            $table->float('talla_promedio');
             $table->string('destino_produccion');
-            $table->float('valor_estimado_cap', 8, 2);
+            $table->float('valor_estimado_cap');
             $table->string('siembra_dias');
             $table->string('siembra_mes');
             $table->string('siembra_anio');
@@ -35,18 +35,17 @@ return new class extends Migration
             $table->string('unidad_procedencia');
             $table->string('certificado_sanitario');
             $table->string('guia_pesca');
-            $table->float('valor_lote', 8, 2);
-            $table->string('metodo_traslado');
+            $table->float('valor_lote');
             $table->string('criasemilla_dia');
             $table->string('criasemilla_mes');
             $table->string('criasemilla_anio');
-            $table->string('num_organismosem');
+            $table->string('numero_organismos');
             $table->date('periodo_prod_ini');
             $table->date('periodo_prod_fin');
             $table->string('estadio_salida');
             $table->string('talla_salida');
-            $table->string('destino_prod');
-            $table->float('valor_produccion', 8, 2);
+            $table->string('destino_produccion');
+            $table->float('valor_produccion');
             $table->timestamps();
         });
     }

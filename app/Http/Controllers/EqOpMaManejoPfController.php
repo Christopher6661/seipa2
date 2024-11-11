@@ -21,10 +21,11 @@ class EqOpMaManejoPfController extends Controller
             $result = $EqOpMaManejoPf->map(function ($item){
                 return [
                     'id' => $item->id,
-                    'emb_pertenece_id' => $item->registroemb_ma_pf->id,
+                    'emb_pertenece_id' => $item->EmbarcacionPertenece->id,
                     'cuenta_eqmanejo' => $item->cuenta_eqmanejo ? 'Sí' : 'No',
                     'equipo_manejo' => $item->equipo_manejo,
-                    'eqmanejo_tipo_id' => $item->tipo_equipo_manejo->id,
+                    'eqmanejo_cant' => $item->eqmanejo_cant,
+                    'eqmanejo_tipo_id' => $item->TipoEquipoManejo->tipo_eqmanejo,
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
                 ];
@@ -46,7 +47,7 @@ class EqOpMaManejoPfController extends Controller
                 'cuenta_eqmanejo' => 'required|boolean',
                 'equipo_manejo' => 'required|string|max:50',
                 'eqmanejo_cant' => 'required|integer',
-                'eqmanejo_tipo_id' => 'required|exists:tipo_equipo_manejo',
+                'eqmanejo_tipo_id' => 'required|exists:tipo_equipo_manejo,id',
             ]);
             $existeEqOpMaManejoPf = EqOpMaManejoPf::where($data)->exists();
             if ($existeEqOpMaManejoPf) {
@@ -71,10 +72,10 @@ class EqOpMaManejoPfController extends Controller
             $EqOpMaManejoPf = EqOpMaManejoPf::findOrFail($id);
             $result = [
                 'id' => $EqOpMaManejoPf->id,
-                'emb_pertenece_id' => $EqOpMaManejoPf->registroemb_ma_pf->id,
+                'emb_pertenece_id' => $EqOpMaManejoPf->EmbarcacionPertenece->id,
                 'cuenta_eqmanejo' => $EqOpMaManejoPf->cuenta_eqmanejo ? 'Sí' : 'No',
                 'equipo_manejo' => $EqOpMaManejoPf->equipo_manejo,
-                'eqmanejo_tipo_id' => $EqOpMaManejoPf->tipo_equipo_manejo->id,
+                'eqmanejo_tipo_id' => $EqOpMaManejoPf->TipoEquipoManejo->id,
                 'created_at' => $EqOpMaManejoPf->created_at,
                 'updated_at' => $EqOpMaManejoPf->updated_at,
             ];

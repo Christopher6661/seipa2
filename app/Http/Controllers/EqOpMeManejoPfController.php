@@ -21,10 +21,10 @@ class EqOpMeManejoPfController extends Controller
             $result = $EqOpMeManejoPf->map(function ($item){
                 return [
                     'id' => $item->id,
-                    'emb_pertenece_id' => $item->registroemb_me_pf->id,
+                    'emb_pertenece_id' => $item->EmbarcacionPertenece->id,
                     'cuenta_eqmanejo' => $item->cuenta_eqmanejo ? 'Sí' : 'No',
                     'equipo_manejo' => $item->equipo_manejo,
-                    'eqmanejo_tipo_id' => $item->tipo_equipo_manejo->id,
+                    'eqmanejo_tipo_id' => $item->TipoEquipoManejo->id,
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
                 ];
@@ -46,7 +46,7 @@ class EqOpMeManejoPfController extends Controller
                 'cuenta_eqmanejo' => 'required|boolean',
                 'equipo_manejo' => 'required|string|max:50',
                 'eqmanejo_cant' => 'required|integer',
-                'eqmanejo_tipo_id' => 'required|exists:tipo_equipo_manejo',
+                'eqmanejo_tipo_id' => 'required|exists:tipo_equipo_manejo,id',
             ]);
             $existeEqOpMeManejoPf = EqOpMeManejoPf::where($data)->exists();
             if ($existeEqOpMeManejoPf) {
@@ -71,10 +71,10 @@ class EqOpMeManejoPfController extends Controller
             $EqOpMeManejoPf = EqOpMeManejoPf::findOrFail($id);
             $result = [
                 'id' => $EqOpMeManejoPf->id,
-                'emb_pertenece_id' => $EqOpMeManejoPf->registroemb_me_pf->id,
+                'emb_pertenece_id' => $EqOpMeManejoPf->EmbarcacionPertenece->id,
                 'cuenta_eqmanejo' => $EqOpMeManejoPf->cuenta_eqmanejo ? 'Sí' : 'No',
                 'equipo_manejo' => $EqOpMeManejoPf->equipo_manejo,
-                'eqmanejo_tipo_id' => $EqOpMeManejoPf->tipo_equipo_manejo->id,
+                'eqmanejo_tipo_id' => $EqOpMeManejoPf->TipoEquipoManejo->id,
                 'created_at' => $EqOpMeManejoPf->created_at,
                 'updated_at' => $EqOpMeManejoPf->updated_at,
             ];

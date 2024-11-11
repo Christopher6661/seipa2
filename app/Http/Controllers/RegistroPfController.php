@@ -21,7 +21,7 @@ class RegistroPfController extends Controller
             $result = $pf->map(function ($item) {
                 return [
                     'id' => $item->id,
-                    'oficregis_id' => $item->oficinas->id,
+                    'oficregis_id' => $item->oficinas->nombre_oficina,
                     'nombres' => $item->nombres,
                     'apellido_pa' => $item->apellido_pa,
                     'apellido_ma' => $item->apellido_ma,
@@ -53,23 +53,32 @@ class RegistroPfController extends Controller
                 'apellido_ma' => 'required|string|max:40',
                 'usuario' => 'required|string|max:30',
                 'password' => 'required|string|max:8',
-                'email' => 'required|string|max:40',
+                'email' => 'required|string|email|max:40', 
                 'tipo_actividad' => 'required|boolean',
                 'tipo_persona' => 'required|boolean'
             ]);
-            $existePF = registro_pf::where($data)->exists();
-            if ($existePF) {
-                return ApiResponse::error('El pescador fisico ya esta registrado.', 422);
+    
+            $usuarioExiste = registro_pf::where('usuario', $data['usuario'])->exists();
+            $emailExiste = registro_pf::where('email', $data['email'])->exists();
+    
+            if ($usuarioExiste && $emailExiste) {
+                return ApiResponse::error('El nombre de usuario y el correo electrónico ya están en uso.', 422);
+            } elseif ($usuarioExiste) {
+                return ApiResponse::error('El nombre de usuario ya está en uso.', 422);
+            } elseif ($emailExiste) {
+                return ApiResponse::error('El correo electrónico ya está en uso.', 422);
             }
-
+    
             $pf = registro_pf::create($data);
-            return ApiResponse::success('El pescador fisico fue creado exitosamente', 201, $pf);
+            return ApiResponse::success('El pescador físico fue creado exitosamente', 201, $pf);
+            
         } catch (ValidationException $e) {
             return ApiResponse::error('Error de validación: ' .$e->getMessage(), 422, $e->errors());
         } catch (Exception $e) {
-            return ApiResponse::error('Error al crear el pescador fisico: ' .$e->getMessage(), 500);
+            return ApiResponse::error('Error al crear el pescador físico: ' .$e->getMessage(), 500);
         }
     }
+    
 
     /**
      * Mostrar un Pescador fisico.
@@ -92,6 +101,8 @@ class RegistroPfController extends Controller
                 'created_at' => $pf->created_at,
                 'updated_at' => $pf->updated_at,
             ];
+
+
             return ApiResponse::success('Pescador fisico obtenido exitosamente', 200, $result);
         } catch (ModelNotFoundException $e) {
             return ApiResponse::error('Pescador fisico no encontrado', 404);
@@ -106,34 +117,41 @@ class RegistroPfController extends Controller
     public function update(Request $request, $id)
     {
         try {
-          $data = $request->validate([
-            'oficregis_id' => 'required',
-            'nombres' => 'required|string|max:40',
-            'apellido_pa' => 'required|string|max:40',
-            'apellido_ma' => 'required|string|max:40',
-            'usuario' => 'required|string|max:30',
-            'password' => 'required|string|max:8',
-            'email' => 'required|string|max:40',
-            'tipo_actividad' => 'required|boolean',
-            'tipo_persona' => 'required|boolean'
-          ]);
-
-          $existePF = registro_pf::where($data)->exists();
-          if ($existePF) {
-            return ApiResponse::error('El pescador fisico ya esta registrado.', 422);
-          }
-
-          $pf = registro_pf::findOrFail($id);
-          $pf->update($data);
-          return ApiResponse::success('El pescador fisico se actualizo exitosamente', 200, $pf);
+            $data = $request->validate([
+                'oficregis_id' => 'required',
+                'nombres' => 'required|string|max:40',
+                'apellido_pa' => 'required|string|max:40',
+                'apellido_ma' => 'required|string|max:40',
+                'usuario' => 'required|string|max:30',
+                'password' => 'required|string|max:8',
+                'email' => 'required|string|max:40',
+                'tipo_actividad' => 'required|boolean',
+                'tipo_persona' => 'required|boolean'
+            ]);
+            
+            $usuarioExiste = registro_pf::where('usuario', $data['usuario'])->where('id', '!=', $id)->exists();
+            $emailExiste = registro_pf::where('email', $data['email'])->where('id', '!=', $id)->exists();
+    
+            if ($usuarioExiste && $emailExiste) {
+                return ApiResponse::error('El nombre de usuario y el correo electrónico ya están en uso.', 422);
+            } elseif ($usuarioExiste) {
+                return ApiResponse::error('El nombre de usuario ya está en uso.', 422);
+            } elseif ($emailExiste) {
+                return ApiResponse::error('El correo electrónico ya está en uso.', 422);
+            }
+    
+            $pf = registro_pf::findOrFail($id);
+            $pf->update($data);
+            return ApiResponse::success('El pescador fisico se actualizo exitosamente', 200, $pf);
         } catch (ModelNotFoundException $e) {
             return ApiResponse::error('Pescador fisico no encontrado', 404);
         } catch (ValidationException $e) {
-            return ApiResponse::error('Error de validacion: ' .$e->getMessage(), 422, $e->errors());
+            return ApiResponse::error('Error de validacion: ' . $e->getMessage(), 422, $e->errors());
         } catch (Exception $e) {
-            return ApiResponse::error('Error al actualizar el pescador fisico: ' .$e->getMessage(), 500);
+            return ApiResponse::error('Error al actualizar el pescador fisico: ' . $e->getMessage(), 500);
         }
     }
+    
 
     /**
      * Eliminar pescador fisico.

@@ -20,7 +20,11 @@ class registro_artepesca_PM extends Model
     ];
     public $timestamps = true;
 
-    public function TipoArtePesca(){
+    public function arte_pesca(){
         return $this->belongsTo(arte_pesca::class, 'tipo_artepesca_id', 'id');
+    }
+
+    public function especie_objetivo(){
+        return $this->belongsTo(especie::class, 'especie_obj_id', 'id');
     }
 }    

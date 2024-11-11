@@ -28,7 +28,7 @@ return new class extends Migration
             $table->boolean('pozo_cieloabierto')->default(false);
             $table->boolean('rio_cuenca')->default(false);
             $table->boolean('arroyo_manantial')->default(false);
-            $table->boolean('otro')->default(false);
+            $table->string('otro')->nullable();
             $table->string('especificar_otro');
             $table->enum('forma_alimentacion', ['Bombeo', 'Pozo']);
             $table->decimal('aliment_agua_caudad', 10,2);

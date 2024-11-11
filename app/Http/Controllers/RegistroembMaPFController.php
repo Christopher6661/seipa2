@@ -26,12 +26,12 @@ class RegistroembMaPFController extends Controller
                     'matricula' => $item->matricula,
                     'puerto_base' => $item->puerto_base,
                     'año_construccion' => $item->año_construccion,
-                    'tipo_cubierta' => $item->tipo_cubierta->id,
-                    'material_casco' => $item->material_casco->id,
+                    'tipo_cubierta_id' => $item->TipoCubierta->id,
+                    'material_casco_id' => $item->MaterialCasco->id,
                     'tipo_actividad_pesca' => $item->tipo_actividad_pesca,
                     'cantidad_patrones' => $item->cantidad_patrones,
                     'cantidad_motoristas' => $item->cantidad_motoristas,
-                    'cantidad_pescadores' => $item->cantidad_pescadores,
+                    'cant_pescadores' => $item->cant_pescadores,
                     'cantpesc_especializados' => $item->cantpesc_especializados,
                     'cant_tripulacion' => $item->cant_tripulacion,
                     'costo_avituallamiento' => $item->costo_avituallamiento,
@@ -66,42 +66,37 @@ class RegistroembMaPFController extends Controller
                 'matricula' => 'required|string|max:20',
                 'puerto_base' => 'required|string|max:30',
                 'año_construccion' => 'required|string|max:30',
-                'tipo_cubierta' => 'required|exists:tipo_cubierta,id',
-                'material_casco' => 'required|exists:material_casco,id',
+                'tipo_cubierta_id' => 'required|exists:tipo_cubierta,id',
+                'material_casco_id' => 'required|exists:material_casco,id',
                 'tipo_actividad_pesca' => 'required|string|max:20',
                 'cantidad_patrones' => 'required|integer',
                 'cantidad_motoristas' => 'required|integer',
                 'cant_pescadores' => 'required|integer',
                 'cantpesc_especializados' => 'required|integer',
                 'cant_tripulacion' => 'required|integer',
-                'costo_avituallamiento' => 'required|float',
-                'medida_eslora' => 'required|float',
-                'medida_manga' => 'required|float',
-                'medida_puntal' => 'required|float',
-                'medida_decalado' => 'required|float',
-                'medida_arqueo_neto' => 'required|float',
-                'capacidad_bodega' => 'required|float',
-                'capacidad_carga' => 'required|float',
-                'capacidad_tanque' => 'required|float',
+                'costo_avituallamiento' => 'required|numeric',
+                'medida_eslora' => 'required|numeric',
+                'medida_manga' => 'required|numeric',
+                'medida_puntal' => 'required|numeric',
+                'medida_decalado' => 'required|numeric',
+                'medida_arqueo_neto' => 'required|numeric',
+                'capacidad_bodega' => 'required|numeric',
+                'capacidad_carga' => 'required|numeric',
+                'capacidad_tanque' => 'required|numeric',
                 'certificado_seguridad' => 'required|string|max:100'
             ]);
 
-            $existeEmbMayorPF = registroemb_ma_PF::where('nombre_emb_ma', $data['nombre_emb_ma'])
-            ->orwhere('matricula', $data['matricula'])
-            ->orwhere('captura_rnpa', $data['captura_rnpa'])
-            ->first();
-            if ($existeEmbMayorPF) {
-                $errors = [];
-                if ($existeEmbMayorPF->nombre_emb_ma === $data['nombre_emb_ma']) {
-                    $errors['nombre_emb_ma'] = 'Este nombre ya esta registrado';
-                }
-                if ($existeEmbMayorPF->matricula === $data['matricula']) {
-                    $errors['matricula'] = 'Esta matricula ya esta registrada';
-                }
-                if ($existeEmbMayorPF->captura_rnpa === $data['captura_rnpa']) {
-                    $errors['captura_rnpa'] = 'Esta captura de RNPA ya esta registrada';
-                }
-                return ApiResponse::error('Esta embarcación mayor ya existe', 422, $errors);
+            $existeNombre = registroemb_ma_PF::where('nombre_emb_ma', $data['nombre_emb_ma'])->first();
+            if ($existeNombre) {
+                return ApiResponse::error('Este nombre ya esta registrado', 422);
+            }
+            $existeMatricula = registroemb_ma_PF::where('matricula', $data['matricula'])->first();
+            if ($existeMatricula) {
+                return ApiResponse::error('Esta matricula ya esta registrada', 422);
+            }
+            $existeMatricula = registroemb_ma_PF::where('captura_rnpa', $data['captura_rnpa'])->first();
+            if ($existeMatricula) {
+                return ApiResponse::error('Esta captura de RNPA ya esta registrada', 422);
             }
 
             $embMayorPF = registroemb_ma_PF::create($data);
@@ -127,12 +122,12 @@ class RegistroembMaPFController extends Controller
                 'matricula' => $embMayorPF->matricula,
                 'puerto_base' => $embMayorPF->puerto_base,
                 'año_construccion' => $embMayorPF->año_construccion,
-                'tipo_cubierta' => $embMayorPF->tipo_cubierta->id,
-                'material_casco' => $embMayorPF->material_casco->id,
+                'tipo_cubierta_id' => $embMayorPF->TipoCubierta->id,
+                'material_casco_id' => $embMayorPF->MaterialCasco->id,
                 'tipo_actividad_pesca' => $embMayorPF->tipo_actividad_pesca,
                 'cantidad_patrones' => $embMayorPF->cantidad_patrones,
                 'cantidad_motoristas' => $embMayorPF->cantidad_motoristas,
-                'cantidad_pescadores' => $embMayorPF->cantidad_pescadores,
+                'cant_pescadores' => $embMayorPF->cant_pescadores,
                 'cantpesc_especializados' => $embMayorPF->cantpesc_especializados,
                 'cant_tripulacion' => $embMayorPF->cant_tripulacion,
                 'costo_avituallamiento' => $embMayorPF->costo_avituallamiento,
@@ -168,23 +163,23 @@ class RegistroembMaPFController extends Controller
                 'matricula' => 'required|string|max:20',
                 'puerto_base' => 'required|string|max:30',
                 'año_construccion' => 'required|string|max:30',
-                'tipo_cubierto' => 'required',
-                'material_casco' => 'required',
+                'tipo_cubierta_id' => 'required',
+                'material_casco_id' => 'required',
                 'tipo_actividad_pesca' => 'required|string|max:20',
                 'cantidad_patrones' => 'required|integer',
                 'cantidad_motoristas' => 'required|integer',
                 'cant_pescadores' => 'required|integer',
                 'cantpesc_especializados' => 'required|integer',
                 'cant_tripulacion' => 'required|integer',
-                'costo_avituallamiento' => 'required|float',
-                'medida_eslora' => 'required|float',
-                'medida_manga' => 'required|float',
-                'medida_puntal' => 'required|float',
-                'medida_decalado' => 'required|float',
-                'medida_arqueo_neto' => 'required|float',
-                'capacidad_bodega' => 'required|float',
-                'capacidad_carga' => 'required|float',
-                'capacidad_tanque' => 'required|float',
+                'costo_avituallamiento' => 'required|numeric',
+                'medida_eslora' => 'required|numeric',
+                'medida_manga' => 'required|numeric',
+                'medida_puntal' => 'required|numeric',
+                'medida_decalado' => 'required|numeric',
+                'medida_arqueo_neto' => 'required|numeric',
+                'capacidad_bodega' => 'required|numeric',
+                'capacidad_carga' => 'required|numeric',
+                'capacidad_tanque' => 'required|numeric',
                 'certificado_seguridad' => 'required|string|max:100'
             ]);
 
@@ -196,18 +191,24 @@ class RegistroembMaPFController extends Controller
                 return ApiResponse::error('Esta embarcación mayor ya existe', 422);
             }*/
 
-            $existeEmbMayorPF = registroemb_ma_PF::where(function($query) use ($request) {
-                $query->where('nombre_emb_ma', $request->nombre_emb_ma)
-                ->orWhere('matricula', $request->matricula)
-                ->orWhere('captura_rnpa', $request->captura_rnpa);
-            })
-            ->where('id', '!=', $id) 
-            ->first();
-
-            if ($existeEmbMayorPF) {
-                return ApiResponse::error('Este embarcación mayor ya existe', 422);
+            $nombreEmbMaExists = registroemb_ma_PF::where('nombre_emb_ma', $request->nombre_emb_ma)
+            ->where('id', '!=', $id)->first();
+            if ($nombreEmbMaExists) {
+                return ApiResponse::error('EL nombre ya esta en uso', 422);
             }
-
+        
+            $matriculaExists = registroemb_ma_PF::where('matricula', $request->matricula)
+            ->where('id', '!=', $id)->first();
+            if ($matriculaExists) {
+                return ApiResponse::error('La matricula ya esta en uso', 422);
+            }
+        
+            $capturaRnpaExists = registroemb_ma_PF::where('captura_rnpa', $request->captura_rnpa)
+            ->where('id', '!=', $id)->first();
+            if ($capturaRnpaExists) {
+                return ApiResponse::error('El RNPA  ya esta en uso', 422);
+            }
+        
             $embMayorPF = registroemb_ma_PF::findOrFail($id);
             $embMayorPF->update($request->all());
             return ApiResponse::success('Embarcación mayor actualizada exitosamente', 200, $embMayorPF);

@@ -21,7 +21,7 @@ class RegistroPmController extends Controller
             $result = $pm->map(function ($item) {
               return [
                 'id' => $item->id,
-                'oficregis_id' => $item->oficinas->id,
+                'oficregis_id' => $item->oficinas->nombre_oficina,
                 'razon_social' => $item->razon_social,
                 'RFC' => $item->RFC,
                 'CURP' => $item->CURP,
@@ -53,23 +53,41 @@ class RegistroPmController extends Controller
                 'CURP' => 'required|string|max:18',
                 'usuario' => 'required|string|max:30',
                 'password' => 'required|string|max:8',
-                'email' => 'required|string|max:40',
+                'email' => 'required|string|email|max:40', 
                 'tipo_actividad' => 'required|boolean',
                 'tipo_persona' => 'required|boolean'
             ]);
-            $existePM = registro_pm::where($data)->exists();
-            if ($existePM) {
-                return ApiResponse::error('El pescador moral ya esta registrado.', 422);
-            }
+    
+            $existeRFC = registro_pm::where('RFC', $data['RFC'])->exists();
+            $existeCURP = registro_pm::where('CURP', $data['CURP'])->exists();
+            $existeRazonsocial = registro_pm::where('razon_social', $data['razon_social'])->exists();
+            $existeEmail = registro_pm::where('email', $data['email'])->exists();
+            $exisUsuario = registro_pm::where('usuario', $data['usuario'])->exists();
+            if ($existeRFC && $existeCURP && $existeRazonsocial && $existeEmail && $exisUsuario) {
+                    return ApiResponse::error('El  RFC, CURP, Razon social, Email y el nombre de usuario ya están en uso.', 422);
+            } elseif ($existeRFC) {
+                    return ApiResponse::error('El RFC ya está en uso.', 422);
+            } elseif ($existeCURP) {
+                    return ApiResponse::error('El CURP ya está registrado.', 422);
 
+            } elseif ($existeRazonsocial) {
+                return ApiResponse::error('La razón social ya está registrada.', 422);
+                
+            } elseif ($existeEmail) {
+                return ApiResponse::error('El correo electrónico ya en uso.', 422);
+            } elseif ($exisUsuario) {
+                return ApiResponse::error('El nombre de usuario ya está en uso.', 422);
+            }
+    
             $pm = registro_pm::create($data);
             return ApiResponse::success('El pescador moral fue creado exitosamente', 201, $pm);
         } catch (ValidationException $e) {
-            return ApiResponse::error('Error de validación: ' .$e->getMessage(), 422, $e->errors());
+            return ApiResponse::error('Error de validación: ' . $e->getMessage(), 422, $e->errors());
         } catch (Exception $e) {
-            return ApiResponse::error('Error al crear el pescador moral: ' .$e->getMessage(), 500);
+            return ApiResponse::error('Error al crear el pescador moral: ' . $e->getMessage(), 500);
         }
     }
+    
 
     /**
      * Muestra un pescador moral.
@@ -113,27 +131,44 @@ class RegistroPmController extends Controller
                 'CURP' => 'required|string|max:18',
                 'usuario' => 'required|string|max:30',
                 'password' => 'required|string|max:8',
-                'email' => 'required|string|max:40',
+                'email' => 'required|email|max:40',
                 'tipo_actividad' => 'required|boolean',
                 'tipo_persona' => 'required|boolean'
             ]);
+    
+            $usuarioExiste = registro_pm::where('usuario', $data['usuario'])->where('id', '!=', $id)->exists();
+            $emailExiste = registro_pm::where('email', $data['email'])->where('id', '!=', $id)->exists();
+            $existeCURP = registro_pm::where('CURP', $data['CURP'])->where('id', '!=', $id)->exists();
+            $existeRazonsocial = registro_pm::where('razon_social', $data['razon_social'])->where('id', '!=', $id)->exists();
+            $existeRFC = registro_pm::where('RFC', $data['RFC'])->where('id', '!=', $id)->exists();
 
-            $existePM = registro_pm::where($data)->exists();
-            if ($existePM) {
-                return ApiResponse::error('El pescador moral ya esta registrado.', 422);
+            if ($usuarioExiste && $emailExiste) {
+                return ApiResponse::error('El nombre de usuario y el correo electrónico ya están en uso.', 422);
+            } elseif ($usuarioExiste) {
+                return ApiResponse::error('El nombre de usuario ya está en uso.', 422);
+            } elseif ($emailExiste) {
+                return ApiResponse::error('El correo electrónico ya está en uso.', 422);
+            } elseif ($existeCURP) {
+                return ApiResponse::error('El CURP ya está registrado.', 422);
+            } elseif ($existeRazonsocial) {
+                return ApiResponse::error('La razón social ya está registrada.', 422);
             }
-
+            elseif ($existeRFC) {
+                return ApiResponse::error('El RFC ya está registrado.', 422);
+            }
+    
             $pm = registro_pm::findOrFail($id);
             $pm->update($data);
-            return ApiResponse::success('El pescador moral se actualizo exitosamente', 200, $pm);
+            return ApiResponse::success('El pescador moral se actualizó exitosamente', 200, $pm);
         } catch (ModelNotFoundException $e) {
             return ApiResponse::error('Pescador moral no encontrado', 404);
         } catch (ValidationException $e) {
-            return ApiResponse::error('Error de validación: ' .$e->getMessage(), 422, $e->errors());
+            return ApiResponse::error('Error de validación: ' . $e->getMessage(), 422, $e->errors());
         } catch (Exception $e) {
-            return ApiResponse::error('Error al actualizar el pescador moral: ' .$e->getMessage(), 500);
+            return ApiResponse::error('Error al actualizar el pescador moral: ' . $e->getMessage(), 500);
         }
     }
+    
 
     /**
      * Elimina pescador moral.

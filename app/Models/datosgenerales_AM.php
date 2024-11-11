@@ -21,7 +21,7 @@ class datosgenerales_AM extends Model
         'muni_id',
         'local_id',        
         'email',
-        'especies_producen',
+        'especies_prod_id',
         'etnia_id',
         'socios',
         'cuenta_siscuarente',
@@ -29,23 +29,27 @@ class datosgenerales_AM extends Model
     ];
     public $timestamps = true;
 
-    public function Region(){
+    public function region(){
         return $this->belongsTo(region::class, 'region_id', 'id');
     }
 
-    public function Distrito(){
+    public function distrito(){
         return $this->belongsTo(distrito::class, 'distrito_id', 'id');
     }
 
-    public function Municipio(){
+    public function municipio(){
         return $this->belongsTo(municipio::class, 'muni_id', 'id');
     }
 
-    public function Localidad(){
+    public function localidad(){
         return $this->belongsTo(localidad::class, 'local_id', 'id');
     }
 
-    public function Etnia(){
+    public function especie_producen(){
+        return $this->belongsTo(especie::class, 'especies_prod_id', 'id');
+    }
+
+    public function etnia(){
         return $this->belongsTo(etnia::class, 'etnia_id', 'id');
     }
 }

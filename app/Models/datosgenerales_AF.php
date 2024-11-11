@@ -24,30 +24,34 @@ class datosgenerales_AF extends Model
         'distrito_id',
         'region_id',
         'grupo_sanguineo',
+        'especies_prod_id',
         'etnia_id',
-        'especies_producen',
         'cuenta_siscaptura',
         'motivo_no_cuenta'
     ];
     public $timestamps = true;
 
-    public function Localidad(){
+    public function localidad(){
         return $this->belongsTo(localidad::class, 'localidad_id', 'id');
     }
 
-    public function Municipio(){
+    public function municipio(){
         return $this->belongsTo(municipio::class, 'municipio_id', 'id');
     }
 
-    public function Distrito(){
+    public function distrito(){
         return $this->belongsTo(distrito::class, 'distrito_id', 'id');
     }
 
-    public function Region(){
+    public function region(){
         return $this->belongsTo(region::class, 'region_id', 'id');
     }
 
-    public function Etnia(){
+    public function especie_producen(){
+        return $this->belongsTo(especie::class, 'especies_prod_id', 'id');
+    }
+
+    public function etnia(){
         return $this->belongsTo(etnia::class, 'etnia_id', 'id');
     }
 }

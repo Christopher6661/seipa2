@@ -12,15 +12,19 @@ class registro_artepesca_PF extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
         'tipo_artepesca_id',
-        'medidad_largo',
-        'medidad_ancho',
+        'medidas_metros',
+        'longitud',
         'material',
         'luz_malla',
-        'especie_objetivo'
+        'especie_obj_id'
     ];
     public $timestamps = true;
 
-    public function TipoArtePesca(){
+    public function arte_pesca(){
         return $this->belongsTo(arte_pesca::class, 'tipo_artepesca_id', 'id');
+    }
+
+    public function especie_objetivo(){
+        return $this->belongsTo(especie::class, 'especie_obj_id', 'id');
     }
 }

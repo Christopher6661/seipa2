@@ -23,7 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger('muni_id');
             $table->unsignedBigInteger('local_id');           
             $table->string('email');
-            $table->string('especies_producen');
+            $table->unsignedBigInteger('especies_prod_id');
             $table->unsignedBigInteger('etnia_id');
             $table->string('socios');
             $table->boolean('cuenta_siscuarente')->default(false);
@@ -33,6 +33,7 @@ return new class extends Migration
             $table->foreign('distrito_id')->references('id')->on('distritos');
             $table->foreign('muni_id')->references('id')->on('municipios');
             $table->foreign('local_id')->references('id')->on('localidades');
+            $table->foreign('especies_prod_id')->references('id')->on('especies');
             $table->foreign('etnia_id')->references('id')->on('etnias');
             $table->timestamps();
         });

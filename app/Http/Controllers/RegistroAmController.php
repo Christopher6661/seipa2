@@ -21,7 +21,7 @@ class RegistroAmController extends Controller
             $result = $am->map(function ($item) {
                 return [
                     'id' => $item->id,
-                    'oficregis_id' => $item->oficinas->id,
+                    'oficregis_id' => $item->Oficinas->id,
                     'razon_social' => $item->razon_social,
                     'RFC' => $item->RFC,
                     'CURP' => $item->CURP,
@@ -57,9 +57,26 @@ class RegistroAmController extends Controller
                 'tipo_actividad' => 'required|boolean',
                 'tipo_persona' => 'required|boolean'
             ]);
-            $existeAM = registro_am::where($data)->exists();
-            if ($existeAM) {
-                return ApiResponse::error('El acuicultor moral ya esta registrado.', 422);
+
+            $existeRFC = registro_am::where('RFC', $data['RFC'])->exists();
+            $existeCURP = registro_am::where('CURP', $data['CURP'])->exists();
+            $existeRazonsocial = registro_am::where('razon_social', $data['razon_social'])->exists();
+            $existeEmail = registro_am::where('email', $data['email'])->exists();
+            $exisUsuario = registro_am::where('usuario', $data['usuario'])->exists();
+            if ($existeRFC && $existeCURP && $existeRazonsocial && $existeEmail && $exisUsuario) {
+                    return ApiResponse::error('El  RFC, CURP, Razon social, Email y el nombre de usuario ya están en uso.', 422);
+            } elseif ($existeRFC) {
+                    return ApiResponse::error('El RFC ya está en uso.', 422);
+            } elseif ($existeCURP) {
+                    return ApiResponse::error('El CURP ya está registrado.', 422);
+
+            } elseif ($existeRazonsocial) {
+                return ApiResponse::error('La razón social ya está registrada.', 422);
+                
+            } elseif ($existeEmail) {
+                return ApiResponse::error('El correo electrónico ya en uso.', 422);
+            } elseif ($exisUsuario) {
+                return ApiResponse::error('El nombre de usuario ya está en uso.', 422);
             }
 
             $am = registro_am::create($data);
@@ -80,7 +97,7 @@ class RegistroAmController extends Controller
             $am = registro_am::findOrFail($id);
             $result = [
                 'id' => $am->id,
-                'oficregis_id' => $am->oficinas->id,
+                'oficregis_id' => $am->Oficinas->id,
                 'razon_social' => $am->razon_social,
                 'RFC' => $am->RFC,
                 'CURP' => $am->CURP,
@@ -118,9 +135,25 @@ class RegistroAmController extends Controller
                 'tipo_persona' => 'required|boolean'
             ]);
 
-            $existeAM = registro_am::where($data)->exists();
-            if ($existeAM) {
-                return ApiResponse::error('El acuicultor moral ya esta registrado.', 422);
+            $usuarioExiste = registro_am::where('usuario', $data['usuario'])->where('id', '!=', $id)->exists();
+            $emailExiste = registro_am::where('email', $data['email'])->where('id', '!=', $id)->exists();
+            $existeCURP = registro_am::where('CURP', $data['CURP'])->where('id', '!=', $id)->exists();
+            $existeRazonsocial = registro_am::where('razon_social', $data['razon_social'])->where('id', '!=', $id)->exists();
+            $existeRFC = registro_am::where('RFC', $data['RFC'])->where('id', '!=', $id)->exists();
+
+            if ($usuarioExiste && $emailExiste) {
+                return ApiResponse::error('El nombre de usuario y el correo electrónico ya están en uso.', 422);
+            } elseif ($usuarioExiste) {
+                return ApiResponse::error('El nombre de usuario ya está en uso.', 422);
+            } elseif ($emailExiste) {
+                return ApiResponse::error('El correo electrónico ya está en uso.', 422);
+            } elseif ($existeCURP) {
+                return ApiResponse::error('El CURP ya está registrado.', 422);
+            } elseif ($existeRazonsocial) {
+                return ApiResponse::error('La razón social ya está registrada.', 422);
+            }
+            elseif ($existeRFC) {
+                return ApiResponse::error('El RFC ya está registrado.', 422);
             }
 
             $am = registro_am::findOrFail($id);

@@ -87,7 +87,7 @@ class DatosgeneralesPFController extends Controller
                 'etnia_id' => 'required|exists:etnias,id',
                 'cantidad_artepesca' => 'required|integer',
                 'cuenta_permiso' => 'required|boolean',
-                'motivo_no_cuenta' => 'required|string|max:200',
+                'motivo_no_cuenta' => 'nullable|string|max:200',
                 'cuenta_emb_mayor' => 'required|boolean',
                 'motino_cuenta_embma' => 'nullable|string|max:200',
                 'cant_emb_ma' => 'nullable|integer',

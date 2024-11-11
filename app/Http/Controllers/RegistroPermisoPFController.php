@@ -26,7 +26,7 @@ class RegistroPermisoPFController extends Controller
                     'vigencia_permiso_ini' => $item->vigencia_permiso_ini,
                     'vigencia_permiso_fin' => $item->vigencia_permiso_fin,
                     'RNPA' => $item->RNPA,
-                    'permiso_id' => $item->tipo_permisos->id,
+                    'permiso_id' => $item->Permiso->id,
                     'tipo_embarcacion' => $item->tipo_embarcacion ? 'Mayor' : 'Menor',
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
@@ -54,24 +54,20 @@ class RegistroPermisoPFController extends Controller
                 'tipo_embarcacion' => 'required|in:Mayor,Menor'
             ]);
 
-            $existepermisoPF = registro_permiso_PF::where('folio', $data['folio'])->first();
-            if ($existepermisoPF) {
-                $errors = [];
-                if ($existepermisoPF->folio === $data['folio']) {
-                    $errors['folio'] = 'El folio para el permiso ya existe.';
-                }
-                return ApiResponse::error('El permiso ya existe', 422, $errors);
+            $existeFolio = registro_permiso_PF::where('folio_permiso', $data['folio_permiso'])->first();
+            if ($existeFolio) {
+                return ApiResponse::error('El folio de permiso ya está en uso.', 422);
             }
-
+           
             $permisosPF = registro_permiso_PF::create($data);
             return ApiResponse::success('Permiso creado exitosamente', 201, $permisosPF);
         } catch (ValidationException $e) {
-            return ApiResponse::error('Error de validación: ' .$e->getMessage(), 422, $e->errors());
+            return ApiResponse::error('Error de validación: ' . $e->getMessage(), 422, $e->errors());
         } catch (Exception $e) {
-            return ApiResponse::error('Error al crear el permiso para el pescador fisico: ' .$e->getMessage(), 500);
+            return ApiResponse::error('Error al crear el permiso para el pescador físico: ' . $e->getMessage(), 500);
         }
     }
-
+    
     /**
      * Muestra un permiso.
      */
@@ -86,11 +82,12 @@ class RegistroPermisoPFController extends Controller
                 'vigencia_permiso_ini' => $permisosPF->vigencia_permiso_ini,
                 'vigencia_permiso_fin' => $permisosPF->vigencia_permiso_fin,
                 'RNPA' => $permisosPF->RNPA,
-                'permiso_id' => $permisosPF->tipo_permiso->nombre_permiso,
+                'permiso_id' => $permisosPF->Permiso->id,
                 'tipo_embarcacion' => $permisosPF->tipo_embarcacion == 'Mayor' ? 'Mayor' : 'Menor',
                 'created_at' => $permisosPF->created_at,
                 'updated_at' => $permisosPF->updated_at,
             ];
+
             return ApiResponse::success('Permiso de pescador fisico obtenido exitosamente', 200, $result);
         } catch (ModelNotFoundException $e) {
             return ApiResponse::error('Permiso no encontrado', 404);
@@ -110,7 +107,7 @@ class RegistroPermisoPFController extends Controller
                 'pesqueria' => 'required|string|max:40',
                 'vigencia_permiso_ini' => 'required|date',
                 'vigencia_permiso_fin' => 'required|date',
-                'RNPA' => 'required|string|50',
+                'RNPA' => 'required|string|max:50',
                 'permiso_id' => 'required',
                 'tipo_embarcacion' => 'required|in:Mayor,Menor'
             ]);
@@ -123,7 +120,7 @@ class RegistroPermisoPFController extends Controller
             $existepermisoPF = registro_permiso_PF::where('folio_permiso', $request->folio_permiso)
             ->where('id', '!=', $id)->first();
             if ($existepermisoPF) {
-                return ApiResponse::error('Este permiso para el pescador fisico ya existe', 422);
+                return ApiResponse::error('EL folio de permiso ya esta en uso', 422);
             }
 
             $permisosPF = registro_permiso_PF::findOrFail($id);

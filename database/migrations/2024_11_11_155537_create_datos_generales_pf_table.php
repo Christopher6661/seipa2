@@ -32,7 +32,7 @@ return new class extends Migration
             $table->unsignedBigInteger('etnia_id');
             $table->integer('cantidad_artepesca');
             $table->boolean('cuenta_permiso')->default(false);
-            $table->string('motivo_no_cuenta');
+            $table->string('motivo_no_cuenta')->nullable();;
             $table->boolean('cuenta_emb_mayor')->default(false);
             $table->string('motino_cuenta_embma')->nullable();
             $table->integer('cant_emb_ma')->nullable();

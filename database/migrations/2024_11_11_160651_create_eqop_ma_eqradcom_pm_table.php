@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('eqop_ma_eqseg_pm', function (Blueprint $table) {
+        Schema::create('eqop_ma_eqradcom_pm', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('emb_pertenece_id');
-            $table->boolean('cuenta_eqseguridad')->default(false);
-            $table->string('equipo_seguiridad');
-            $table->integer('eqseg_cant');
-            $table->unsignedBigInteger('eqseg_tipo_id');
+            $table->boolean('cuenta_eqradiocom')->default(false);
+            $table->string('equipo_radiocomun');
+            $table->integer('eqradiocom_cant');
+            $table->unsignedBigInteger('eqradiocom_tipo_id'); 
             
             $table->foreign('emb_pertenece_id')->references('id')->on('registroemb_ma_pm');
-            $table->foreign('eqseg_tipo_id')->references('id')->on('tipo_equipo_seg');
+            $table->foreign('eqradiocom_tipo_id')->references('id')->on('tipo_equipo_radcom');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('eqop_ma_eqseg_pm');
+        Schema::dropIfExists('eqop_ma_eqradcom_pm');
     }
 };

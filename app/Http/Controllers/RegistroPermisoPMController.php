@@ -26,7 +26,7 @@ class RegistroPermisoPMController extends Controller
                     'vigencia_permiso_ini' => $item->vigencia_permiso_ini,
                     'vigencia_permiso_fin' => $item->vigencia_permiso_fin,
                     'RNPA' => $item->RNPA,
-                    'permiso_id' => $item->tipo_permisos->id,
+                    'tipo_permiso_id' => $item->permiso->nombre_permiso,
                     'tipo_emb' => $item->tipo_emb ? 'Mayor' : 'Menor',
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
@@ -50,7 +50,7 @@ class RegistroPermisoPMController extends Controller
                 'vigencia_permiso_ini' => 'required|date',
                 'vigencia_permiso_fin' => 'required|date',
                 'RNPA' => 'required|string|max:50',
-                'permiso_id' => 'required|exists:tipo_permisos,id',
+                'tipo_permiso_id' => 'required|exists:tipo_permisos,id',
                 'tipo_emb' => 'required|boolean'
             ]);
 
@@ -86,7 +86,7 @@ class RegistroPermisoPMController extends Controller
                 'vigencia_permiso_ini' => $permisoPM->vigencia_permiso_ini,
                 'vigencia_permiso_fin' => $permisoPM->vigencia_permiso_fin,
                 'RNPA' => $permisoPM->RNPA,
-                'permiso_id' => $permisoPM->tipo_permisos->id,
+                'tipo_permiso_id' => $permisoPM->permiso->nombre_permiso,
                 'tipo_emb' => $permisoPM->tipo_emb ? 'Mayor' : 'Menor',
                 'created_at' => $permisoPM->created_at,
                 'updated_at' => $permisoPM->updated_at,
@@ -111,7 +111,7 @@ class RegistroPermisoPMController extends Controller
                 'vigencia_permiso_ini' => 'required|date',
                 'vigencia_permiso_fin' => 'required|date',
                 'RNPA' => 'required|string|50',
-                'permiso_id' => 'required',
+                'tipo_permiso_id' => 'required',
                 'tipo_embarcacion' => 'required|boolean'
             ]);
 

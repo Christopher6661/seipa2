@@ -57,10 +57,18 @@ class RegistroAfController extends Controller
                 'tipo_actividad' => 'required|boolean',
                 'tipo_persona' => 'required|boolean'
             ]);
-            $existeAF = registro_af::where($data)->exists();
-            if ($existeAF) {
-                return ApiResponse::error('El acuicultor fisico ya esta registrado.', 422);
+
+            $usuarioExiste = registro_af::where('usuario', $data['usuario'])->exists();
+            $emailExiste = registro_af::where('email', $data['email'])->exists();
+    
+            if ($usuarioExiste && $emailExiste) {
+                return ApiResponse::error('El nombre de usuario y el correo electrónico ya están en uso.', 422);
+            } elseif ($usuarioExiste) {
+                return ApiResponse::error('El nombre de usuario ya está en uso.', 422);
+            } elseif ($emailExiste) {
+                return ApiResponse::error('El correo electrónico ya está en uso.', 422);
             }
+    
 
             $af = registro_af::create($data);
             return ApiResponse::success('El acuicultor fisico fue creado existosamente', 201, $af);
@@ -118,9 +126,15 @@ class RegistroAfController extends Controller
             'tipo_persona' => 'required|boolean'
             ]);
 
-            $existeAF = registro_af::where($data)->exists();
-            if ($existeAF) {
-                return ApiResponse::error('El acuicultor fisico ya esta registrado.', 422);
+            $usuarioExiste = registro_af::where('usuario', $data['usuario'])->where('id', '!=', $id)->exists();
+            $emailExiste = registro_af::where('email', $data['email'])->where('id', '!=', $id)->exists();
+    
+            if ($usuarioExiste && $emailExiste) {
+                return ApiResponse::error('El nombre de usuario y el correo electrónico ya están en uso.', 422);
+            } elseif ($usuarioExiste) {
+                return ApiResponse::error('El nombre de usuario ya está en uso.', 422);
+            } elseif ($emailExiste) {
+                return ApiResponse::error('El correo electrónico ya está en uso.', 422);
             }
 
             $af = registro_af::findOrFail($id);

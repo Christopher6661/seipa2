@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('datos_generales_pm', function (Blueprint $table) {
             $table->id();
+            $table->id();
             $table->string('razon_social');
             $table->string('RFC');
             $table->string('CURP');

@@ -21,11 +21,11 @@ class EqOpMaSegPfController extends Controller
             $result = $EqOpMaSegPf->map(function ($item){
                 return [
                     'id' => $item->id,
-                    'emb_pertenece_id' => $item->registroemb_ma_pf->id,
+                    'emb_pertenece_id' => $item->EmbarcacionPertenece->id,
                     'cuenta_eqseguridad' => $item->cuenta_eqseguridad ? 'Sí' : 'No',
-                    'equipo_seguridad' => $item->equipo_seguridad,
+                    'equipo_seguiridad' => $item->equipo_seguiridad,
                     'eqseg_cant' => $item->eqseg_cant,
-                    'eqseg_tipo_id' => $item->tipo_equipo_seg->id,
+                    'eqseg_tipo_id' => $item->TipoEquipoSeguridad->id,
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
                 ];
@@ -45,7 +45,7 @@ class EqOpMaSegPfController extends Controller
             $data = $request->validate([
                 'emb_pertenece_id' => 'required|exists:registroemb_ma_pf,id',
                 'cuenta_eqseguridad' => 'required|boolean',
-                'equipo_seguridad' => 'required|string|max:50',
+                'equipo_seguiridad' => 'required|string|max:50',
                 'eqseg_cant' => 'required|integer',
                 'eqseg_tipo_id' => 'required|exists:tipo_equipo_seg,id',
             ]);
@@ -72,11 +72,11 @@ class EqOpMaSegPfController extends Controller
             $EqOpMaSegPf = EqOpMaSegPf::findOrFail($id);
             $result = [
                 'id' => $EqOpMaSegPf->id,
-                'emb_pertenece_id' => $EqOpMaSegPf->registroemb_ma_pf->id,
+                'emb_pertenece_id' => $EqOpMaSegPf->EmbarcacionPertenece->id,
                 'cuenta_eqseguridad' => $EqOpMaSegPf->cuenta_eqseguridad ? 'Sí' : 'No',
-                'equipo_seguridad' => $EqOpMaSegPf->equipo_seguridad,
+                'equipo_seguiridad' => $EqOpMaSegPf->equipo_seguiridad,
                 'eqseg_cant' => $EqOpMaSegPf->eqseg_cant,
-                'eqseg_tipo_id' => $EqOpMaSegPf->tipo_equipo_seg->id,
+                'eqseg_tipo_id' => $EqOpMaSegPf->TipoEquipoSeguridad->id,
                 'created_at' => $EqOpMaSegPf->created_at,
                 'updated_at' => $EqOpMaSegPf->updated_at,
             ];
@@ -97,7 +97,7 @@ class EqOpMaSegPfController extends Controller
             $data = $request->validate([
                 'emb_pertenece_id' => 'required',
                 'cuenta_eqseguridad' => 'required|boolean',
-                'equipo_seguridad' => 'required|string|max:50',
+                'equipo_seguiridad' => 'required|string|max:50',
                 'eqseg_cant' => 'required|integer',
                 'eqseg_tipo_id' => 'required',
             ]);

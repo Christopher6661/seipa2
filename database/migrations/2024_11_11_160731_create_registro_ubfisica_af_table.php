@@ -31,7 +31,7 @@ return new class extends Migration
             $table->foreign('region_id')->references('id')->on('regiones');
             $table->foreign('distr_id')->references('id')->on('distritos');
             $table->foreign('muni_id')->references('id')->on('municipios');
-            $table->foreign('local_id')->references('id')->on('localidades');  
+            $table->foreign('local_id')->references('id')->on('localidades');        
             $table->timestamps();
         });
     }

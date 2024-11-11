@@ -18,10 +18,10 @@ class registroemb_ma_PF extends Model
         'año_construccion',
         'tipo_cubierta_id',
         'material_casco_id',
-        'tipo_Actividad_pesca',
+        'tipo_actividad_pesca',
         'cantidad_patrones',
         'cantidad_motoristas',
-        'cantidad_pescadores',
+        'cant_pescadores',
         'cantpesc_especializados',
         'cant_tripulacion',
         'costo_avituallamiento',
@@ -33,7 +33,7 @@ class registroemb_ma_PF extends Model
         'capacidad_bodega',
         'capacidad_carga',
         'capacidad_tanque',
-        'certificado_seg'
+        'certificado_seguridad'
     ];
     public $timestamps = true;
 

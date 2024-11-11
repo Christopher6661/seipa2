@@ -21,10 +21,10 @@ class EqOpMeRadComPfController extends Controller
             $result = $EqOpMeRadComPf->map(function ($item){
                 return [
                     'id' => $item->id,
-                    'emb_pertenece_id' => $item->registroemb_me_pf->id,
+                    'emb_pertenece_id' => $item->EmbarcacionPertenece->id,
                     'cuenta_eqradiocom' => $item->cuenta_eqradiocom ? 'Sí' : 'No',
                     'equipo_radiocomun' => $item->equipo_radiocomun,
-                    'eqradiocom_tipo_id' => $item->tipo_equipo_radcom->id,
+                    'eqradiocom_tipo_id' => $item->TipoEquipoRadioComunicacion->id,
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
                 ];
@@ -71,10 +71,10 @@ class EqOpMeRadComPfController extends Controller
             $EqOpMeRadComPf = EqOpMeRadComPf::findOrFail($id);
             $result = [
                 'id' => $EqOpMeRadComPf->id,
-                'emb_pertenece_id' => $EqOpMeRadComPf->registroemb_me_pf->id,
+                'emb_pertenece_id' => $EqOpMeRadComPf->EmbarcacionPertenece->id,
                 'cuenta_eqradiocom' => $EqOpMeRadComPf->cuenta_eqradiocom ? 'Sí' : 'No',
                 'equipo_radiocomun' => $EqOpMeRadComPf->equipo_radiocomun,
-                'eqradiocom_tipo_id' => $EqOpMeRadComPf->tipo_equipo_radcom->id,
+                'eqradiocom_tipo_id' => $EqOpMeRadComPf->TipoEquipoRadioComunicacion->id,
                 'created_at' => $EqOpMeRadComPf->created_at,
                 'updated_at' => $EqOpMeRadComPf->updated_at,
             ];

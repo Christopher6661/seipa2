@@ -21,14 +21,15 @@ class MotorMayorPFController extends Controller
             $result = $motorMayorPF->map(function ($item){
                 return [
                     'id' => $item->id,
-                    'emb_pertenece_id' => $item->registroemb_ma_pf->nombre_emb_ma,
+                    'emb_pertenece_id' => $item->EmbarcacionPertenece->nombre_emb_ma,
                     'marca_motor' => $item->marca_motor,
                     'modelo_motor' => $item->modelo_motor,
                     'potencia' => $item->potencia,
                     'num_serie' => $item->num_serie,
                     'tiempo' => $item->tiempo,
-                    'tipo_combustible' => $item->tipo_combustible,
-                    'fuera_borda' => $item->fuera_borda ? 'Sí' : 'No',
+                    'tipo_combustible' =>  $item->tipo_combustible == 'Magna' ? 'Magna' :
+                    ($item->tipo_combustible == 'Premium' ? 'Premium' : 'Diesel'),
+                    'fuera_borda' => $item->fuera_borda,
                     'vida_util_anio' => $item->vida_util_anio,
                     'doc_propiedad' => $item->doc_propiedad,
                     'created_at' => $item->created_at,
@@ -62,11 +63,7 @@ class MotorMayorPFController extends Controller
 
             $existeMotorMayorPF = MotorMayor_PF::where('num_serie', $data['num_serie'])->first();
             if ($existeMotorMayorPF) {
-                $errors = [];
-                if ($existeMotorMayorPF->num_serie === $data['num_serie']) {
-                    $errors['num_serie'] = 'Este número de serie ya esta registrado';
-                }
-                return ApiResponse::error('Este motor para embarcaciones mayores ya existe', 422, $errors);
+                return ApiResponse::error('Este número de serie ya esta registrado', 422);
             }
 
             $motorMayorPF = MotorMayor_PF::create($data);
@@ -87,14 +84,14 @@ class MotorMayorPFController extends Controller
             $motorMayorPF = MotorMayor_PF::findOrFail($id);
             $result = [
                 'id' => $motorMayorPF->id,
-                'emb_pertenece_id' => $motorMayorPF->registroemb_ma_pf->nombre_emb_ma,
+                'emb_pertenece_id' => $motorMayorPF->EmbarcacionPertenece->id,
                 'marca_motor' => $motorMayorPF->marca_motor,
                 'modelo_motor' => $motorMayorPF->modelo_motor,
                 'potencia' => $motorMayorPF->potencia,
                 'num_serie' => $motorMayorPF->num_serie,
                 'tiempo' => $motorMayorPF->tiempo,
                 'tipo_combustible' => $motorMayorPF->tipo_combustible,
-                'fuera_borda' => $motorMayorPF->fuera_borda ? 'Sí' : 'No',
+                'fuera_borda' => $motorMayorPF->fuera_borda,
                 'vida_util_anio' => $motorMayorPF->vida_util_anio,
                 'doc_propiedad' => $motorMayorPF->doc_propiedad,
                 'created_at' => $motorMayorPF->created_at,
@@ -126,10 +123,11 @@ class MotorMayorPFController extends Controller
                 'vida_util_anio' => 'required|string|max:10',
                 'doc_propiedad' => 'required|string|max:255'
             ]);
-
-            $existeMotorMayorPF = MotorMayor_PF::where('num_serie', $request->num_serie)->first();
+           
+            $existeMotorMayorPF = MotorMayor_PF::where('num_serie', $request->num_serie)
+            ->where('id', '!=', $id)->first();
             if ($existeMotorMayorPF) {
-                return ApiResponse::error('Este motor para embarcaciones mayores ya existe', 422);
+                return ApiResponse::error('Este motor para embarcaciones menores ya existe', 422);
             }
 
             $motorMayorPF = MotorMayor_PF::findOrFail($id);

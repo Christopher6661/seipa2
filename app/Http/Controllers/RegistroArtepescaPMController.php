@@ -21,12 +21,12 @@ class RegistroArtepescaPMController extends Controller
             $result = $ArtePescaPM->map(function ($item){
                 return [
                     'id' => $item->id,
-                    'tipo_artepesca_id' => $item->tipo_artepesca->id,
+                    'tipo_artepesca_id' => $item->arte_pesca_nombre_artpesca,
                     'medida_largo' => $item->medida_largo,
                     'medida_ancho' => $item->medida_ancho,
                     'material' => $item->material,
                     'luz_malla' => $item->luz_malla,
-                    'especie_objetivo' => $item->especie_objetivo,
+                    'especie_obj_id' => $item->especie_objetivo->nombre_especie,
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
                 ];
@@ -49,7 +49,7 @@ class RegistroArtepescaPMController extends Controller
                 'medida_ancho' => 'required|float',
                 'material' => 'required|string|max:30',
                 'luz_malla' => 'required|float',
-                'especie_objetivo' => 'required|string|max:255',
+                'especie_obj_id' => 'required|exists:especies,id',
             ]);
 
             $existeArtePescaPM = registro_artepesca_PM::where('tipo_artepesca_id', $data['tipo_artepesca_id'])->first();
@@ -79,12 +79,12 @@ class RegistroArtepescaPMController extends Controller
             $ArtePescaPM = registro_artepesca_PM::findOrFail($id);
             $result = [
                 'id' => $ArtePescaPM->id,
-                'tipo_artepesca_id' => $ArtePescaPM->tipo_artepesca->id,
+                'tipo_artepesca_id' => $ArtePescaPM->arte_pesca_nombre_artpesca,
                 'medida_largo' => $ArtePescaPM->medida_largo,
                 'medida_ancho' => $ArtePescaPM->medida_ancho,
                 'material' => $ArtePescaPM->material,
                 'luz_malla' => $ArtePescaPM->luz_malla,
-                'especie_objetivo' => $ArtePescaPM->especie_objetivo,
+                'especie_obj_id' => $ArtePescaPM->especie_objetivo->nombre_especie,
                 'created_at' => $ArtePescaPM->created_at,
                 'updated_at' => $ArtePescaPM->updated_at,
             ];
@@ -108,7 +108,7 @@ class RegistroArtepescaPMController extends Controller
                 'medida_ancho' => 'required|float',
                 'material' => 'required|string|max:30',
                 'luz_malla' => 'required|float',
-                'especie_objetivo' => 'required|string|max:255',
+                'especie_objetivo' => 'required',
             ]);
 
             $existeArtePescaPM = registro_artepesca_PM::where('tipo_artepesca_id', $request->tipo_artepesca_id)->first();

@@ -45,7 +45,8 @@ class OficinaController extends Controller
                 'nombre_oficina' => 'required|string|max:50',
                 'ubicacion' => 'required|string|max:50',
                 'telefono' => 'required|string|max:10',
-                'email' => 'required|string|max:40'
+                'email' => 'required|string|max:40',
+                
             ]);
             
             $existeOficina = oficina::where(function ($query) use ($data) {

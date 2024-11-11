@@ -21,11 +21,11 @@ class EqOpMaSisConPfController extends Controller
             $result = $EqOpMaSisConPf->map(function ($item){
                 return [
                     'id' => $item->id,
-                    'emb_pertenece_id' => $item->registroemb_ma_pf->id,
+                    'emb_pertenece_id' => $item->EmbarcacionPertenece->nombre_emb_ma,
                     'cuenta_siscon' => $item->cuenta_siscon ? 'Sí' : 'No',
                     'sistema_conserva' => $item->sistema_conserva,
                     'siscon_cant' => $item->siscon_cant,
-                    'siscon_tipo_id' => $item->tipo_sistconservacion->id,
+                    'siscon_tipo_id' => $item->TipoSistemaConservacion->tipo_siscon,
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
                 ];
@@ -72,11 +72,11 @@ class EqOpMaSisConPfController extends Controller
             $EqOpMaSisConPf = EqOpMaSisConPf::findOrFail($id);
             $result = [
                 'id' => $EqOpMaSisConPf->id,
-                'emb_pertenece_id' => $EqOpMaSisConPf->registroemb_ma_pf->id,
+                'emb_pertenece_id' => $EqOpMaSisConPf->EmbarcacionPertenece->id,
                 'cuenta_siscon' => $EqOpMaSisConPf->cuenta_siscon ? 'Sí' : 'No',
                 'sistema_conserva' => $EqOpMaSisConPf->sistema_conserva,
                 'siscon_cant' => $EqOpMaSisConPf->siscon_cant,
-                'siscon_tipo_id' => $EqOpMaSisConPf->tipo_sistconservacion->id,
+                'siscon_tipo_id' => $EqOpMaSisConPf->TipoSistemaConservacion->id,
                 'created_at' => $EqOpMaSisConPf->created_at,
                 'updated_at' => $EqOpMaSisConPf->updated_at,
             ];

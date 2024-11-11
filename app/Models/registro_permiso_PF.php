@@ -16,12 +16,12 @@ class registro_permiso_PF extends Model
         'vigencia_permiso_ini',
         'vigencia_permiso_fin',
         'RNPA',
-        'permiso_id',
+        'tipo_permiso_id',
         'tipo_embarcacion'
     ];
     public $timestamps = true;
 
-    public function Permiso(){
+    public function permiso(){
         return $this->belongsTo(tipo_permiso::class, 'permiso_id', 'id');
     }
 }

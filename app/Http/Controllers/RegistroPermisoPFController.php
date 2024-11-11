@@ -26,7 +26,7 @@ class RegistroPermisoPFController extends Controller
                     'vigencia_permiso_ini' => $item->vigencia_permiso_ini,
                     'vigencia_permiso_fin' => $item->vigencia_permiso_fin,
                     'RNPA' => $item->RNPA,
-                    'permiso_id' => $item->Permiso->id,
+                    'tipo_permiso_id' => $item->permiso->nombre_permiso,
                     'tipo_embarcacion' => $item->tipo_embarcacion ? 'Mayor' : 'Menor',
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
@@ -50,7 +50,7 @@ class RegistroPermisoPFController extends Controller
                 'vigencia_permiso_ini' => 'required|date',
                 'vigencia_permiso_fin' => 'required|date',
                 'RNPA' => 'required|string|max:50',
-                'permiso_id' => 'required|exists:tipo_permisos,id',
+                'tipo_permiso_id' => 'required|exists:tipo_permisos,id',
                 'tipo_embarcacion' => 'required|in:Mayor,Menor'
             ]);
 
@@ -82,7 +82,7 @@ class RegistroPermisoPFController extends Controller
                 'vigencia_permiso_ini' => $permisosPF->vigencia_permiso_ini,
                 'vigencia_permiso_fin' => $permisosPF->vigencia_permiso_fin,
                 'RNPA' => $permisosPF->RNPA,
-                'permiso_id' => $permisosPF->Permiso->id,
+                'tipo_permiso_id' => $permisosPF->permiso->nombre_permiso,
                 'tipo_embarcacion' => $permisosPF->tipo_embarcacion == 'Mayor' ? 'Mayor' : 'Menor',
                 'created_at' => $permisosPF->created_at,
                 'updated_at' => $permisosPF->updated_at,
@@ -108,7 +108,7 @@ class RegistroPermisoPFController extends Controller
                 'vigencia_permiso_ini' => 'required|date',
                 'vigencia_permiso_fin' => 'required|date',
                 'RNPA' => 'required|string|max:50',
-                'permiso_id' => 'required',
+                'tipo_permiso_id' => 'required',
                 'tipo_embarcacion' => 'required|in:Mayor,Menor'
             ]);
 

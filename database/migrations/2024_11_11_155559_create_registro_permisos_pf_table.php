@@ -18,10 +18,10 @@ return new class extends Migration
             $table->date('vigencia_permiso_ini');
             $table->date('vigencia_permiso_fin');
             $table->string('RNPA');
-            $table->unsignedBigInteger('permiso_id');
+            $table->unsignedBigInteger('tipo_permiso_id');
             $table->enum('tipo_embarcacion', ['Mayor', 'Menor']);
 
-            $table->foreign('permiso_id')->references('id')->on('tipo_permisos');
+            $table->foreign('tipo_permiso_id')->references('id')->on('tipo_permisos');
             $table->timestamps();
         });
     }

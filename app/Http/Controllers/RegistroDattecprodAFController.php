@@ -78,7 +78,7 @@ class RegistroDattecprodAFController extends Controller
                 'pozo_cieloabierto' => 'required|boolean',
                 'rio_cuenca' => 'required|boolean',
                 'arroyo_manantial' => 'required|boolean',
-                'otro' => 'required|string|max:40',
+                'otro' => 'required|string|max:40|nullable',
                 'especificar_otro' => 'required|string|max:50',
                 'forma_alimentacion' => 'required|in:Bombeo, Pozo',
                 'aliment_agua_caudad' => 'required|numeric|max:9999999999.99',

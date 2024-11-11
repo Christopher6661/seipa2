@@ -19,11 +19,11 @@ class EqOpMeSisConPf extends Model
     ];
     public $timestamps = true;
 
-    public function EmbarcacionPertenece(){
+    public function registroemb_me_pf(){
         return $this->belongsTo(registroemb_me_PF::class, 'emb_pertenece_id', 'id');
     }
 
-    public function TipoSistemaConservacion(){
+    public function TipoSisCon(){
         return $this->belongsTo(TipoSisCon::class, 'siscon_tipo_id', 'id');
     }
 }

@@ -25,6 +25,11 @@ class EqOpMaRadComPfController extends Controller
                     'cuenta_eqradiocom' => $item->cuenta_eqradiocom ? 'Sí' : 'No',
                     'equipo_radiocomun' => $item->equipo_radiocomun,
                     'eqradiocom_tipo_id' => $item->TipoEquipoRadioComunicacion->tipo_radiocom,
+                    'emb_pertenece_id' => $item->registroemb_ma_pf->nombre_emb_ma,
+                    'cuenta_eqradiocom' => $item->cuenta_eqradiocom ? 'Sí' : 'No',
+                    'equipo_radiocomun' => $item->equipo_radiocomun,
+                    'eqradiocom_cant' => $item->eqradiocom_cant,
+                    'eqradiocom_tipo_id' => $item->tipoeqradcom->tipo_radiocom,
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
                 ];
@@ -39,28 +44,33 @@ class EqOpMaRadComPfController extends Controller
      * Crea un equipo de operaciones de radio-comunicación para embarcaciones mayores.
      */
     public function store(Request $request)
-    {
-        try {
-            $data = $request->validate([
-                'emb_pertenece_id' => 'required|exists:registroemb_ma_pf,id',
-                'cuenta_eqradiocom' => 'required|boolean',
-                'equipo_radiocomun' => 'required|string|max:50',
-                'eqradiocom_cant' => 'required|integer',
-                'eqradiocom_tipo_id' => 'required|exists:tipo_equipo_radcom,id',
-            ]);
-            $existeEqOpMaRadComPf = EqOpMaRadComPf::where($data)->exists();
-            if ($existeEqOpMaRadComPf) {
-                return ApiResponse::error('El equipo de operaciones de radio-comunicación para embarcaciones mayores ya esta registrado.', 422);
-            }
+{
+    try {
+        $data = $request->validate([
+            'emb_pertenece_id' => 'required|exists:registroemb_ma_pf,id',
+            'cuenta_eqradiocom' => 'required|boolean',
+            'equipo_radiocomun' => 'required|string|max:50',
+            'eqradiocom_cant' => 'required|integer',
+            'eqradiocom_tipo_id' => 'required|exists:tipo_equipo_radcom,id',
+        ]);
 
-            $EqOpMaRadComPf = EqOpMaRadComPf::create($data);
-            return ApiResponse::success('El equipo de operaciones de radio-comunicación para embarcaciones mayores fue creado exitosamente', 201, $EqOpMaRadComPf);
-        } catch (ValidationException $e) {
-            return ApiResponse::error('Error de validación: ' .$e->getMessage(), 422, $e->errors());
-        } catch (Exception $e) {
-            return ApiResponse::error('Error al crear el equipo de operaciones de radio-comunicación para embarcaciones mayores: ' .$e->getMessage(), 500);
+        $existeEqOpMaRadComPf = EqOpMaRadComPf::where('emb_pertenece_id', $data['emb_pertenece_id'])
+            ->where('cuenta_eqradiocom', $data['cuenta_eqradiocom'])
+            ->where('equipo_radiocomun', $data['equipo_radiocomun'])
+            ->where('eqradiocom_tipo_id', $data['eqradiocom_tipo_id'])
+            ->exists();
+        if ($existeEqOpMaRadComPf) {
+            return ApiResponse::error('El equipo de radio-comunicación para embarcaciones mayores ya está registrado.', 422);
         }
+
+        $EqOpMaRadComPf = EqOpMaRadComPf::create($data);
+        return ApiResponse::success('El equipo de radio-comunicación para embarcaciones mayores fue creado exitosamente', 201, $EqOpMaRadComPf);
+    } catch (ValidationException $e) {
+        return ApiResponse::error('Error de validación: ' . $e->getMessage(), 422, $e->errors());
+    } catch (Exception $e) {
+        return ApiResponse::error('Error al crear el equipo de radio-comunicación para embarcaciones mayores: ' . $e->getMessage(), 500);
     }
+}
 
     /**
      *  Muestra la información de un equipo de operaciones de radio-comunicación para embarcaciones mayores.
@@ -75,6 +85,11 @@ class EqOpMaRadComPfController extends Controller
                 'cuenta_eqradiocom' => $EqOpMaRadComPf->cuenta_eqradiocom ? 'Sí' : 'No',
                 'equipo_radiocomun' => $EqOpMaRadComPf->equipo_radiocomun,
                 'eqradiocom_tipo_id' => $EqOpMaRadComPf->TipoEquipoRadioComunicacion->tipo_radiocom,
+                'emb_pertenece_id' => $EqOpMaRadComPf->registroemb_ma_pf->nombre_emb_ma,
+                'cuenta_eqradiocom' => $EqOpMaRadComPf->cuenta_eqradiocom ? 'Sí' : 'No',
+                'equipo_radiocomun' => $EqOpMaRadComPf->equipo_radiocomun,
+                'eqradiocom_cant' => $EqOpMaRadComPf->eqradiocom_cant,
+                'eqradiocom_tipo_id' => $EqOpMaRadComPf->tipoeqradcom->tipo_radiocom,
                 'created_at' => $EqOpMaRadComPf->created_at,
                 'updated_at' => $EqOpMaRadComPf->updated_at,
             ];
@@ -90,33 +105,44 @@ class EqOpMaRadComPfController extends Controller
      * Actualiza un equipo de operaciones de radio-comunicación para embarcaciones mayores.
      */
     public function update(Request $request, $id)
-    {
-        try {
-            $data = $request->validate([
-                'emb_pertenece_id' => 'required',
-                'cuenta_eqradiocom' => 'required|boolean',
-                'equipo_radiocomun' => 'required|string|max:50',
-                'eqradiocom_cant' => 'required|integer',
-                'eqradiocom_tipo_id' => 'required',
-            ]);
+{
+    try {
+        // Validación de los datos
+        $data = $request->validate([
+            'emb_pertenece_id' => 'required|exists:registroemb_ma_pf,id',
+            'cuenta_eqradiocom' => 'required|boolean',
+            'equipo_radiocomun' => 'required|string|max:50',
+            'eqradiocom_cant' => 'required|integer',
+            'eqradiocom_tipo_id' => 'required|exists:tipo_equipo_radcom,id',
+        ]);
 
-            $existeEqOpMaRadComPf = EqOpMaRadComPf::where($data)->exists();
-            if ($existeEqOpMaRadComPf) {
-                return ApiResponse::error('El equipo de operaciones de radio-comunicación para embarcaciones menores ya esta registrado.', 422);
-            }
+        // Buscar el registro que se desea actualizar
+        $EqOpMaRadComPf = EqOpMaRadComPf::findOrFail($id);
 
-            $EqOpMaRadComPf = EqOpMaRadComPf::findOrFail($id);
-            $EqOpMaRadComPf->update($data);
-            return ApiResponse::success('El equipo de operaciones de radio-comunicación para embarcaciones mayores se actualizo exitosamente', 200, $EqOpMaRadComPf);
-        } catch (ModelNotFoundException $e) {
-            return ApiResponse::error('Equipo de operaciones de radio-comunicación para embarcaciones mayores no encontrado', 404);
-        } catch (ValidationException $e) {
-            return ApiResponse::error('Error de validacion: ' .$e->getMessage(), 422, $e->errors());
-        } catch (Exception $e) {
-            return ApiResponse::error('Error al actualizar el equipo de operaciones de radio-comunicación para embarcaciones mayores: ' .$e->getMessage(), 500);
+        // Verificar si ya existe un registro similar (excluyendo el registro actual)
+        $existeEqOpMaRadComPf = EqOpMaRadComPf::where('emb_pertenece_id', $data['emb_pertenece_id'])
+            ->where('cuenta_eqradiocom', $data['cuenta_eqradiocom'])
+            ->where('equipo_radiocomun', $data['equipo_radiocomun'])
+            ->where('eqradiocom_tipo_id', $data['eqradiocom_tipo_id'])
+            ->where('id', '!=', $id) // Excluye el registro actual
+            ->exists();
+
+        if ($existeEqOpMaRadComPf) {
+            return ApiResponse::error('Ya existe otro equipo de radio-comunicación para embarcaciones mayores con los mismos datos.', 422);
         }
-    }
 
+        // Actualizar el registro con los datos nuevos
+        $EqOpMaRadComPf->update($data);
+
+        return ApiResponse::success('El equipo de radio-comunicación para embarcaciones mayores fue actualizado exitosamente', 200, $EqOpMaRadComPf);
+    } catch (ValidationException $e) {
+        return ApiResponse::error('Error de validación: ' . $e->getMessage(), 422, $e->errors());
+    } catch (ModelNotFoundException $e) {
+        return ApiResponse::error('El equipo de radio-comunicación para embarcaciones mayores no se encontró.', 404);
+    } catch (Exception $e) {
+        return ApiResponse::error('Error al actualizar el equipo de radio-comunicación para embarcaciones mayores: ' . $e->getMessage(), 500);
+    }
+}
     /**
      * Elimina un equipo de operaciones de radio-comunicación para embarcaciones mayores.
      */
@@ -125,6 +151,7 @@ class EqOpMaRadComPfController extends Controller
         try {
             $EqOpMaRadComPf = EqOpMaRadComPf::findOrFail($id);
             $EqOpMaRadComPf->delete();
+
             return ApiResponse::success('Equipo de operaciones de radio-comunicación para embarcaciones mayores eliminado exitosamente', 200, $EqOpMaRadComPf);
         } catch (ModelNotFoundException $e) {
             return ApiResponse::error('Equipo de operaciones de radio-comunicación para embarcaciones mayores no encontrado', 404);

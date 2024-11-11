@@ -19,11 +19,11 @@ class EqOpMaRadComPf extends Model
     ];
     public $timestamps = true;
 
-    public function EmbarcacionPertenece(){
+    public function registroemb_ma_PF(){
         return $this->belongsTo(registroemb_ma_PF::class, 'emb_pertenece_id', 'id');
     }
 
-    public function TipoEquipoRadioComunicacion(){
-        return $this->belongsTo(TipoEqRadCom::class, 'eqradiocom_tipo_id', 'id');
+    public function tipoeqradcom(){
+        return $this->belongsTo(tipoeqradcom::class, 'eqradiocom_tipo_id', 'id');
     }
 }

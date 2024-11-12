@@ -44,7 +44,7 @@ return new class extends Migration
             $table->date('periodo_prod_fin');
             $table->string('estadio_salida');
             $table->string('talla_salida');
-            $table->string('destino_produccion');
+            $table->string('destino_prod');
             $table->float('valor_produccion');
             $table->timestamps();
         });

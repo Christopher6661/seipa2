@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('registro_artepesca_pf', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('tipo_artepesca_id');
-            $table->numeric('medidas_metros');
-            $table->numeric('longitud');
+            $table->float('medidas_metros');
+            $table->float('longitud');
             $table->string('material');
-            $table->numeric('luz_malla');
+            $table->float('luz_malla');
             $table->unsignedBigInteger('especie_obj_id');         
 
             $table->foreign('tipo_artepesca_id')->references('id')->on('arte_pesca');

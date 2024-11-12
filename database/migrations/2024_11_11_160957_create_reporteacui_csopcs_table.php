@@ -39,7 +39,7 @@ return new class extends Migration
             $table->string('criasemilla_dia');
             $table->string('criasemilla_mes');
             $table->string('criasemilla_anio');
-            $table->string('numero_organismos');
+            $table->string('num_organismosem');
             $table->date('periodo_prod_ini');
             $table->date('periodo_prod_fin');
             $table->string('estadio_salida');

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->boolean('modelo_extensivo')->default(false);
             $table->boolean('modelo_intensivo')->default(false);
             $table->boolean('modelo_semintensivo')->default(false);
-            $table->boolean('modelo_otro')->default(false);
+            $table->string('modelo_otro');
             $table->string('especies_acuicolas');
             $table->boolean('pozo_profundo')->default(false);
             $table->boolean('presa')->default(false);

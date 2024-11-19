@@ -37,11 +37,11 @@ class registroemb_ma_PM extends Model
     ];
     public $timestamps = true;
 
-    public function TipoCubierta(){
+    public function tipocubierta(){
         return $this->belongsTo(tipo_cubierta::class, 'tipo_cubierta_id', 'id');
     }
 
-    public function MaterialCasco(){
+    public function materialcasco(){
         return $this->belongsTo(material_casco::class, 'material_casco_id', 'id');
     }
 }

@@ -13,7 +13,6 @@ class registro_ubifisica_AM extends Model
     protected $fillable = [
         'razon_social',
         'RNPA',
-        'paraje',
         'domicilio',
         'codigo_postal',
         'telefono',

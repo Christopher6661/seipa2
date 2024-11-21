@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('nombres');
             $table->string('RNPA');
-            $table->string('paraje');
             $table->string('domicilio');
             $table->string('codigo_postal');
             $table->string('telefono');

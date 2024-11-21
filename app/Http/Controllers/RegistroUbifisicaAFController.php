@@ -23,7 +23,6 @@ class RegistroUbifisicaAFController extends Controller
                     'id' => $item->id,
                     'nombres' => $item->nombres,
                     'RNPA' => $item->RNPA,
-                    'paraje' => $item->paraje,
                     'domicilio' => $item->domicilio,
                     'codigo_postal' => $item->codigo_postal,
                     'telefono' => $item->telefono,
@@ -54,7 +53,6 @@ class RegistroUbifisicaAFController extends Controller
             $data = $request->validate([
                 'nombres' => 'required|string|max:60',
                 'RNPA' => 'required|string|max:50',
-                'paraje' => 'required|string|max:60',
                 'domicilio' => 'required|string|max:40',
                 'codigo_postal' => 'required|string|max:5',
                 'telefono' => 'required|string|max:10',
@@ -98,7 +96,6 @@ class RegistroUbifisicaAFController extends Controller
                 'id' => $UbicacionFisicaAF->id,
                 'nombres' => $UbicacionFisicaAF->nombres,
                 'RNPA' => $UbicacionFisicaAF->RNPA,
-                'paraje' => $UbicacionFisicaAF->paraje,
                 'domicilio' => $UbicacionFisicaAF->domicilio,
                 'codigo_postal' => $UbicacionFisicaAF->codigo_postal,
                 'telefono' => $UbicacionFisicaAF->telefono,
@@ -130,7 +127,6 @@ class RegistroUbifisicaAFController extends Controller
             $data = $request->validate([
                 'nombres' => 'required|string|max:60',
                 'RNPA' => 'required|string|max:50',
-                'paraje' => 'required|string|max:60',
                 'domicilio' => 'required|string|max:40',
                 'codigo_postal' => 'required|string|max:5',
                 'telefono' => 'required|string|max:10',

@@ -23,7 +23,6 @@ class RegistroUbifisicaAMController extends Controller
                     'id' => $item->id,
                     'razon_social' => $item->razon_social,
                     'RNPA' => $item->RNPA,
-                    'paraje' => $item->paraje,
                     'domicilio' => $item->domicilio,
                     'codigo_postal' => $item->codigo_postal,
                     'telefono' => $item->telefono,
@@ -54,7 +53,6 @@ class RegistroUbifisicaAMController extends Controller
             $data = $request->validate([
                 'razon_social' => 'required|string|max:60',
                 'RNPA' => 'required|string|max:50',
-                'paraje' => 'required|string|max:60',
                 'domicilio' => 'required|string|max:40',
                 'codigo_postal' => 'required|string|max:5',
                 'telefono' => 'required|string|max:10',
@@ -98,7 +96,6 @@ class RegistroUbifisicaAMController extends Controller
                 'id' => $UbicacionFisicaAM->id,
                 'razon_social' => $UbicacionFisicaAM->razon_social,
                 'RNPA' => $UbicacionFisicaAM->RNPA,
-                'paraje' => $UbicacionFisicaAM->paraje,
                 'domicilio' => $UbicacionFisicaAM->domicilio,
                 'codigo_postal' => $UbicacionFisicaAM->codigo_postal,
                 'telefono' => $UbicacionFisicaAM->telefono,
@@ -130,7 +127,6 @@ class RegistroUbifisicaAMController extends Controller
             $data = $request->validate([
                 'razon_social' => 'required|string|max:60',
                 'RNPA' => 'required|string|max:50',
-                'paraje' => 'required|string|max:60',
                 'domicilio' => 'required|string|max:40',
                 'codigo_postal' => 'required|string|max:5',
                 'telefono' => 'required|string|max:10',

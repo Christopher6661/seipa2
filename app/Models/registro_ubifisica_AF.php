@@ -13,7 +13,6 @@ class registro_ubifisica_AF extends Model
     protected $fillable = [
         'nombres',
         'RNPA',
-        'paraje',
         'domicilio',
         'codigo_postal',
         'telefono',

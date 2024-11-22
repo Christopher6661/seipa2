@@ -21,15 +21,15 @@ class RegistroAfController extends Controller
             $result = $af->map(function ($item) {
                 return [
                     'id' => $item->id,
-                    'oficregis_id' => $item->oficinas->id,
+                    'oficregis_id' => $item->oficinas->nombre_oficina,
                     'nombres' => $item->nombres,
                     'apellido_pa' => $item->apellido_pa,
                     'apellido_ma' => $item->apellido_ma,
                     'usuario' => $item->usuario,
                     'password' => $item->password,
                     'email' => $item->email,
-                    'tipo_actividad' => $item->tipo_actividad ? 'Pescador' : 'Acuicultor',
-                    'tipo_persona' => $item->tipo_persona ? 'Fisica' : 'Moral',
+                    'tipo_actividad' => $item->tipo_actividad ? '1' : '0',
+                    'tipo_persona' => $item->tipo_persona ? '1' : '0',
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
                 ];
@@ -95,8 +95,8 @@ class RegistroAfController extends Controller
                 'usuario' => $af->usuario,
                 'password' => $af->password,
                 'email' => $af->email,
-                'tipo_actividad' => $af->tipo_actividad ? 'Pescador' : 'Acuicultor',
-                'tipo_persona' => $af->tipo_persona ? 'Fisica' : 'Moral',
+                'tipo_actividad' => $af->tipo_actividad ? '1' : '0',
+                'tipo_persona' => $af->tipo_persona ? '1' : '0',
                 'created_at' => $af->created_at,
                 'updated_at' => $af->updated_at,
             ];

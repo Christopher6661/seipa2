@@ -63,9 +63,9 @@ class RegistroDattecprodAMController extends Controller
     {
         try {
             $data = $request->validate([
-                'area_total' => 'required|float',
-                'area_total_actacu' => 'required|float',
-                'uso_arearestante' => 'required|float',
+                'area_total' => 'required|numeric',
+                'area_total_actacu' => 'required|numeric',
+                'uso_arearestante' => 'required|numeric',
                 'modelo_extensivo' => 'required|boolean',
                 'modelo_intensivo' => 'required|boolean',
                 'modelo_semintensivo' => 'required|boolean',
@@ -78,7 +78,7 @@ class RegistroDattecprodAMController extends Controller
                 'pozo_cieloabierto' => 'required|boolean',
                 'rio_cuenca' => 'required|boolean',
                 'arroyo_manantial' => 'required|boolean',
-                'otro' => 'required|string|max:40|nullable',
+                'otro' => 'nullable|string|max:40',
                 'especificar_otro' => 'required|string|max:50',
                 'forma_alimentacion' => 'required|in:Bombeo, Pozo',
                 'aliment_agua_caudad' => 'required|numeric|max:9999999999.99',
@@ -151,9 +151,9 @@ class RegistroDattecprodAMController extends Controller
     {
         try {
             $data = $request->validate([
-                'area_total' => 'required|float',
-                'area_total_actacu' => 'required|float',
-                'uso_arearestante' => 'required|float',
+                'area_total' => 'required|numeric',
+                'area_total_actacu' => 'required|numeric',
+                'uso_arearestante' => 'required|numeric',
                 'modelo_extensivo' => 'required|boolean',
                 'modelo_intensivo' => 'required|boolean',
                 'modelo_semintensivo' => 'required|boolean',

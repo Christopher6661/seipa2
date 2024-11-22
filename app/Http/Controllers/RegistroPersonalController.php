@@ -29,7 +29,7 @@ class RegistroPersonalController extends Controller
                     'telefono_secun' => $item->telefono_secun,
                     'email' => $item->email,
                     'password' => $item->password,
-                    'rol_id' => $item->rol->id,
+                    'rol_id' => $item->rol->tipo_rol,
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
                 ];
@@ -88,7 +88,7 @@ class RegistroPersonalController extends Controller
                 'telefono_secun' => $personal->telefono_secun,
                 'email'=> $personal->email,
                 'password' => $personal->password,
-                'rol_id' => $personal->roles->id,
+                'rol_id' => $personal->rol->id,
             ];
             return ApiResponse::success('Personal de registro obtenido exitosamente', 200, $result);
         } catch (ModelNotFoundException $e) {

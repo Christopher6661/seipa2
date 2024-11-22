@@ -22,7 +22,7 @@ class SocioController extends Controller
                 return [
                     'id' => $item->id,
                     'CURP' => $item->CURP,
-                    'tipo' => $item->tipo ? 'Pescador' : 'Acuicultor',
+                    'tipo' => $item->tipo ? '1' : '0',
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
                 ];
@@ -72,7 +72,7 @@ class SocioController extends Controller
             $result = [
                 'id' => $sociosAM->id,
                 'CURP' => $sociosAM->CURP,
-                'tipo' => $sociosAM->tipo ? 'Pescador' : 'Acuicultor',
+                'tipo' => $sociosAM->tipo ? '1' : '0',
                 'created_at' => $sociosAM->created_at,
                 'updated_at' => $sociosAM->updated_at,
             ];

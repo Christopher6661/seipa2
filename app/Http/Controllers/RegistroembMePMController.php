@@ -62,10 +62,10 @@ class RegistroembMePMController extends Controller
                 'marca_emb' => 'required|string|max:30',
                 'numpescadores_emb' => 'required|string|max:200',
                 'estado_emb' => 'required|in:Bueno,Malo,Deplorable',
-                'manga_metros' => 'required|float',
-                'eslora_metros' => 'required|float',
-                'capacidad_carga' => 'required|float',
-                'puntal_metros' => 'required|float',
+                'manga_metros' => 'required|numeric',
+                'eslora_metros' => 'required|numeric',
+                'capacidad_carga' => 'required|numeric',
+                'puntal_metros' => 'required|numeric',
                 'certificado_seg_mar' => 'required|string|max:255',
                 'movilidad_emb' => 'required|string|max:50'
             ]);
@@ -148,10 +148,10 @@ class RegistroembMePMController extends Controller
                 'marca_emb' => 'required|string|max:30',
                 'numpescadores_emb' => 'required|string|max:200',
                 'estado_emb' => 'required|in:Bueno,Malo,Deplorable',
-                'manga_metros' => 'required|float',
-                'eslora_metros' => 'required|float',
-                'capacidad_carga' => 'required|float',
-                'puntal_metros' => 'required|float',
+                'manga_metros' => 'required|numeric',
+                'eslora_metros' => 'required|numeric',
+                'capacidad_carga' => 'required|numeric',
+                'puntal_metros' => 'required|numeric',
                 'certificado_seg_mar' => 'required|string|max:255',
                 'movilidad_emb' => 'required|string|max:50'
             ]);

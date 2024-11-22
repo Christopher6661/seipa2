@@ -21,14 +21,14 @@ class MotorMenorPMController extends Controller
             $result = $motorMenor_PM->map(function ($item){
                 return [
                     'id' => $item->id,
-                    'emb_pertenece_id' => $item->registroemb_me_pm->nombre_emb,
+                    'emb_pertenece_id' => $item->EmbarcacionPertenece->nombre_emb,
                     'marca_motor' => $item->marca_motor,
                     'modelo_motor' => $item->modelo_motor,
                     'potencia' => $item->potencia,
                     'num_serie' => $item->num_serie,
                     'tiempo' => $item->tiempo,
                     'tipo_combustible' => $item->tipo_combustible,
-                    'fuera_borda' => $item->fuera_borda ? 'Sí' : 'No',
+                    'fuera_borda' => $item->fuera_borda ? '1' : '0',
                     'vida_util_anio' => $item->vida_util_anio,
                     'doc_propiedad' => $item->doc_propiedad,
                     'created_at' => $item->created_at,
@@ -54,7 +54,7 @@ class MotorMenorPMController extends Controller
             'potencia' => 'required|string|max:20',
             'num_serie' => 'required|string|max:10',
             'tiempo' => 'required|string|max:13',
-            'tipo_combustible' => 'required|in:Magna, Premium, Diesel',
+            'tipo_combustible' => 'required|in:Magna,Premium,Diesel',
             'fuera_borda' => 'required|boolean',
             'vida_util_anio' => 'required|string|max:10',
             'doc_propiedad' => 'required|string|max:255'
@@ -87,14 +87,14 @@ class MotorMenorPMController extends Controller
             $motorMenor_PM = MotorMenor_PM::findOrFail($id);
             $result = [
                 'id' => $motorMenor_PM->id,
-                'emb_pertenece_id' => $motorMenor_PM->registroemb_me_pm->id,
+                'emb_pertenece_id' => $motorMenor_PM->EmbarcacionPertenece->id,
                 'marca_motor' => $motorMenor_PM->marca_motor,
                 'modelo_motor' => $motorMenor_PM->modelo_motor,
                 'potencia' => $motorMenor_PM->potencia,
                 'num_serie' => $motorMenor_PM->num_serie,
                 'tiempo' => $motorMenor_PM->tiempo,
                 'tipo_combustible' => $motorMenor_PM->tipo_combustible,
-                'fuera_borda' => $motorMenor_PM->fuera_borda ? 'Sí' : 'No',
+                'fuera_borda' => $motorMenor_PM->fuera_borda ? '1' : '0',
                 'vida_util_anio' => $motorMenor_PM->vida_util_anio,
                 'doc_propiedad' => $motorMenor_PM->doc_propiedad,
                 'created_at' => $motorMenor_PM->created_at,
@@ -121,7 +121,7 @@ class MotorMenorPMController extends Controller
                 'potencia' => 'required|string|max:20',
                 'num_serie' => 'required|string|max:10',
                 'tiempo' => 'required|string|max:13',
-                'tipo_combustible' => 'required|in:Magna, Premium, Diesel',
+                'tipo_combustible' => 'required|in:Magna,Premium,Diesel',
                 'fuera_borda' => 'required|boolean',
                 'vida_util_anio' => 'required|string|max:10',
                 'doc_propiedad' => 'required|string|max:255'

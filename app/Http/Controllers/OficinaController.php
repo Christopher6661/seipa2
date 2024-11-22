@@ -43,7 +43,7 @@ class OficinaController extends Controller
         try {
             $data = $request->validate([
                 'nombre_oficina' => 'required|string|max:50',
-                'ubicacion' => 'required|string|max:50',
+                'ubicacion' => 'required|string|max:100',
                 'telefono' => 'required|string|max:10',
                 'email' => 'required|string|max:40',
                 

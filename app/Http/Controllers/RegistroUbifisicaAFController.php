@@ -53,7 +53,7 @@ class RegistroUbifisicaAFController extends Controller
             $data = $request->validate([
                 'nombres' => 'required|string|max:60',
                 'RNPA' => 'required|string|max:50',
-                'domicilio' => 'required|string|max:40',
+                'domicilio' => 'required|string|max:250',
                 'codigo_postal' => 'required|string|max:5',
                 'telefono' => 'required|string|max:10',
                 'region_id' => 'required|exists:regiones,id',
@@ -127,7 +127,7 @@ class RegistroUbifisicaAFController extends Controller
             $data = $request->validate([
                 'nombres' => 'required|string|max:60',
                 'RNPA' => 'required|string|max:50',
-                'domicilio' => 'required|string|max:40',
+                'domicilio' => 'required|string|max:250',
                 'codigo_postal' => 'required|string|max:5',
                 'telefono' => 'required|string|max:10',
                 'region_id' => 'required',

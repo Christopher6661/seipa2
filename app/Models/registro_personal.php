@@ -23,7 +23,7 @@ class registro_personal extends Model
     ];
     public $timestamps = true;
 
-    public function Rol(){
+    public function rol(){
         return $this->belongsTo(rol::class, 'rol_id', 'id');
     }
 }

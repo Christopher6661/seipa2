@@ -28,8 +28,8 @@ class RegistroPfController extends Controller
                     'usuario' => $item->usuario,
                     'password' => $item->password,
                     'email' => $item->email,
-                    'tipo_actividad' => $item->tipo_actividad ? 'Pescador' : 'Acuicultor',
-                    'tipo_persona' => $item->tipo_persona ? 'Fisica' : 'Moral',
+                    'tipo_actividad' => $item->tipo_actividad ? '1' : '0',
+                    'tipo_persona' => $item->tipo_persona ? '1' : '0',
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
                 ];
@@ -96,8 +96,8 @@ class RegistroPfController extends Controller
                 'usuario' => $pf->usuario,
                 'password' => $pf->password,
                 'email' => $pf->email,
-                'tipo_actividad' => $pf->tipo_actividad ? 'Pescador' : 'Acuicultor',
-                'tipo_persona' => $pf->tipo_persona ? 'Fisica' : 'Moral',
+                'tipo_actividad' => $pf->tipo_actividad ? '1' : '0',
+                'tipo_persona' => $pf->tipo_persona ? '1' : '0',
                 'created_at' => $pf->created_at,
                 'updated_at' => $pf->updated_at,
             ];

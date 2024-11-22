@@ -64,17 +64,17 @@ class RegistroDattececonAFController extends Controller
     {
         try {
             $data = $request->validate([
-                'prodprom_x_mes' => 'required|float',
+                'prodprom_x_mes' => 'required|numeric',
                 'prodpromx_mes_peso' => 'required|in:Kilogramo,Tonelada',
-                'prodprom_mes_talla' => 'required|float', 
+                'prodprom_mes_talla' => 'required|numeric', 
                 'ciclocultivoultimo_anio' => 'required|string|max:30',
                 'ciclocult_ultanio_mes' => 'required|string|max:30',
                 'capturacosecha_anio' => 'required|string|max:30',
                 'capturacos_anio_peso' => 'required|in:Kilogramo,Tonelada',
-                'captcosanio_mortalidad' => 'required|float',
-                'destino_autoconsimo' => 'required|float',
-                'destino_comercializacio' => 'required|float',
-                'destino_otro' => 'required|float',
+                'captcosanio_mortalidad' => 'required|numeric',
+                'destino_autoconsimo' => 'required|numeric',
+                'destino_comercializacio' => 'required|numeric',
+                'destino_otro' => 'required|numeric',
                 'tipo_mercado_local' => 'required|boolean',
                 'tipo_mercado_estatal' => 'required|boolean',
                 'tipo_mercado_regional' => 'required|boolean',
@@ -88,8 +88,8 @@ class RegistroDattececonAFController extends Controller
                 'otro' => 'required|boolean',
                 'otro_preciokilo' => 'nullable|numeric|max:9999999999.99',
                 'fuenfinanza_programa' => 'required|string|max:50',
-                'fuentefianza_anio' => 'required|float',
-                'costogasto_anualprod' => 'required|float',
+                'fuentefianza_anio' => 'required|numeric',
+                'costogasto_anualprod' => 'required|numeric',
             ]);
 
             $DatosTecnicoEconomicosAF = registro_dattececon_AF::create($data);

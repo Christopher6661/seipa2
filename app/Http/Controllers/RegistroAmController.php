@@ -21,15 +21,15 @@ class RegistroAmController extends Controller
             $result = $am->map(function ($item) {
                 return [
                     'id' => $item->id,
-                    'oficregis_id' => $item->Oficinas->id,
+                    'oficregis_id' => $item->oficinas->nombre_oficina,
                     'razon_social' => $item->razon_social,
                     'RFC' => $item->RFC,
                     'CURP' => $item->CURP,
                     'usuario' => $item->usuario,
                     'password' => $item->password,
                     'email' => $item->email,
-                    'tipo_actividad' => $item->tipo_actividad ? 'Pescador' : 'Acuicultor',
-                    'tipo_persona' => $item->tipo_persona ? 'Fisica' : 'Moral',
+                    'tipo_actividad' => $item->tipo_actividad ? '1' : '0',
+                    'tipo_persona' => $item->tipo_persona ? '1' : '0',
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
                 ];
@@ -97,15 +97,15 @@ class RegistroAmController extends Controller
             $am = registro_am::findOrFail($id);
             $result = [
                 'id' => $am->id,
-                'oficregis_id' => $am->Oficinas->id,
+                'oficregis_id' => $am->oficinas->id,
                 'razon_social' => $am->razon_social,
                 'RFC' => $am->RFC,
                 'CURP' => $am->CURP,
                 'usuario' => $am->usuario,
                 'password' => $am->password,
                 'email' => $am->email,
-                'tipo_actividad' => $am->tipo_actividad ? 'Pescador' : 'Acuicultor',
-                'tipo_persona' => $am->tipo_persona ? 'Fisica' : 'Moral',
+                'tipo_actividad' => $am->tipo_actividad ? '1' : '0',
+                'tipo_persona' => $am->tipo_persona ? '1' : '0',
                 'created_at' => $am->created_at,
                 'updated_at' => $am->updated_at,
             ];

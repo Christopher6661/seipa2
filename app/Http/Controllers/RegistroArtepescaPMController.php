@@ -21,7 +21,7 @@ class RegistroArtepescaPMController extends Controller
             $result = $ArtePescaPM->map(function ($item){
                 return [
                     'id' => $item->id,
-                    'tipo_artepesca_id' => $item->arte_pesca_nombre_artpesca,
+                    'tipo_artepesca_id' => $item->arte_pesca->nombre_artpesca,
                     'medida_largo' => $item->medida_largo,
                     'medida_ancho' => $item->medida_ancho,
                     'material' => $item->material,
@@ -45,10 +45,10 @@ class RegistroArtepescaPMController extends Controller
         try {
             $data = $request->validate([
                 'tipo_artepesca_id' => 'required|exists:tipo_artepesca,id',
-                'medida_largo' => 'required|float',
-                'medida_ancho' => 'required|float',
+                'medida_largo' => 'required|numeric',
+                'medida_ancho' => 'required|numeric',
                 'material' => 'required|string|max:30',
-                'luz_malla' => 'required|float',
+                'luz_malla' => 'required|numeric',
                 'especie_obj_id' => 'required|exists:especies,id',
             ]);
 
@@ -79,12 +79,12 @@ class RegistroArtepescaPMController extends Controller
             $ArtePescaPM = registro_artepesca_PM::findOrFail($id);
             $result = [
                 'id' => $ArtePescaPM->id,
-                'tipo_artepesca_id' => $ArtePescaPM->arte_pesca_nombre_artpesca,
+                'tipo_artepesca_id' => $ArtePescaPM->arte_pesca->id,
                 'medida_largo' => $ArtePescaPM->medida_largo,
                 'medida_ancho' => $ArtePescaPM->medida_ancho,
                 'material' => $ArtePescaPM->material,
                 'luz_malla' => $ArtePescaPM->luz_malla,
-                'especie_obj_id' => $ArtePescaPM->especie_objetivo->nombre_especie,
+                'especie_obj_id' => $ArtePescaPM->especie_objetivo->id,
                 'created_at' => $ArtePescaPM->created_at,
                 'updated_at' => $ArtePescaPM->updated_at,
             ];

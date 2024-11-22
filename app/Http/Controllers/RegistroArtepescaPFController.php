@@ -78,12 +78,12 @@ class RegistroArtepescaPFController extends Controller
             $ArtePescaPF = registro_artepesca_PF::findOrFail($id);
             $result = [
                 'id' => $ArtePescaPF->id,
-                'tipo_artepesca_id' => $ArtePescaPF->arte_pesca->nombre_artpesca,
+                'tipo_artepesca_id' => $ArtePescaPF->arte_pesca->id,
                 'medidas_metros' => $ArtePescaPF->medidas_metros,
                 'longitud' => $ArtePescaPF->longitud,
                 'material' => $ArtePescaPF->material,
                 'luz_malla' => $ArtePescaPF->luz_malla,
-                'especie_obj_id' => $ArtePescaPF->especie_objetivo->nombre_especie,
+                'especie_obj_id' => $ArtePescaPF->especie_objetivo->id,
                 'created_at' => $ArtePescaPF->created_at,
                 'updated_at' => $ArtePescaPF->updated_at,
             ];

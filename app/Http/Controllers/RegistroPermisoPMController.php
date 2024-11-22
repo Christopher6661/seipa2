@@ -27,7 +27,7 @@ class RegistroPermisoPMController extends Controller
                     'vigencia_permiso_fin' => $item->vigencia_permiso_fin,
                     'RNPA' => $item->RNPA,
                     'tipo_permiso_id' => $item->permiso->nombre_permiso,
-                    'tipo_emb' => $item->tipo_emb ? 'Mayor' : 'Menor',
+                    'tipo_emb' => $item->tipo_emb ? '1' : '0',
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
                 ];
@@ -87,7 +87,7 @@ class RegistroPermisoPMController extends Controller
                 'vigencia_permiso_fin' => $permisoPM->vigencia_permiso_fin,
                 'RNPA' => $permisoPM->RNPA,
                 'tipo_permiso_id' => $permisoPM->permiso->nombre_permiso,
-                'tipo_emb' => $permisoPM->tipo_emb ? 'Mayor' : 'Menor',
+                'tipo_emb' => $permisoPM->tipo_emb ? '1' : '0',
                 'created_at' => $permisoPM->created_at,
                 'updated_at' => $permisoPM->updated_at,
             ];

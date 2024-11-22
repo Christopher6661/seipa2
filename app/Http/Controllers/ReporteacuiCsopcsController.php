@@ -76,10 +76,10 @@ class ReporteacuiCsopcsController extends Controller
                 'mes' => 'required|string|max:50',
                 'anio' => 'required|string|max:50',
                 'especie' => 'required|string|max:50',
-                'volumen_prodkg' => 'required|float',
-                'talla_promedio' => 'required|float',
+                'volumen_prodkg' => 'required|numeric',
+                'talla_promedio' => 'required|numeric',
                 'destino_produccion' => 'required|string|max:50',
-                'valor_estimado_cap' => 'required|float',
+                'valor_estimado_cap' => 'required|numeric',
                 'siembra_dias' => 'required|string|max:50',
                 'siembra_mes' => 'required|string|max:50',
                 'siembra_anio' => 'required|string|max:50',
@@ -94,7 +94,7 @@ class ReporteacuiCsopcsController extends Controller
                 'unidad_procedencia' => 'required|string|max:50',
                 'certificado_sanitario' => 'required|string|max:50',
                 'guia_pesca' => 'required|string|max:50',
-                'valor_lote' => 'required|float',
+                'valor_lote' => 'required|numeric',
                 'metodo_traslado' => 'required|string|max:50',
                 'criasemilla_dia' => 'required|string|max:50',
                 'criasemilla_mes' => 'required|string|max:50',
@@ -105,7 +105,7 @@ class ReporteacuiCsopcsController extends Controller
                 'estadio_salida' => 'required|string|max:50',
                 'talla_salida' => 'required|string|max:50',
                 'detino_prod' => 'required|string|max:50',
-                'valor_produccion' => 'required|float'
+                'valor_produccion' => 'required|numeric'
             ]);
 
             $existeReporteacuiCsopcs = reporteacui_csopcs::where(function ($query) use ($data){
@@ -202,10 +202,10 @@ class ReporteacuiCsopcsController extends Controller
                 'mes' => 'required|string|max:50',
                 'anio' => 'required|string|max:50',
                 'especie' => 'required|string|max:50',
-                'volumen_prodkg' => 'required|float',
-                'talla_promedio' => 'required|float',
+                'volumen_prodkg' => 'required|numeric',
+                'talla_promedio' => 'required|numeric',
                 'destino_produccion' => 'required|string|max:50',
-                'valor_estimado_cap' => 'required|float',
+                'valor_estimado_cap' => 'required|numeric',
                 'siembra_dias' => 'required|string|max:50',
                 'siembra_mes' => 'required|string|max:50',
                 'siembra_anio' => 'required|string|max:50',
@@ -231,7 +231,7 @@ class ReporteacuiCsopcsController extends Controller
                 'estadio_salida' => 'required|string|max:50',
                 'talla_salida' => 'required|string|max:50',
                 'detino_prod' => 'required|string|max:50',
-                'valor_produccion' => 'required|float'
+                'valor_produccion' => 'required|numeric'
             ]);
 
             $existeReporteacuiCsopcs = reporteacui_csopcs::where(function ($query) use ($data, $id) {

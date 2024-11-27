@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('acuicultorfisico_id');
             $table->unsignedBigInteger('especie_prod_id');
+            
             $table->foreign('acuicultorfisico_id')->references('id')->on('datos_generales_af')->onDelete('cascade');
             $table->foreign('especie_prod_id')->references('id')->on('especies')->onDelete('cascade');
             $table->timestamps();

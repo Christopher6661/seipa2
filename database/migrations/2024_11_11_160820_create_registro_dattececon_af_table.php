@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('registro_dattececon_af', function (Blueprint $table) {
             $table->id();
-            $table->float('prodprom_x_mes');
+            $table->float('prodprom_x_mes', 2,8);
             $table->enum('prodpromx_mes_peso', ['Kilogramo', 'Tonelada']);
-            $table->float('prodprom_mes_talla');
+            $table->float('prodprom_mes_talla', 2,8);
             $table->string('ciclocultivoultimo_anio');
             $table->string('ciclocult_ultanio_mes');
             $table->string('capturacosecha_anio');
             $table->enum('capturacos_anio_peso', ['Kilogramo', 'Tonelada']);
-            $table->float('captcosanio_mortalidad');
-            $table->float('destino_autoconsimo');
-            $table->float('destino_comercializacio');
-            $table->float('destino_otro');
+            $table->float('captcosanio_mortalidad', 2,8);
+            $table->float('destino_autoconsimo', 2,8);
+            $table->float('destino_comercializacio', 2,8);
+            $table->float('destino_otro', 2,8);
             $table->boolean('tipo_mercado_local')->default(false);
             $table->boolean('tipo_mercado_estatal')->default(false);
             $table->boolean('tipo_mercado_regional')->default(false);

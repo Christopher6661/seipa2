@@ -26,7 +26,6 @@ return new class extends Migration
             $table->unsignedBigInteger('distrito_id');
             $table->unsignedBigInteger('region_id');
             $table->string('grupo_sanguineo');
-            $table->unsignedBigInteger('especies_prod_id');
             $table->unsignedBigInteger('etnia_id');
             $table->boolean('cuenta_siscaptura')->default(false);
 	        $table->string('motivo_no_cuenta');
@@ -35,7 +34,6 @@ return new class extends Migration
             $table->foreign('municipio_id')->references('id')->on('municipios');
             $table->foreign('distrito_id')->references('id')->on('distritos');
             $table->foreign('region_id')->references('id')->on('regiones');
-            $table->foreign('especies_prod_id')->references('id')->on('especies');
             $table->foreign('etnia_id')->references('id')->on('etnias');
             $table->timestamps();
         });

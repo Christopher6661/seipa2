@@ -21,7 +21,6 @@ class datosgenerales_AM extends Model
         'muni_id',
         'local_id',        
         'email',
-        'especies_prod_id',
         'etnia_id',
         'socios',
         'cuenta_siscuarente',
@@ -46,7 +45,11 @@ class datosgenerales_AM extends Model
     }
 
     public function especie_producen(){
-        return $this->belongsTo(especie::class, 'especies_prod_id', 'id');
+        return $this->belongsToMany(especie::class, 'especies_prod_id', 'id');
+    }
+
+    public function especies(){
+        return $this->belongsToMany(especie::class, 'especieproduce_x_af', 'acuicultormoral_id', 'especie_prod_id');
     }
 
     public function etnia(){

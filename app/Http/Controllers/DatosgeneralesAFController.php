@@ -68,11 +68,15 @@ class DatosgeneralesAFController extends Controller
                 'distrito_id' => 'required|exists:distritos,id',
                 'region_id' => 'required|exists:regiones,id',
                 'grupo_sanguineo' => 'required|string|max:6',
-                'especies_prod_id' => 'required|exists:especies,id',
+                'especies_prod_id' => 'required|array',
+                'especies_prod_id.*' => 'integer|exists:especies,id',
                 'etnia_id' => 'required|exists:etnias,id',
                 'cuenta_siscaptura' => 'required|boolean',
                 'motivo_no_cuenta' => 'required|string|max:255',
             ]);
+
+            $especiesProdId = $data['especies_prod_id'];
+            unset($data['especies_prod_id']);
 
             $existeDatosGeneralesAF = datosgenerales_AF::where('nombres', $data['nombres'])
             ->orwhere('RFC', $data['RFC'])
@@ -93,11 +97,14 @@ class DatosgeneralesAFController extends Controller
             }
 
             $datosgeneralesAF = datosgenerales_AF::create($data);
+
+            $datosgeneralesAF->especies()->attach($especiesProdId);
+
             return ApiResponse::success('Los datos fueron registrados exitosamente', 201, $datosgeneralesAF);
         } catch (ValidationException $e) {
             return ApiResponse::error('Error de validación: ' .$e->getMessage(), 422, $e->errors());
         } catch (Exception $e) {
-            return ApiResponse::error('Error al registrar los datos generales del acuicultor fisico: ', 500);
+            return ApiResponse::error('Error al registrar los datos generales del acuicultor fisico: ' .$e->getMessage(), 500);
         }
     }
 

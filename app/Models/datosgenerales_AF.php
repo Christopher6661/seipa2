@@ -24,7 +24,6 @@ class datosgenerales_AF extends Model
         'distrito_id',
         'region_id',
         'grupo_sanguineo',
-        'especies_prod_id',
         'etnia_id',
         'cuenta_siscaptura',
         'motivo_no_cuenta'
@@ -49,6 +48,10 @@ class datosgenerales_AF extends Model
 
     public function especie_producen(){
         return $this->belongsTo(especie::class, 'especies_prod_id', 'id');
+    }
+
+    public function especies(){
+        return $this->belongsToMany(especie::class, 'especieproduce_x_af', 'acuicultorfisico_id', 'especie_prod_id');   
     }
 
     public function etnia(){

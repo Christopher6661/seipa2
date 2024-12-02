@@ -17,7 +17,8 @@ class RegistroArtepescaPMController extends Controller
     public function index()
     {
         try {
-            $ArtePescaPM = registro_artepesca_PM::all();
+            $ArtePescaPM = registro_artepesca_PM::with('esp_objetivo', 'arte_pesca')->get();
+           
             $result = $ArtePescaPM->map(function ($item){
                 return [
                     'id' => $item->id,
@@ -26,7 +27,7 @@ class RegistroArtepescaPMController extends Controller
                     'medida_ancho' => $item->medida_ancho,
                     'material' => $item->material,
                     'luz_malla' => $item->luz_malla,
-                    'especie_obj_id' => $item->especie_objetivo->nombre_especie,
+                    'especie_obj_id' => $item->esp_objetivo ? $item->esp_objetivo->pluck('nombre_especie')->toArray() : [],
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
                 ];
@@ -76,7 +77,7 @@ class RegistroArtepescaPMController extends Controller
     public function show($id)
     {
         try {
-            $ArtePescaPM = registro_artepesca_PM::findOrFail($id);
+            $ArtePescaPM = registro_artepesca_PM::with('esp_objetivo', 'arte_pesca')->findOrFail($id);
             $result = [
                 'id' => $ArtePescaPM->id,
                 'tipo_artepesca_id' => $ArtePescaPM->arte_pesca->id,
@@ -84,7 +85,7 @@ class RegistroArtepescaPMController extends Controller
                 'medida_ancho' => $ArtePescaPM->medida_ancho,
                 'material' => $ArtePescaPM->material,
                 'luz_malla' => $ArtePescaPM->luz_malla,
-                'especie_obj_id' => $ArtePescaPM->especie_objetivo->id,
+                'especie_obj_id' => $ArtePescaPM->esp_objetivo ? $ArtePescaPM->esp_objetivo->pluck('nombre_especie')->toArray() : [],
                 'created_at' => $ArtePescaPM->created_at,
                 'updated_at' => $ArtePescaPM->updated_at,
             ];
@@ -102,14 +103,18 @@ class RegistroArtepescaPMController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $request->validate([
+            $data = $request->validate([
                 'tipo_artepesca_id' => 'required',
                 'medida_largo' => 'required|float',
                 'medida_ancho' => 'required|float',
                 'material' => 'required|string|max:30',
                 'luz_malla' => 'required|float',
-                'especie_objetivo' => 'required',
+                'especie_objetivo' => 'required|array',
+                'especie_objetivo' => 'integer|exists:especies,id'
             ]);
+
+            $especiesProdId = $data['especie_obj_id'];
+            unset($data['especie_obj_id']);
 
             $existeArtePescaPM = registro_artepesca_PM::where('tipo_artepesca_id', $request->tipo_artepesca_id)->first();
             if ($existeArtePescaPM) {
@@ -117,7 +122,9 @@ class RegistroArtepescaPMController extends Controller
             }
 
             $ArtePescaPM = registro_artepesca_PM::findOrFail($id);
-            $ArtePescaPM->update($request->all());
+            $ArtePescaPM->update($data);
+            $ArtePescaPM->esp_objetivo()->sync($especiesProdId);
+
             return ApiResponse::success('Arte de pesca actualizado exitosamente', 200, $ArtePescaPM);
         } catch (ModelNotFoundException $e) {
             return ApiResponse::error('Arte de pesca no encontrado', 404);

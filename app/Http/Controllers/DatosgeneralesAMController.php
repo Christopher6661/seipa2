@@ -63,12 +63,16 @@ class DatosgeneralesAMController extends Controller
                 'muni_id' => 'required|exists:municipios,id',
                 'local_id' => 'required|exists:localidades,id',
                 'email' => 'required|string|max:30',
-                'especies_prod_id' => 'required|exists:especies,id',
+                'especies_prod_id' => 'required|array',
+                'especies_prod_id.*' => 'integer|exists:especies,id',
                 'etnia_id' => 'required|exists:etnias,id',
                 'socios' => 'required|string|max:255',
                 'cuenta_siscuarente' => 'required|boolean',
                 'motivo_no_cuenta' => 'required|string|max:255',
             ]);
+
+            $especiesProdId = $data['especies_prod_id'];
+            unset($data['especies_prod_id']);
 
             $existeDatosGeneralesAM = datosgenerales_AM::where('razon_social', $data['razon_social'])
             ->orwhere('RFC', $data['RFC'])
@@ -89,11 +93,14 @@ class DatosgeneralesAMController extends Controller
             }
 
             $datosgeneralesAM = datosgenerales_AM::create($data);
+
+            $datosgeneralesAM->especies()->attach($especiesProdId);
+
             return ApiResponse::success('Los datos fueron registrados exitosamente', 201, $datosgeneralesAM);
         } catch (ValidationException $e) {
             return ApiResponse::error('Error de validación: ' .$e->getMessage(), 422, $e->errors());
         } catch (Exception $e) {
-            return ApiResponse::error('Error al registrar los datos generales del acuicultor moral: ', 500);
+            return ApiResponse::error('Error al registrar los datos generales del acuicultor moral: ' .$e->getMessage(), 500);
         }
     }
 

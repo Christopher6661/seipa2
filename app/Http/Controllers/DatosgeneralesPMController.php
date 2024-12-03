@@ -65,7 +65,7 @@ class DatosgeneralesPMController extends Controller
     {
         try {
             $data = $request->validate([
-                'razon_social' => 'required|string|max:50',
+                'razon_social' => 'required|string|max:250',
                 'RFC' => 'required|string|max:12',
                 'CURP' => 'required|string|max:18',
                 'telefono' => 'required|string|max:10',
@@ -175,7 +175,7 @@ class DatosgeneralesPMController extends Controller
     {
         try {
             $data = $request->validate([
-                'razon_social' => 'required|string|max:50',
+                'razon_social' => 'required|string|max:250',
                 'RFC' => 'required|string|max:12',
                 'CURP' => 'required|string|max:18',
                 'telefono' => 'required|string|max:10',

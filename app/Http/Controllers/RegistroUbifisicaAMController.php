@@ -51,7 +51,7 @@ class RegistroUbifisicaAMController extends Controller
     {
         try {
             $data = $request->validate([
-                'razon_social' => 'required|string|max:60',
+                'razon_social' => 'required|string|max:250',
                 'RNPA' => 'required|string|max:50',
                 'domicilio' => 'required|string|max:250',
                 'codigo_postal' => 'required|string|max:5',
@@ -125,7 +125,7 @@ class RegistroUbifisicaAMController extends Controller
     {
         try {
             $data = $request->validate([
-                'razon_social' => 'required|string|max:60',
+                'razon_social' => 'required|string|max:250',
                 'RNPA' => 'required|string|max:50',
                 'domicilio' => 'required|string|max:250',
                 'codigo_postal' => 'required|string|max:5',

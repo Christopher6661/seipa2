@@ -17,11 +17,9 @@ return new class extends Migration
             $table->float('medidas_metros');
             $table->float('longitud');
             $table->string('material');
-            $table->float('luz_malla');
-            $table->unsignedBigInteger('especie_obj_id');         
+            $table->float('luz_malla');        
 
             $table->foreign('tipo_artepesca_id')->references('id')->on('arte_pesca');
-            $table->foreign('especie_obj_id')->references('id')->on('especies');
             $table->timestamps();
         });
     }

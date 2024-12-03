@@ -21,6 +21,7 @@ class SocioController extends Controller
             $result = $sociosAM->map(function ($item){
                 return [
                     'id' => $item->id,
+                    'colaborador_id' => $item->colaborador->razon_social,
                     'CURP' => $item->CURP,
                     'tipo' => $item->tipo ? '1' : '0',
                     'created_at' => $item->created_at,
@@ -40,6 +41,7 @@ class SocioController extends Controller
     {
         try {
             $data = $request->validate([
+                'colaborador_id' => 'required|exists:datos_generales_am,id',
                 'CURP' => 'required|string|max:18',
                 'tipo' => 'required|boolean'
             ]);
@@ -71,6 +73,7 @@ class SocioController extends Controller
             $sociosAM = socio::findOrFail($id);
             $result = [
                 'id' => $sociosAM->id,
+                'colaborador_id' => $sociosAM->colaborador->id,
                 'CURP' => $sociosAM->CURP,
                 'tipo' => $sociosAM->tipo ? '1' : '0',
                 'created_at' => $sociosAM->created_at,
@@ -91,6 +94,7 @@ class SocioController extends Controller
     {
         try {
             $data = $request->validate([
+                'colaborador_id' => 'required',
                 'CURP' => 'required|string|max:18',
                 'tipo' => 'required|boolean'
             ]);

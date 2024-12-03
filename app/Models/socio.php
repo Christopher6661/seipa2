@@ -11,8 +11,13 @@ class socio extends Model
     protected $table = 'socios';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'colaborador_id',
         'CURP',
         'tipo'
     ];
     public $timestamps = true;
+
+    public function colaborador(){
+        return $this->belongsTo(datosgenerales_AM::class, 'colaborador_id', 'id');
+    }
 }

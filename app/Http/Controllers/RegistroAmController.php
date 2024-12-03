@@ -48,7 +48,7 @@ class RegistroAmController extends Controller
         try {
             $data = $request->validate([
                 'oficregis_id' => 'required|exists:oficinas,id',
-                'razon_social' => 'required|string|max:40',
+                'razon_social' => 'required|string|max:250',
                 'RFC' => 'required|string|max:12',
                 'CURP' => 'required|string|max:18',
                 'usuario' => 'required|string|max:30',
@@ -125,7 +125,7 @@ class RegistroAmController extends Controller
         try {
             $data = $request->validate([
                 'oficregis_id' => 'required',
-                'razon_social' => 'required|string|max:40',
+                'razon_social' => 'required|string|max:250',
                 'RFC' => 'required|string|max:12',
                 'CURP' => 'required|string|max:18',
                 'usuario' => 'required|string|max:30',

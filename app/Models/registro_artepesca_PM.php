@@ -15,8 +15,7 @@ class registro_artepesca_PM extends Model
         'medidad_largo',
         'medidad_ancho',
         'material',
-        'luz_malla',
-        'especie_objetivo'  
+        'luz_malla',  
     ];
     public $timestamps = true;
 
@@ -25,6 +24,10 @@ class registro_artepesca_PM extends Model
     }
 
     public function especie_objetivo(){
-        return $this->belongsTo(especie::class, 'especie_obj_id', 'id');
+        return $this->belongsToMany(especie::class, 'especieobjetivo_id', 'id');
+    }
+
+    public function especies(){
+        return $this->belongsToMany(especie::class, 'artepesca_x_especieobjpm', 'artepesca_pm_id', 'especieobjetivo_id');
     }
 }    

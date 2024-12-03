@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('socios', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('colaborador_id');
             $table->string('CURP');
             $table->boolean('tipo')->default(false);
+
+            $table->foreign('colaborador_id')->references('id')->on('datos_generales_am');
             $table->timestamps();
         });
     }

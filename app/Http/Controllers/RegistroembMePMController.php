@@ -71,18 +71,19 @@ class RegistroembMePMController extends Controller
             ]);
 
             $existeEmbMenorPM = registroemb_me_PM::where('nombre_emb', $data['nombre_emb'])
-            ->orwhere('matricula', $data['matricula'])
-            ->orwhere('RNP', $data['RNP'])
-            ->first();
+            ->orWhere('matricula', $data['matricula'])
+            ->orWhere('RNP', $data['RNP']) 
+            ->exists();
+
             if ($existeEmbMenorPM) {
                 $errors = [];
-                if ($existeEmbMenorPM->nombre_emb === $data['nombre_emb']) {
+                if (registroemb_me_PM::where('nombre_emb', $data['nombre_emb'])->exists()) {
                     $errors['nombre_emb'] = 'Este nombre ya esta registrado';
                 }
-                if ($existeEmbMenorPM->matricula === $data['matricula']) {
+                if (registroemb_me_PM::where('matricula', $data['matricula'])->exists()) {
                     $errors['matricula'] = 'Esta matricula ya esta registrada';
                 }
-                if ($existeEmbMenorPM->RNP === $data['RNP']) {
+                if (registroemb_me_PM::where('RNP', $data['RNP'])->exists()) {
                     $errors['RNP'] = 'Este RNP ya esta registrado';
                 }
                 return ApiResponse::error('Esta embarcación menor ya existe', 422, $errors);

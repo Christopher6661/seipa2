@@ -41,13 +41,25 @@ class EspecieController extends Controller
             $data = $request->validate([
                 'nombre_especie' => 'required|string|max:40'
             ]);
-            $existeEspecie = especie::where($data)->exists();
-            if ($existeEspecie) {
-                return ApiResponse::error('Esta especie ya existe', 422);
+
+            $especieExistente = especie::where('nombre_especie', $data['nombre_especie'])->first();
+
+            if ($especieExistente) {
+                return response()->json([
+                    'message' => 'La especie ya existe.',
+                    'data' => $especieExistente,
+                    'especies_insertadas' => especie::all()
+                ], 200);
             }
 
             $especie = especie::create($data);
-            return ApiResponse::success('Especie creada exitosamente', 201, $especie);
+
+            return response()->json([
+                'message' => 'Especie creada exitosamente',
+                'data' => $especie,
+                'especies_insertadas' => especie::all()
+            ], 201);
+            
         } catch (ValidationException $e) {
             return ApiResponse::error('Error de validación: ' .$e->getMessage(), 422, $e->errors());
         } catch (Exception $e) {

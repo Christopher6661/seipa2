@@ -29,13 +29,13 @@ return new class extends Migration
             $table->boolean('tipo_mercado_regional')->default(false);
             $table->string('tipo_mercado_otro')->nullable();
             $table->boolean('fresco_entero')->default(false);
-            $table->decimal('fresco_entero_preckilo', 2,8)->nullable();
+            $table->decimal('fresco_entero_preckilo', 8,2)->nullable();
             $table->boolean('evicerado')->default(false);
-            $table->decimal('evicerado_preciokilo', 2,8)->nullable();
+            $table->decimal('evicerado_preciokilo', 8,2)->nullable();
             $table->boolean('enhielado')->default(false);
-            $table->decimal('enhielado_preciokilo', 2,8)->nullable();
+            $table->decimal('enhielado_preciokilo', 8,2)->nullable();
             $table->boolean('otro')->default(false);
-            $table->decimal('otro_preciokilo', 2,8)->nullable();
+            $table->decimal('otro_preciokilo', 8,2)->nullable();
             $table->string('fuenfinanza_programa');
             $table->float('fuentefianza_anio');
             $table->float('costogasto_anualprod');

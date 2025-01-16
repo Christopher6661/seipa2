@@ -89,7 +89,7 @@ class RegistroDattececonAFController extends Controller
                 'otro_preciokilo' => 'nullable|numeric|max:9999999999.99',
                 'fuenfinanza_programa' => 'required|string|max:50',
                 'fuentefianza_anio' => 'required|numeric',
-                'costogasto_anualprod' => 'required|numeric',
+                'costogasto_anualprod' => 'nullable|numeric|max:9999999999.99',
             ]);
 
             $DatosTecnicoEconomicosAF = registro_dattececon_AF::create($data);
@@ -179,7 +179,7 @@ class RegistroDattececonAFController extends Controller
                 'otro_preciokilo' => 'nullable|numeric|max:9999999999.99',
                 'fuenfinanza_programa' => 'required|string|max:50',
                 'fuentefianza_anio' => 'required|float',
-                'costogasto_anualprod' => 'required|float',
+                'costogasto_anualprod' => 'nullable|numeric|max:9999999999.99',
             ]);
 
             $DatosTecnicoEconomicosAF = registro_dattececon_AF::findOrFail($id);

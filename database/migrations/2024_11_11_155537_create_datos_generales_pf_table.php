@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('datos_generales_pf', function (Blueprint $table) {
             $table->id();
-            $table->string('nombres')->unique();
-            $table->string('apellido_pa')->unique();
-            $table->string('apellido_ma')->unique();
+            $table->string('nombres');
+            $table->string('apellido_pa');
+            $table->string('apellido_ma');
             $table->string('RFC')->unique();
             $table->string('CURP')->unique();
             $table->string('telefono');

@@ -89,7 +89,7 @@ class RegistroDattececonAMController extends Controller
                 'otro_preciokilo' => 'nullable|numeric|max:9999999999.99',
                 'fuenfinanza_programa' => 'required|string|max:50',
                 'fuentefianza_anio' => 'required|numeric',
-                'costogasto_anualprod' => 'required|numeric',
+                'costogasto_anualprod' => 'nullable|numeric|max:9999999999.99',
             ]);
 
             $DatosTecnicoEconomicosAM = registro_dattececon_AM::create($data);
@@ -179,7 +179,7 @@ class RegistroDattececonAMController extends Controller
                 'otro_preciokilo' => 'nullable|numeric|max:9999999999.99',
                 'fuenfinanza_programa' => 'required|string|max:50',
                 'fuentefianza_anio' => 'required|numeric',
-                'costogasto_anualprod' => 'required|numeric',
+                'costogasto_anualprod' => 'nullable|numeric|max:9999999999.99',
             ]);
 
             $DatosTecnicoEconomicosAM = registro_dattececon_AM::findOrFail($id);

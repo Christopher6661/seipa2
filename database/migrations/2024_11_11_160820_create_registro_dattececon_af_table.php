@@ -38,7 +38,7 @@ return new class extends Migration
             $table->decimal('otro_preciokilo', 8,2)->nullable();
             $table->string('fuenfinanza_programa');
             $table->float('fuentefianza_anio');
-            $table->float('costogasto_anualprod');
+            $table->decimal('costogasto_anualprod', 8,2)->nullable();
             $table->timestamps();
         });
     }

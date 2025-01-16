@@ -57,7 +57,7 @@ class MotorMenorPFController extends Controller
                 'tiempo' => 'required|string|max:13',
                 'tipo_combustible' => 'required|in:Magna,Premium,Diesel',
                 'fuera_borda' => 'required|boolean',
-                'vida_util_anio' => 'required|string|max:10',
+                'vida_util_anio' => 'required|string|max:20',
                 'doc_propiedad' => 'required|string|max:255'
             ]);
 
@@ -121,7 +121,7 @@ class MotorMenorPFController extends Controller
                 'tiempo' => 'required|string|max:13',
                 'tipo_combustible' => 'required|in:Magna,Premium,Diesel',
                 'fuera_borda' => 'required|boolean',
-                'vida_util_anio' => 'required|string|max:10',
+                'vida_util_anio' => 'required|string|max:20',
                 'doc_propiedad' => 'required|string|max:255'
             ]);
             

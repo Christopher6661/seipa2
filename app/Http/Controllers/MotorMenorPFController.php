@@ -29,7 +29,7 @@ class MotorMenorPFController extends Controller
                     'tiempo' => $item->tiempo,
                     'tipo_combustible' =>  $item->tipo_combustible == 'Magna' ? 'Magna' :
                     ($item->tipo_combustible == 'Premium' ? 'Premium' : 'Diesel'),
-                    'fuera_borda' => $item->fuera_borda ? '1' : '0',
+                    'fuera_borda' => ($item->fuera_borda == '1') ? '1' : '0',
                     'vida_util_anio' => $item->vida_util_anio,
                     'doc_propiedad' => $item->doc_propiedad,
                     'created_at' => $item->created_at,
@@ -92,7 +92,7 @@ class MotorMenorPFController extends Controller
                 'tiempo' => $motorMenor_PF->tiempo,
                 'tipo_combustible' =>  $motorMenor_PF->tipo_combustible == 'Magna' ? 'Magna' :
                 ($motorMenor_PF->tipo_combustible == 'Premium' ? 'Premium' : 'Diesel'),
-                'fuera_borda' => $motorMenor_PF->fuera_borda ? '1' : '0',
+                'fuera_borda' => ($motorMenor_PF->fuera_borda == '1') ? '1' : '0',
                 'vida_util_anio' => $motorMenor_PF->vida_util_anio,
                 'doc_propiedad' => $motorMenor_PF->doc_propiedad,
                 'created_at' => $motorMenor_PF->created_at,

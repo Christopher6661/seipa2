@@ -31,6 +31,7 @@ use App\Http\Controllers\MotorMenorPMController;
 use App\Http\Controllers\MunicipioController;
 use App\Http\Controllers\OficinaController;
 use App\Http\Controllers\RegionController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RegistroAdminprodAFController;
 use App\Http\Controllers\RegistroAdminprodAMController;
 use App\Http\Controllers\RegistroAfController;
@@ -57,6 +58,7 @@ use App\Http\Controllers\RegistroUbifisicaAMController;
 use App\Http\Controllers\ReporteacuiCsopcsController;
 use App\Http\Controllers\ReportepescaArriboController;
 use App\Http\Controllers\RolController;
+use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\SocioController;
 use App\Http\Controllers\TipoCubiertaController;
 use App\Http\Controllers\TipoEqManejoController;
@@ -83,6 +85,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 //ruta de las tablas
+Route::apiResource('register', RegisterController::class);
+Route::apiResource('login', SessionsController::class);
 Route::apiResource('roles', RolController::class);
 Route::apiResource('oficinas', OficinaController::class);
 Route::apiResource('registro_personal', RegistroPersonalController::class);

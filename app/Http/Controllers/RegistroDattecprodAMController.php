@@ -69,7 +69,7 @@ class RegistroDattecprodAMController extends Controller
                 'modelo_extensivo' => 'required|boolean',
                 'modelo_intensivo' => 'required|boolean',
                 'modelo_semintensivo' => 'required|boolean',
-                'modelo_otro' => 'required|string|max:50',
+                'modelo_otro' => 'string|max:50|nullable',
                 'especies_acuicolas' => 'required|string|max:40',
                 'pozo_profundo' => 'required|boolean',
                 'presa' => 'required|boolean',

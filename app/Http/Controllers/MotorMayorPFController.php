@@ -29,7 +29,7 @@ class MotorMayorPFController extends Controller
                     'tiempo' => $item->tiempo,
                     'tipo_combustible' =>  $item->tipo_combustible == 'Magna' ? 'Magna' :
                     ($item->tipo_combustible == 'Premium' ? 'Premium' : 'Diesel'),
-                    'fuera_borda' => $item->fuera_borda ? '1' : '0',
+                    'fuera_borda' => ($item->fuera_borda == '1') ? '1' : '0',
                     'vida_util_anio' => $item->vida_util_anio,
                     'doc_propiedad' => $item->doc_propiedad,
                     'created_at' => $item->created_at,
@@ -91,7 +91,7 @@ class MotorMayorPFController extends Controller
                 'num_serie' => $motorMayorPF->num_serie,
                 'tiempo' => $motorMayorPF->tiempo,
                 'tipo_combustible' => $motorMayorPF->tipo_combustible,
-                'fuera_borda' => $motorMayorPF->fuera_borda ? '1' : '0',
+                'fuera_borda' => ($motorMayorPF->fuera_borda == '1') ? '1' : '0',
                 'vida_util_anio' => $motorMayorPF->vida_util_anio,
                 'doc_propiedad' => $motorMayorPF->doc_propiedad,
                 'created_at' => $motorMayorPF->created_at,

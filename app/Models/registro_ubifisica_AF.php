@@ -16,7 +16,7 @@ class registro_ubifisica_AF extends Model
         'domicilio',
         'codigo_postal',
         'telefono',
-        'region_id',
+        'region_id ',
         'distr_id',
         'muni_id',
         'local_id',
@@ -30,16 +30,16 @@ class registro_ubifisica_AF extends Model
     public function Region(){
         return $this->belongsTo(region::class, 'region_id', 'id');
     }
-
+    
     public function Distrito(){
-        return $this->belongsTo(distrito::class, 'distrito_id', 'id');
+        return $this->belongsTo(distrito::class, 'distr_id', 'id');
     }
 
     public function Municipio(){
-        return $this->belongsTo(municipio::class, 'municipio_id', 'id');
+        return $this->belongsTo(municipio::class, 'muni_id', 'id');
     }
 
     public function Localidad(){
-        return $this->belongsTo(localidad::class, 'localidad_id', 'id');
+        return $this->belongsTo(localidad::class, 'local_id', 'id');
     }
 }

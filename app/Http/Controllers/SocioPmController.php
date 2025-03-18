@@ -21,7 +21,6 @@ class SocioPmController extends Controller
             $result = $socio_pm->map(function ($item){
                 return [
                     'id' => $item->id,
-                    'pescadormoral_id' => $item->colaborador->razon_social,
                     'CURP' => $item->CURP,
                     'tipo' => $item->tipo ? '1' : '0',
                     'created_at' => $item->created_at,
@@ -41,7 +40,6 @@ class SocioPmController extends Controller
     {
         try {
             $data = $request->validate([
-                'pescadormoral_id' => 'required|exists:datos_generales_pm,id',
                 'CURP' => 'required|string|max:18',
                 'tipo' => 'required|boolean'
             ]);
@@ -73,7 +71,6 @@ class SocioPmController extends Controller
             $socioPM = socio_pm::findOrFail($id);
             $result = [
                 'id' => $socioPM->id,
-                'pescadormoral_id' => $socioPM->colaborador->id,
                 'CURP' => $socioPM->CURP,
                 'tipo' => $socioPM->tipo ? '1' : '0',
                 'created_at' => $socioPM->created_at,
@@ -94,7 +91,6 @@ class SocioPmController extends Controller
     {
         try {
             $data = $request->validate([
-                'pescadormoral_id' => 'required',
                 'CURP' => 'required|string|max:18',
                 'tipo' => 'required|boolean'
             ]);

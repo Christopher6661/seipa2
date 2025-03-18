@@ -123,13 +123,14 @@ class MotorMayorPMController extends Controller
                 'tiempo' => 'required|string|max:13',
                 'tipo_combustible' => 'required|in:Magna,Premium,Diesel',
                 'fuera_borda' => 'required|boolean',
-                'vida_util_anio' => 'required|string|max:20',
+                'vida_util_anio' => 'required|string|max:10',
                 'doc_propiedad' => 'required|string|max:255'
             ]);
 
-            $existeMotorMayorPM = MotorMayor_PM::where('num_serie', $request->num_serie)->first();
+            $existeMotorMayorPM = MotorMayor_PM::where('num_serie', $request->num_serie)
+            ->where('id', '!=', $id)->first();
             if ($existeMotorMayorPM) {
-                return ApiResponse::error('Este motor para embarcaciones mayores ya existe', 422);  
+                return ApiResponse::error('Este motor para embarcaciones menores ya existe', 422);
             }
 
             $motorMayorPM = MotorMayor_PM::findOrFail($id);

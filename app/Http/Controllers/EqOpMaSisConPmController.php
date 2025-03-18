@@ -21,11 +21,11 @@ class EqOpMaSisConPmController extends Controller
             $result = $EqOpMaSisConPm->map(function ($item){
                 return [
                     'id' => $item->id,
-                    'emb_pertenece_id' => $item->registroemb_ma_pm->id,
+                    'emb_pertenece_id' => $item->EmbarcacionPertenece->nombre_emb_ma,
                     'cuenta_siscon' => $item->cuenta_siscon ? 'Sí' : 'No',
                     'sistema_conserva' => $item->sistema_conserva,
                     'siscon_cant' => $item->siscon_cant,
-                    'siscon_tipo_id' => $item->tipo_sistconservacion->id,
+                    'siscon_tipo_id' => $item->TipoSistemaConservacion->tipo_siscon,
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
                 ];

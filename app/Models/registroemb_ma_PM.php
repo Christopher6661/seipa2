@@ -11,17 +11,17 @@ class registroemb_ma_PM extends Model
     protected $table = 'registroemb_ma_pm';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'nombre_emb_ma',
+       'nombre_emb_ma',
         'captura_rnpa',
         'matricula',
         'puerto_base',
-        'anio_construccion',
+        'año_construccion',
         'tipo_cubierta_id',
         'material_casco_id',
-        'tipo_Actividad_pesca',
+        'tipo_actividad_pesca',
         'cantidad_patrones',
         'cantidad_motoristas',
-        'cantidad_pescadores',
+        'cant_pescadores',
         'cantidad_pesc_espe',
         'cantidad_tripulacion',
         'costo_avituallamiento',

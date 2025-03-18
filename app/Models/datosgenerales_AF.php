@@ -24,6 +24,7 @@ class datosgenerales_AF extends Model
         'distrito_id',
         'region_id',
         'grupo_sanguineo',
+        'especie_prod_id',
         'etnia_id',
         'cuenta_siscaptura',
         'motivo_no_cuenta'

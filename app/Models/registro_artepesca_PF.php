@@ -22,12 +22,13 @@ class registro_artepesca_PF extends Model
     public function arte_pesca(){
         return $this->belongsTo(arte_pesca::class, 'tipo_artepesca_id', 'id');
     }
-
-    public function especie_objetivo(){
-        return $this->belongsToMany(especie::class, 'especie_obj_id', 'id');
+    
+    public function especieobjetivo(){
+        return $this->belongsTo(especie::class, 'especie_obj_id', 'id');
     }
 
-    public function especies(){
+    public function esp_objetivo() {
         return $this->belongsToMany(especie::class, 'artepesca_x_especieobjpf', 'artepesca_pf_id', 'especieobjetivo_id');
     }
-}
+
+    }

@@ -127,10 +127,12 @@ class MotorMenorPMController extends Controller
                 'doc_propiedad' => 'required|string|max:255'
             ]);
 
-            $existeMotorMePM = MotorMenor_PM::where('num_serie', $request->num_serie)->first();
+            $existeMotorMePM = MotorMenor_PM::where('num_serie', $request->num_serie)
+            ->where('id', '!=', $id)->first();
             if ($existeMotorMePM) {
                 return ApiResponse::error('Este motor para embarcaciones menores ya existe', 422);
             }
+
 
             $motorMenor_PM = MotorMenor_PM::findOrFail($id);
             $motorMenor_PM->update($request->all());

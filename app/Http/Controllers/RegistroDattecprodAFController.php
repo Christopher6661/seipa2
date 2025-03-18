@@ -36,12 +36,12 @@ class RegistroDattecprodAFController extends Controller
                     'pozo_cieloabierto' => $item->pozo_cieloabierto ? '1' : '0',
                     'rio_cuenca' => $item->rio_cuenca ? '1' : '0',
                     'arroyo_manantial' => $item->arroyo_manantial ? '1' : '0',
-                    'otro' => $item->otro,
+                    'otro' => $item->otro ? '1' : '0',
                     'especificar_otro' => $item->especificar_otro,
-                    'forma_alimentacion' => $item->forma_alimentacion,
+                    'forma_alimentacion' => $item->forma_alimentacion === 'Bombeo' ? 'Bombeo' : 'Pozo',
                     'aliment_agua_caudad' => $item->aliment_agua_caudad,
                     'desc_equip_acuicola' => $item->desc_equip_acuicola,
-                    'tipo_asistenciatec' => $item->tipo_asistenciatec,
+                    'tipo_asistenciatec' => $item->tipo_asistenciatec === 'Asesor pagado' ? 'Asesor pagado' : 'Otorgado por la institucion',
                     'organismo_laboratorio' => $item->organismo_laboratorio ? '1' : '0',
                     'hormonados_genetica' => $item->hormonados_genetica ? '1' : '0',
                     'medicam_quimicos' => $item->medicam_quimicos ? '1' : '0',
@@ -79,11 +79,11 @@ class RegistroDattecprodAFController extends Controller
                 'rio_cuenca' => 'required|boolean',
                 'arroyo_manantial' => 'required|boolean',
                 'otro' => 'nullable|string|max:40',
-                'especificar_otro' => 'required|string|max:50',
-                'forma_alimentacion' => 'required|in:Bombeo, Pozo',
+                'especificar_otro' => 'string|max:50|nullable',
+                'forma_alimentacion' => 'required|in:Bombeo,Pozo',
                 'aliment_agua_caudad' => 'required|numeric|max:9999999999.99',
                 'desc_equip_acuicola' => 'required|string|max:200',
-                'tipo_asistenciatec' => 'required|in:Asesor pagado, Otorgado por la institucion',
+                'tipo_asistenciatec' => 'required|in:Asesor pagado,Otorgado por la institucion',
                 'organismo_laboratorio' => 'required|boolean',
                 'hormonados_genetica' => 'required|boolean',
                 'medicam_quimicos' => 'required|boolean',
@@ -95,7 +95,7 @@ class RegistroDattecprodAFController extends Controller
         } catch (ValidationException $e) {
             return ApiResponse::error('Error de validación: ' .$e->getMessage(), 422, $e->errors());
         } catch (Exception $e) {
-            return ApiResponse::error('Error al registrar los datos tecnico-productivos del acuicultor fisico: ', 500);
+            return ApiResponse::error('Error al registrar los datos tecnico-productivos del acuicultor fisico: '.$e->getMessage(), 500);
         }
     }
 
@@ -113,7 +113,7 @@ class RegistroDattecprodAFController extends Controller
                 'uso_arearestante' => $registroDatTecProdAF->uso_arearestante,
                 'modelo_extensivo' => $registroDatTecProdAF->modelo_extensivo ? '1' : '0',
                 'modelo_intensivo' => $registroDatTecProdAF->modelo_intensivo ? '1' : '0',
-                'modelo_semintensivo' => $registroDatTecProdAF->modelo_semintensivo ? 'Sí' : 'No',
+                'modelo_semintensivo' => $registroDatTecProdAF->modelo_semintensivo ? '1' : '0',
                 'modelo_otro' => $registroDatTecProdAF->modelo_otro,
                 'especies_acuicolas' => $registroDatTecProdAF->especies_acuicolas,
                 'pozo_profundo' => $registroDatTecProdAF->pozo_profundo ? '1' : '0',
@@ -123,12 +123,12 @@ class RegistroDattecprodAFController extends Controller
                 'pozo_cieloabierto' => $registroDatTecProdAF->pozo_cieloabierto ? '1' : '0',
                 'rio_cuenca' => $registroDatTecProdAF->rio_cuenca ? '1' : '0',
                 'arroyo_manantial' => $registroDatTecProdAF->arroyo_manantial ? '1' : '0',
-                'otro' => $registroDatTecProdAF->otro,
+                'otro' => $registroDatTecProdAF->otro ? '1' : '0',
                 'especificar_otro' => $registroDatTecProdAF->especificar_otro,
-                'forma_alimentacion' => $registroDatTecProdAF->forma_alimentacion,
+                'forma_alimentacion' => $registroDatTecProdAF->forma_alimentacion === 'Bombeo' ? 'Bombeo' : 'Pozo',
                 'aliment_agua_caudad' => $registroDatTecProdAF->aliment_agua_caudad,
                 'desc_equip_acuicola' => $registroDatTecProdAF->desc_equip_acuicola,
-                'tipo_asistenciatec' => $registroDatTecProdAF->tipo_asistenciatec,
+                'tipo_asistenciatec' => $registroDatTecProdAF->tipo_asistenciatec === 'Asesor pagado' ? 'Asesor pagado' : 'Otorgado por la institucion',
                 'organismo_laboratorio' => $registroDatTecProdAF->organismo_laboratorio ? '1' : '0',
                 'hormonados_genetica' => $registroDatTecProdAF->hormonados_genetica ? '1' : '0',
                 'medicam_quimicos' => $registroDatTecProdAF->medicam_quimicos ? '1' : '0',
@@ -149,7 +149,7 @@ class RegistroDattecprodAFController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try{
+        try {
             $data = $request->validate([
                 'area_total' => 'required|numeric',
                 'area_total_actacu' => 'required|numeric',
@@ -157,7 +157,7 @@ class RegistroDattecprodAFController extends Controller
                 'modelo_extensivo' => 'required|boolean',
                 'modelo_intensivo' => 'required|boolean',
                 'modelo_semintensivo' => 'required|boolean',
-                'modelo_otro' => 'required|string|max:50',
+                'modelo_otro' => 'string|max:50|nullable',
                 'especies_acuicolas' => 'required|string|max:40',
                 'pozo_profundo' => 'required|boolean',
                 'presa' => 'required|boolean',
@@ -166,12 +166,12 @@ class RegistroDattecprodAFController extends Controller
                 'pozo_cieloabierto' => 'required|boolean',
                 'rio_cuenca' => 'required|boolean',
                 'arroyo_manantial' => 'required|boolean',
-                'otro' => 'nullable|string|max:40',
-                'especificar_otro' => 'required|string|max:50',
-                'forma_alimentacion' => 'required|in:Bombeo, Pozo',
+                'otro' => 'required|boolean',
+                'especificar_otro' => 'string|max:50|nullable',
+                'forma_alimentacion' => 'required|in:Bombeo,Pozo',
                 'aliment_agua_caudad' => 'required|numeric|max:9999999999.99',
                 'desc_equip_acuicola' => 'required|string|max:200',
-                'tipo_asistenciatec' => 'required|in:Asesor pagado, Otorgado por la institucion',
+                'tipo_asistenciatec' => 'required|in:Asesor pagado,Otorgado por la institucion',
                 'organismo_laboratorio' => 'required|boolean',
                 'hormonados_genetica' => 'required|boolean',
                 'medicam_quimicos' => 'required|boolean',
@@ -189,6 +189,7 @@ class RegistroDattecprodAFController extends Controller
             return ApiResponse::error('Error al actualizar los datos tecnico-productivos: ' .$e->getMessage(), 500);
         }
     }
+
 
     /**
      * Elimina un registro de datos tecnico-productivos del acuicultor fisico.

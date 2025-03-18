@@ -45,13 +45,17 @@ class RegistroArtepescaPMController extends Controller
     {
         try {
             $data = $request->validate([
-                'tipo_artepesca_id' => 'required|exists:tipo_artepesca,id',
+                'tipo_artepesca_id' => 'required|exists:arte_pesca,id',
                 'medida_largo' => 'required|numeric',
                 'medida_ancho' => 'required|numeric',
                 'material' => 'required|string|max:30',
                 'luz_malla' => 'required|numeric',
-                'especie_obj_id' => 'required|exists:especies,id',
+                'especie_obj_id' => 'required|array',
+                'especie_obj_id.*' => 'integer|exists:especies,id', 
             ]);
+
+            $especiesProdId = $data['especie_obj_id'];
+            unset($data['especie_obj_id']);
 
             $existeArtePescaPM = registro_artepesca_PM::where('tipo_artepesca_id', $data['tipo_artepesca_id'])->first();
             if ($existeArtePescaPM) {
@@ -63,6 +67,9 @@ class RegistroArtepescaPMController extends Controller
             }
 
             $ArtePescaPM = registro_artepesca_PM::create($data);
+
+            $ArtePescaPM->esp_objetivo()->attach($especiesProdId);
+
             return ApiResponse::success('Arte de pesca creado exitosamente', 201, $ArtePescaPM);
         } catch (ValidationException $e) {
             return ApiResponse::error('Error de validación: ' .$e->getMessage(), 422, $e->errors());
@@ -77,7 +84,7 @@ class RegistroArtepescaPMController extends Controller
     public function show($id)
     {
         try {
-            $ArtePescaPM = registro_artepesca_PM::with('esp_objetivo', 'arte_pesca')->findOrFail($id);
+            $ArtePescaPM = registro_artepesca_PM::with('esp_objetivo')->findOrFail($id);
             $result = [
                 'id' => $ArtePescaPM->id,
                 'tipo_artepesca_id' => $ArtePescaPM->arte_pesca->id,
@@ -105,35 +112,39 @@ class RegistroArtepescaPMController extends Controller
         try {
             $data = $request->validate([
                 'tipo_artepesca_id' => 'required',
-                'medida_largo' => 'required|float',
-                'medida_ancho' => 'required|float',
+                'medida_largo' => 'required|numeric',
+                'medida_ancho' => 'required|numeric',
                 'material' => 'required|string|max:30',
-                'luz_malla' => 'required|float',
-                'especie_objetivo' => 'required|array',
-                'especie_objetivo' => 'integer|exists:especies,id'
+                'luz_malla' => 'required|numeric',
+                'especie_obj_id' => 'required|array',
+                'especie_obj_id.*' => 'integer|exists:especies,id',
             ]);
-
+    
             $especiesProdId = $data['especie_obj_id'];
             unset($data['especie_obj_id']);
-
-            $existeArtePescaPM = registro_artepesca_PM::where('tipo_artepesca_id', $request->tipo_artepesca_id)->first();
+    
+            $existeArtePescaPM = registro_artepesca_PM::where('tipo_artepesca_id', $data['tipo_artepesca_id'])
+                ->where('id', '!=', $id)
+                ->first();
+    
             if ($existeArtePescaPM) {
-                return ApiResponse::error('Este arte de pesca ya esta registrado', 422);
+                return ApiResponse::error('El tipo de arte de pesca ya está registrado.', 422);
             }
 
             $ArtePescaPM = registro_artepesca_PM::findOrFail($id);
             $ArtePescaPM->update($data);
             $ArtePescaPM->esp_objetivo()->sync($especiesProdId);
-
+    
             return ApiResponse::success('Arte de pesca actualizado exitosamente', 200, $ArtePescaPM);
         } catch (ModelNotFoundException $e) {
             return ApiResponse::error('Arte de pesca no encontrado', 404);
         } catch (ValidationException $e) {
-            return ApiResponse::error('Error de validación: ' .$e->getMessage(), 422, $e->errors());
+            return ApiResponse::error('Error de validación: ' . $e->getMessage(), 422, $e->errors());
         } catch (Exception $e) {
-            return ApiResponse::error('Error al actualizar el arte de pesca: ' .$e->getMessage(), 500);
+            return ApiResponse::error('Error al actualizar el arte de pesca: ' . $e->getMessage(), 500);
         }
-    }
+    }    
+
 
     /**
      * Elimina el arte de pesca.

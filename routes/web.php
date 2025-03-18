@@ -22,39 +22,39 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //Rutas para el pescador/fisico
-Route::get('/pescador_fisico', [PescadorFController::class, 'index'])->middleware('auth.pf')->name('pescador_fisico.index');
+//Route::get('/pescador_fisico', [PescadorFController::class, 'index'])->middleware('auth.pf')->name('pescador_fisico.index');
 
 //Rutas para el pescador/moral
-Route::get('/pescador_moral', [PescadorMController::class, 'index'])->middleware('auth.pm')->name('pescador_moral.index');
+//Route::get('/pescador_moral', [PescadorMController::class, 'index'])->middleware('auth.pm')->name('pescador_moral.index');
 
-Route::get('/', function () {
-    return view('home');
-})->middleware('auth');
+//Route::get('/', function () {
+   // return view('home');
+//})->middleware('auth');
 
-Route::get('/register', [RegisterController::class, 'create'])->middleware('guest')->name('register.index');
-Route::post('/register', [RegisterController::class, 'store'])->name('register.store'); 
+//Route::get('/register', [RegisterController::class, 'create'])->middleware('guest')->name('register.index');
+//Route::post('/register', [RegisterController::class, 'store'])->name('register.store'); 
 
-Route::get('/login', [SessionsController::class, 'create'])->middleware('guest')->name('login.index');
-Route::post('/login', [SessionsController::class, 'store'])->name('login.store');
-Route::get('/logout', [SessionsController::class, 'destroy'])->middleware('auth')->name('login.destroy');
+//Route::get('/login', [SessionsController::class, 'create'])->middleware('guest')->name('login.index');
+//Route::post('/login', [SessionsController::class, 'store'])->name('login.store');
+//Route::get('/logout', [SessionsController::class, 'destroy'])->middleware('auth')->name('login.destroy');
 
 //Rutas para el admin
-Route::get('/admin', [AdminController::class, 'index'])->middleware('auth.admin')->name('admin.index');
+//Route::get('/admin', [AdminController::class, 'index'])->middleware('auth.admin')->name('admin.index');
 
 //Rutas para el personal
-Route::get('/personal', [PersonalController::class, 'index'])->middleware('auth.personal')->name('personal.index');
+//Route::get('/personal', [PersonalController::class, 'index'])->middleware('auth.personal')->name('personal.index');
 
 //Rutas para el pescador/fisico
-Route::get('/pescador_fisico', [PescadorFController::class, 'index'])->middleware('auth.pf')->name('pescador_fisico.index');
+//Route::get('/pescador_fisico', [PescadorFController::class, 'index'])->middleware('auth.pf')->name('pescador_fisico.index');
 
 //Rutas para el pescador/moral
-Route::get('/pescador_moral', [PescadorMController::class, 'index'])->middleware('auth.pm')->name('pescador_moral.index');
+//Route::get('/pescador_moral', [PescadorMController::class, 'index'])->middleware('auth.pm')->name('pescador_moral.index');
 
 //Rutas para el acuicultor/fisico
-Route::get('/acuicultor_fisico', [AcuicultorFController::class, 'index'])->middleware('auth.af')->name('acuicultor_fisico.index');
+//Route::get('/acuicultor_fisico', [AcuicultorFController::class, 'index'])->middleware('auth.af')->name('acuicultor_fisico.index');
 
 //Rutas para el acuicultor/moral
-Route::get('/acuicultor_moral', [AcuicultorMController::class, 'index'])->middleware('auth.am')->name('acuicultor_moral.index');
+//Route::get('/acuicultor_moral', [AcuicultorMController::class, 'index'])->middleware('auth.am')->name('acuicultor_moral.index');
 
 
 /**Route::view('/login', "login")->name('login');

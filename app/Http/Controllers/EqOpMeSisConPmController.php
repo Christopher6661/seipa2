@@ -21,11 +21,11 @@ class EqOpMeSisConPmController extends Controller
             $result = $EqOpMeSisConPm->map(function ($item){
                 return [
                     'id' => $item->id,
-                    'emb_pertenece_id' => $item->registroemb_me_pm->id,
+                    'emb_pertenece_id' => $item->EmbarcacionPertenece->nombre_emb,
                     'cuenta_siscon' => $item->cuenta_siscon ? 'Sí' : 'No',
                     'sistema_conserva' => $item->sistema_conserva,
                     'siscon_cant' => $item->siscon_cant,
-                    'siscon_tipo_id' => $item->tipo_sistconservacion->id,
+                    'siscon_tipo_id' => $item->TipoSistemaConservacion->tipo_siscon,
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
                 ];
@@ -35,6 +35,7 @@ class EqOpMeSisConPmController extends Controller
             return ApiResponse::error('Error al obtener la lista de los equipos de operación de embarcaciones menores de sistemas de conservación: ' .$e->getMessage(), 500);
         }
     }
+
 
     /**
      * Crea un equipo de operacion menor de sistema de conservación del pescador moral.

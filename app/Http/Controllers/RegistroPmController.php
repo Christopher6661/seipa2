@@ -105,8 +105,8 @@ class RegistroPmController extends Controller
                 'usuario' => $pm->usuario,
                 'password' => $pm->password,
                 'email' => $pm->email,
-                'tipo_actividad' => $pm->tipo_actividad ? '1' : '0',
-                'tipo_persona' => $pm->tipo_persona ? '1' : '0',
+                'tipo_actividad' => $pm->tipo_actividad ? 'Pescador' : 'Acuicultor',
+                'tipo_persona' => $pm->tipo_persona ? 'Fisica' : 'Moral',
                 'created_at' => $pm->created_at,
                 'updated_at' => $pm->updated_at,
             ];

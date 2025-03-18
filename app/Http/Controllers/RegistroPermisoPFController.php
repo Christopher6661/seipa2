@@ -82,7 +82,7 @@ class RegistroPermisoPFController extends Controller
                 'vigencia_permiso_ini' => $permisosPF->vigencia_permiso_ini,
                 'vigencia_permiso_fin' => $permisosPF->vigencia_permiso_fin,
                 'RNPA' => $permisosPF->RNPA,
-                'tipo_permiso_id' => $permisosPF->permiso->nombre_permiso,
+                'tipo_permiso_id' => $permisosPF->permiso->id,
                 'tipo_embarcacion' => $permisosPF->tipo_embarcacion == 'Mayor' ? 'Mayor' : 'Menor',
                 'created_at' => $permisosPF->created_at,
                 'updated_at' => $permisosPF->updated_at,

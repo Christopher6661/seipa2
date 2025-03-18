@@ -22,7 +22,7 @@ class datosgenerales_PM extends Model
         'localidad_id',
         'zona_pesca',
         'cuota_captura',
-        'cant_artpesca',
+        'cant_artepesca',
         'etnia_id',
         'acta_constitutiva',
         'socios',

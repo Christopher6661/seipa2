@@ -22,6 +22,6 @@ class registro_permiso_PF extends Model
     public $timestamps = true;
 
     public function permiso(){
-        return $this->belongsTo(tipo_permiso::class, 'permiso_id', 'id');
+        return $this->belongsTo(tipo_permiso::class, 'tipo_permiso_id', 'id');
     }
 }

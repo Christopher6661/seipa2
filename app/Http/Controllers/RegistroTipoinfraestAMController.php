@@ -54,7 +54,6 @@ class RegistroTipoinfraestAMController extends Controller
             return ApiResponse::error('Error al obtener la lista de los tipos de infraestructura de los acuicultores morales: ' .$e->getMessage(), 500);
         }
     }
-
     /**
      * Crea un registro del tipo de infraestructura de un acuicultor moral.
      */
@@ -73,10 +72,10 @@ class RegistroTipoinfraestAMController extends Controller
                 'geomallagallamina_can' => 'required|string|max:50',
                 'tipo_circular_sup' => 'required|numeric',
                 'tipo_circular_vol' => 'required|numeric',
-                'tipo_circular_can' => 'requiredstring|max:50',
+                'tipo_circular_can' => 'required|string|max:50',
                 'tipo_rectangular_sup' => 'required|numeric',
                 'tipo_rectangular_vol' => 'required|numeric',
-                'tipo_rectangular_can' => 'requiredstring|max:50',
+                'tipo_rectangular_can' => 'required|string|max:50',
                 'jaula_flotante_sup' => 'required|numeric',
                 'jaula_flotante_vol' => 'required|numeric',
                 'jaula_flotante_can' => 'required|string|max:50',
@@ -159,10 +158,10 @@ class RegistroTipoinfraestAMController extends Controller
                 'geomallagallamina_can' => 'required|string|max:50',
                 'tipo_circular_sup' => 'required|numeric',
                 'tipo_circular_vol' => 'required|numeric',
-                'tipo_circular_can' => 'requiredstring|max:50',
+                'tipo_circular_can' => 'required|string|max:50',
                 'tipo_rectangular_sup' => 'required|numeric',
                 'tipo_rectangular_vol' => 'required|numeric',
-                'tipo_rectangular_can' => 'requiredstring|max:50',
+                'tipo_rectangular_can' => 'required|string|max:50',
                 'jaula_flotante_sup' => 'required|numeric',
                 'jaula_flotante_vol' => 'required|numeric',
                 'jaula_flotante_can' => 'required|string|max:50',

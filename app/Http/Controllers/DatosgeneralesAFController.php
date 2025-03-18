@@ -17,7 +17,7 @@ class DatosgeneralesAFController extends Controller
     public function index()
     {
         try {
-            $datosgeneralesAF = datosgenerales_AF::all();
+            $datosgeneralesAF = datosgenerales_AF::with('especies')->get();
             $result = $datosgeneralesAF->map(function ($item){
                 return [
                     'id' => $item->id,
@@ -34,8 +34,8 @@ class DatosgeneralesAFController extends Controller
                     'distrito_id' => $item->distrito->nombre_distrito,
                     'region_id' => $item->region->nombre_region,
                     'grupo_sanguineo' => $item->grupo_sanguineo,
-                    'especies_prod_id' => $item->especie_producen->nombre_especie,
-                    'etnia_id' => $item->etnias->id,
+                    'especie_prod_id' => $item->especies ? $item->especies->pluck('nombre_especie')->toArray() : [],
+                    'etnia_id' => $item->etnia->nombre_etnia,
                     'cuenta_siscaptura' => $item->cuenta_siscaptura ? 'Sí': 'NO',
                     'motivo_no_cuenta' => $item->motivo_no_cuenta,
                     'created_at' => $item->created_at,
@@ -68,15 +68,15 @@ class DatosgeneralesAFController extends Controller
                 'distrito_id' => 'required|exists:distritos,id',
                 'region_id' => 'required|exists:regiones,id',
                 'grupo_sanguineo' => 'required|string|max:6',
-                'especies_prod_id' => 'required|array',
-                'especies_prod_id.*' => 'integer|exists:especies,id',
+                'especie_prod_id' => 'required|array',
+                'especie_prod_id.*' => 'integer|exists:especies,id',
                 'etnia_id' => 'required|exists:etnias,id',
                 'cuenta_siscaptura' => 'required|boolean',
-                'motivo_no_cuenta' => 'required|string|max:255',
+                'motivo_no_cuenta' => 'nullable|string|max:255',
             ]);
 
-            $especiesProdId = $data['especies_prod_id'];
-            unset($data['especies_prod_id']);
+            $especiesProdId = $data['especie_prod_id'];
+            unset($data['especie_prod_id']);
 
             $existeDatosGeneralesAF = datosgenerales_AF::where('nombres', $data['nombres'])
             ->orwhere('RFC', $data['RFC'])
@@ -125,12 +125,12 @@ class DatosgeneralesAFController extends Controller
                     'telefono' => $datosgeneralesAF->telefono,
                     'email' => $datosgeneralesAF->email,
                     'domicilio' => $datosgeneralesAF->domicilio,
-                    'localidad_id' => $datosgeneralesAF->localidad->nombre_localidad,
-                    'municipio_id' => $datosgeneralesAF->municipio->nombre_municipio,
-                    'distrito_id' => $datosgeneralesAF->distrito->nombre_distrito,
-                    'region_id' => $datosgeneralesAF->region->nombre_region,
+                    'localidad_id' => $datosgeneralesAF->localidad->id,
+                    'municipio_id' => $datosgeneralesAF->municipio->id,
+                    'distrito_id' => $datosgeneralesAF->distrito->id,
+                    'region_id' => $datosgeneralesAF->region->id,
                     'grupo_sanguineo' => $datosgeneralesAF->grupo_sanguineo,
-                    'especies_prod_id' => $datosgeneralesAF->especie_producen->nombre_especie,
+                    'especie_prod_id' => $datosgeneralesAF->especie_producen->id,
                     'etnia_id' => $datosgeneralesAF->etnias->id,
                     'cuenta_siscaptura' => $datosgeneralesAF->cuenta_siscaptura ? 'Sí': 'NO',
                     'motivo_no_cuenta' => $datosgeneralesAF->motivo_no_cuenta,
@@ -165,10 +165,10 @@ class DatosgeneralesAFController extends Controller
                 'distrito_id' => 'required',
                 'region_id' => 'required',
                 'grupo_sanguineo' => 'required|string|max:6',
-                'especies_prod_id' => 'required',
+                'especie_prod_id' => 'required',
                 'etnia_id' => 'required',
                 'cuenta_siscaptura' => 'required|boolean',
-                'motivo_no_cuenta' => 'required|string|max:255',
+                'motivo_no_cuenta' => 'nullable|string|max:255',
             ]);
 
             $existeDatosGeneralesAF = datosgenerales_AF::where('id', '!=', $id)

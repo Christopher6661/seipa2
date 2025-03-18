@@ -14,7 +14,7 @@ class RegistroembMaPMController extends Controller
     /**
      * Despliega la lista de embarcaciones mayores del pescador moral.
      */
-    public function index()
+     public function index()
     {
         try {
             $embMayorPM = registroemb_ma_PM::all();
@@ -31,7 +31,7 @@ class RegistroembMaPMController extends Controller
                     'tipo_actividad_pesca' => $item->tipo_actividad_pesca,
                     'cantidad_patrones' => $item->cantidad_patrones,
                     'cantidad_motoristas' => $item->cantidad_motoristas,
-                    'cantidad_pescadores' => $item->cantidad_pescadores,
+                    'cant_pescadores' => $item->cant_pescadores,
                     'cantidad_pesc_espe' => $item->cantidad_pesc_espe,
                     'cantidad_tripulacion' => $item->cantidad_tripulacion,
                     'costo_avituallamiento' => $item->costo_avituallamiento,
@@ -61,7 +61,7 @@ class RegistroembMaPMController extends Controller
     {
         try {
             $data = $request->validate([
-                'nombre_emb_ma' => 'required|string|max:30',
+                'nombre_emb_ma' => 'required|string|max:250',
                 'captura_rnpa' => 'required|string|max:30',
                 'matricula' => 'required|string|max:20',
                 'puerto_base' => 'required|string|max:30',
@@ -128,7 +128,7 @@ class RegistroembMaPMController extends Controller
                     'tipo_actividad_pesca' => $embMayorPM->tipo_actividad_pesca,
                     'cantidad_patrones' => $embMayorPM->cantidad_patrones,
                     'cantidad_motoristas' => $embMayorPM->cantidad_motoristas,
-                    'cantidad_pescadores' => $embMayorPM->cantidad_pescadores,
+                    'cant_pescadores' => $embMayorPM->cant_pescadores,
                     'cantidad_pesc_espe' => $embMayorPM->cantidad_pesc_espe,
                     'cantidad_tripulacion' => $embMayorPM->cantidad_tripulacion,
                     'costo_avituallamiento' => $embMayorPM->costo_avituallamiento,

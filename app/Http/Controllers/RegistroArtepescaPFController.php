@@ -17,9 +17,10 @@ class RegistroArtepescaPFController extends Controller
     public function index()
     {
         try {
-            $ArtePescaPF = registro_artepesca_PF::with('esp_objetivo', 'arte_pesca')->get();
-           
-            $result = $ArtePescaPF->map(function ($item){
+            
+            $ArtePescaPF = registro_artepesca_PF::with('esp_objetivo')->get();
+    
+            $result = $ArtePescaPF->map(function ($item) {
                 return [
                     'id' => $item->id,
                     'tipo_artepesca_id' => $item->arte_pesca->nombre_artpesca,
@@ -32,26 +33,31 @@ class RegistroArtepescaPFController extends Controller
                     'updated_at' => $item->updated_at,
                 ];
             });
+    
             return ApiResponse::success('Lista de artes de pesca de pescador fisico', 200, $result);
         } catch (Exception $e) {
-            return ApiResponse::error('Error al obtener la lista de artes de pesca para pescador fisico: ' .$e->getMessage(), 500);
+            return ApiResponse::error('Error al obtener la lista de artes de pesca para pescador fisico: ' . $e->getMessage(), 500);
         }
     }
+    
 
     /**
      * Crea un arte de pesca.
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         try {
             $data = $request->validate([
                 'tipo_artepesca_id' => 'required|exists:arte_pesca,id',
                 'medidas_metros' => 'required|numeric',
                 'longitud' => 'required|numeric',
                 'material' => 'required|string|max:30',
-                'luz_malla' => 'required|numeric',
-                'especie_obj_id' => 'required|exists:especies,id'               
+                'luz_malla' => 'required|numeric',     
+                'especie_obj_id' => 'required|array',
+                'especie_obj_id.*' => 'integer|exists:especies,id',        
             ]);
+
+            $especiesProdId = $data['especie_obj_id'];
+            unset($data['especie_obj_id']);
 
             $existeArtePescaPF = registro_artepesca_PF::where('tipo_artepesca_id', $data['tipo_artepesca_id'])->first();
             if ($existeArtePescaPF) {
@@ -63,13 +69,16 @@ class RegistroArtepescaPFController extends Controller
             }
 
             $ArtePescaPF = registro_artepesca_PF::create($data);
+
+            $ArtePescaPF->esp_objetivo()->attach($especiesProdId);
+
             return ApiResponse::success('Arte de pesca creado exitosamente', 201, $ArtePescaPF);
         } catch (ValidationException $e) {
             return ApiResponse::error('Error de validación: ' .$e->getMessage(), 422, $e->errors());
         } catch (Exception $e) {
             return ApiResponse::error('Error al crear el arte de pesca: '  .$e->getMessage(), 500);
-        }
-    }
+           } 
+       }
     
     /**
      * Muestra un arte de pesca.
@@ -77,8 +86,8 @@ class RegistroArtepescaPFController extends Controller
     public function show($id)
     {
         try {
-            $artePesca = registro_artepesca_PF::with('esp_objetivo', 'arte_pesca')->findOrFail($id);
-
+            $artePesca = registro_artepesca_PF::with('esp_objetivo')->findOrFail($id);
+    
             $result = [
                 'id' => $artePesca->id,
                 'tipo_artepesca_id' => $artePesca->arte_pesca->id,
@@ -90,14 +99,15 @@ class RegistroArtepescaPFController extends Controller
                 'created_at' => $artePesca->created_at,
                 'updated_at' => $artePesca->updated_at,
             ];
-
+    
             return ApiResponse::success('Detalle del arte de pesca', 200, $result);
         } catch (ModelNotFoundException $e) {
             return ApiResponse::error('Arte de pesca no encontrado', 404);
         } catch (Exception $e) {
-            return ApiResponse::error('Error al obtener el detalle del arte de pesca: ' .$e->getMessage(), 500);
+            return ApiResponse::error('Error al obtener el detalle del arte de pesca: ' . $e->getMessage(), 500);
         }
     }
+
 
     /**
      * Actualiza el arte de pesca.
@@ -111,8 +121,8 @@ class RegistroArtepescaPFController extends Controller
                 'longitud' => 'required|numeric',
                 'material' => 'required|string|max:30',
                 'luz_malla' => 'required|numeric',
-                'especie_obj_id' => 'required|array', 
-                'especie_obj_id' => 'integer|exists:especies,id'
+                'especie_obj_id' => 'required|array',
+                'especie_obj_id.*' => 'integer|exists:especies,id',
             ]);
 
             $especiesProdId = $data['especie_obj_id'];

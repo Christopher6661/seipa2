@@ -46,7 +46,7 @@ class EqOpMaManejoPmController extends Controller
                 'cuenta_eqmanejo' => 'required|boolean',
                 'equipo_manejo' => 'required|string|max:50',
                 'eqmanejo_cant' => 'required|integer',
-                'eqmanejo_tipo_id' => 'required|exists:tipo_equipo_manejo',
+                'eqmanejo_tipo_id' => 'required|exists:tipo_equipo_manejo,id',
             ]);
             $existeEqOpMaManejoPm = EqOpMaManejoPm::where($data)->exists();
             if ($existeEqOpMaManejoPm) {

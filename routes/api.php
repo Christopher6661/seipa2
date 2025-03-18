@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArtePescaController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DatosgeneralesAFController;
 use App\Http\Controllers\DatosgeneralesPFController;
 use App\Http\Controllers\DatosgeneralesPMController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\EqOpMeSegPfController;
 use App\Http\Controllers\EqOpMeSegPmController;
 use App\Http\Controllers\EqOpMeSisConPfController;
 use App\Http\Controllers\EqOpMeSisConPmController;
+use App\Http\Controllers\EspecieController;
 use App\Http\Controllers\EtniaController;
 use App\Http\Controllers\LocalidadController;
 use App\Http\Controllers\MaterialCascoController;
@@ -84,9 +86,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
+
+//Rutas protegidas según el rol del usuario
+Route::middleware(['auth'])->group(function () {
+    Route::get('/user', [AuthController::class, 'userProfile']);
+    Route::put('/user/{id}', [AuthController::class, 'update'])->middleware('role:admin');
+    Route::delete('/user/{id}', [AuthController::class, 'destroy'])->middleware('role:admin');
+});
+
 //ruta de las tablas
-Route::apiResource('register', RegisterController::class);
-Route::apiResource('login', SessionsController::class);
 Route::apiResource('roles', RolController::class);
 Route::apiResource('oficinas', OficinaController::class);
 Route::apiResource('registro_personal', RegistroPersonalController::class);
@@ -107,6 +118,7 @@ Route::apiResource('tipo_sistconservacion', TipoSisConController::class);
 Route::apiResource('tipo_equipo_radcom', TipoEqRadComController::class);
 Route::apiResource('tipo_equipo_seg', TipoEqSegController::class);
 Route::apiResource('tipo_equipo_manejo', TipoEqManejoController::class);
+Route::apiResource('especies', EspecieController::class);
 Route::apiResource('datos_generales_pf', DatosgeneralesPFController::class);
 Route::apiResource('registro_permisos_pf', RegistroPermisoPFController::class);
 Route::apiResource('registroemb_me_pf', RegistroembMePFController::class);

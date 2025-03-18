@@ -51,7 +51,7 @@ class RegistroPermisoPMController extends Controller
                 'vigencia_permiso_fin' => 'required|date',
                 'RNPA' => 'required|string|max:50',
                 'tipo_permiso_id' => 'required|exists:tipo_permisos,id',
-                'tipo_emb' => 'required|boolean'
+                'tipo_emb' => 'required|in:Mayor,Menor'
             ]);
 
             $existepermisoPM = registro_permiso_PM::where('folio_permiso', $data['folio_permiso'])->first();
@@ -63,7 +63,7 @@ class RegistroPermisoPMController extends Controller
                 return ApiResponse::error('El permiso ya existe', 422, $errors);
             }
 
-            $permisoPM = registro_permiso_PM::creatr($data);
+            $permisoPM = registro_permiso_PM::create($data);
             return ApiResponse::success('Permiso creado exitosamente', 201, $permisoPM);
         } catch (ValidationException $e) {
             return ApiResponse::error('Error de validación: ' .$e->getMessage(), 422, $e->errors());
@@ -86,8 +86,8 @@ class RegistroPermisoPMController extends Controller
                 'vigencia_permiso_ini' => $permisoPM->vigencia_permiso_ini,
                 'vigencia_permiso_fin' => $permisoPM->vigencia_permiso_fin,
                 'RNPA' => $permisoPM->RNPA,
-                'tipo_permiso_id' => $permisoPM->permiso->nombre_permiso,
-                'tipo_emb' => $permisoPM->tipo_emb ? '1' : '0',
+                'tipo_permiso_id' => $permisoPM->permiso->id,
+                'tipo_emb' => $permisoPM->tipo_emb == 'Mayor' ? 'Mayor' : 'Menor',
                 'created_at' => $permisoPM->created_at,
                 'updated_at' => $permisoPM->updated_at,
             ];
@@ -110,19 +110,20 @@ class RegistroPermisoPMController extends Controller
                 'pesqueria' => 'required|string|max:40',
                 'vigencia_permiso_ini' => 'required|date',
                 'vigencia_permiso_fin' => 'required|date',
-                'RNPA' => 'required|string|50',
+                'RNPA' => 'required|string|max:50',
                 'tipo_permiso_id' => 'required',
-                'tipo_embarcacion' => 'required|boolean'
+                'tipo_emb' => 'required|in:Mayor,Menor'
             ]);
 
-            $existepermisoPM = registro_permiso_PM::where('folio_permiso', $request->folio_permiso)->first();
+            $existepermisoPM = registro_permiso_PM::where('folio_permiso', $request->folio_permiso)
+            ->where('id', '!=', $id)->first();
             if ($existepermisoPM) {
-                return ApiResponse::error('Este permiso para pescador fisico ya existe', 422);
+                return ApiResponse::error('EL folio de permiso ya esta en uso', 422);
             }
 
-            $permisoPM = registro_permiso_PM::findOrFail($id);
-            $permisoPM->update($request->all());
-            return ApiResponse::success('Permiso actualizado exitosamente', 200, $permisoPM);
+            $permisosPM = registro_permiso_PM::findOrFail($id);
+            $permisosPM->update($request->all());
+            return ApiResponse::success('Permiso actualizado exitosamente', 200, $permisosPM);
         } catch (ModelNotFoundException $e) {
             return ApiResponse::error('Permiso no encontrado', 404);
         } catch (ValidationException $e) {

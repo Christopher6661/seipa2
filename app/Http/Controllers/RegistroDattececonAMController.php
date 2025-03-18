@@ -78,7 +78,7 @@ class RegistroDattececonAMController extends Controller
                 'tipo_mercado_local' => 'required|boolean',
                 'tipo_mercado_estatal' => 'required|boolean',
                 'tipo_mercado_regional' => 'required|boolean',
-                'tipo_mercado_otro' => 'required|string|max:40|nullable',
+                'tipo_mercado_otro' => 'string|max:40|nullable',
                 'fresco_entero' => 'required|boolean',
                 'fresco_entero_preckilo' => 'nullable|numeric|max:9999999999.99',
                 'evicerado' => 'required|boolean',
@@ -89,7 +89,7 @@ class RegistroDattececonAMController extends Controller
                 'otro_preciokilo' => 'nullable|numeric|max:9999999999.99',
                 'fuenfinanza_programa' => 'required|string|max:50',
                 'fuentefianza_anio' => 'required|numeric',
-                'costogasto_anualprod' => 'nullable|numeric|max:9999999999.99',
+                'costogasto_anualprod' => 'required|numeric',
             ]);
 
             $DatosTecnicoEconomicosAM = registro_dattececon_AM::create($data);
@@ -97,7 +97,7 @@ class RegistroDattececonAMController extends Controller
         } catch (ValidationException $e) {
             return ApiResponse::error('Error de validación: ' .$e->getMessage(), 422, $e->errors());
         } catch (Exception $e) {
-            return ApiResponse::error('Error al registrar los datos tecnico-economicos del acuicultor moral: ', 500);
+            return ApiResponse::error('Error al registrar los datos tecnico-economicos del acuicultor moral: ' .$e->getMessage(), 500);
         }
     }
 
@@ -168,7 +168,7 @@ class RegistroDattececonAMController extends Controller
                 'tipo_mercado_local' => 'required|boolean',
                 'tipo_mercado_estatal' => 'required|boolean',
                 'tipo_mercado_regional' => 'required|boolean',
-                'tipo_mercado_otro' => 'required|string|max:40|nullable',
+                'tipo_mercado_otro' => 'string|max:40|nullable',
                 'fresco_entero' => 'required|boolean',
                 'fresco_entero_preckilo' => 'nullable|numeric|max:9999999999.99',
                 'evicerado' => 'required|boolean',
@@ -179,7 +179,7 @@ class RegistroDattececonAMController extends Controller
                 'otro_preciokilo' => 'nullable|numeric|max:9999999999.99',
                 'fuenfinanza_programa' => 'required|string|max:50',
                 'fuentefianza_anio' => 'required|numeric',
-                'costogasto_anualprod' => 'nullable|numeric|max:9999999999.99',
+                'costogasto_anualprod' => 'required|numeric',
             ]);
 
             $DatosTecnicoEconomicosAM = registro_dattececon_AM::findOrFail($id);

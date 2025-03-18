@@ -96,8 +96,8 @@ class RegistroPfController extends Controller
                 'usuario' => $pf->usuario,
                 'password' => $pf->password,
                 'email' => $pf->email,
-                'tipo_actividad' => $pf->tipo_actividad ? '1' : '0',
-                'tipo_persona' => $pf->tipo_persona ? '1' : '0',
+                'tipo_actividad' => $pf->tipo_actividad ? 'Pescador' : 'Acuicultor',
+                'tipo_persona' => $pf->tipo_persona ? 'Fisica' : 'Moral',
                 'created_at' => $pf->created_at,
                 'updated_at' => $pf->updated_at,
             ];

@@ -23,7 +23,7 @@ class EqOpMeSegPmController extends Controller
                     'id' => $item->id,
                     'emb_pertenece_id' => $item->registroemb_me_pm->id,
                     'cuenta_eqseguridad' => $item->cuenta_eqseguridad ? 'Sí' : 'No',
-                    'equipo_seguridad' => $item->equipo_seguridad,
+                    'equipo_seguiridad' => $item->equipo_seguiridad,
                     'eqseg_cant' => $item->eqseg_cant,
                     'eqseg_tipo_id' => $item->tipo_equipo_seg->id,
                     'created_at' => $item->created_at,
@@ -45,7 +45,7 @@ class EqOpMeSegPmController extends Controller
             $data = $request->validate([
                 'emb_pertenece_id' => 'required|exists:registroemb_me_pm,id',
                 'cuenta_eqseguridad' => 'required|boolean',
-                'equipo_seguridad' => 'required|string|max:50',
+                'equipo_seguiridad' => 'required|string|max:50',
                 'eqseg_cant' => 'required|integer',
                 'eqseg_tipo_id' => 'required|exists:tipo_equipo_seg,id',
             ]);
@@ -74,7 +74,7 @@ class EqOpMeSegPmController extends Controller
                 'id' => $EqOpMeSegPm->id,
                 'emb_pertenece_id' => $EqOpMeSegPm->registroemb_me_pm->id,
                 'cuenta_eqseguridad' => $EqOpMeSegPm->cuenta_eqseguridad ? 'Sí' : 'No',
-                'equipo_seguridad' => $EqOpMeSegPm->equipo_seguridad,
+                'equipo_seguiridad' => $EqOpMeSegPm->equipo_seguiridad,
                 'eqseg_cant' => $EqOpMeSegPm->eqseg_cant,
                 'eqseg_tipo_id' => $EqOpMeSegPm->tipo_equipo_seg->id,
                 'created_at' => $EqOpMeSegPm->created_at,
@@ -97,7 +97,7 @@ class EqOpMeSegPmController extends Controller
             $data = $request->validate([
                 'emb_pertenece_id' => 'required',
                 'cuenta_eqseguridad' => 'required|boolean',
-                'equipo_seguridad' => 'required|string|max:50',
+                'equipo_seguiridad' => 'required|string|max:50',
                 'eqseg_cant' => 'required|integer',
                 'eqseg_tipo_id' => 'required',
             ]);

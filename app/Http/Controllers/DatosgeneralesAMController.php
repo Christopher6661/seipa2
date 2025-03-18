@@ -17,7 +17,7 @@ class DatosgeneralesAMController extends Controller
     public function index()
     {
         try {
-            $datosgeneralesAM = datosgenerales_AM::all();
+            $datosgeneralesAM = datosgenerales_AM::with('especies')->get();
             $result = $datosgeneralesAM->map(function ($item){
                 return [
                     'id' => $item->id,
@@ -31,8 +31,8 @@ class DatosgeneralesAMController extends Controller
                     'muni_id' => $item->municipio->nombre_municipio,
                     'local_id' => $item->localidad->nombre_localidad,
                     'email' => $item->email,
-                    'especies_prod_id' => $item->especies_producen->nombre_especie,
-                    'etnia_id' => $item->etnias->id,
+                    'especies_prod_id' => $item->especies ? $item->especies->pluck('nombre_especie')->toArray() : [],
+                    'etnia_id' => $item->etnia->nombre_etnia,
                     'socios' => $item->socios,
                     'cuenta_siscuarente' => $item->cuenta_siscuarente ? 'Sí': 'NO',
                     'motivo_no_cuenta' => $item->motivo_no_cuenta,
@@ -68,7 +68,7 @@ class DatosgeneralesAMController extends Controller
                 'etnia_id' => 'required|exists:etnias,id',
                 'socios' => 'required|string|max:255',
                 'cuenta_siscuarente' => 'required|boolean',
-                'motivo_no_cuenta' => 'required|string|max:255',
+                'motivo_no_cuenta' => 'nullable|string|max:255',
             ]);
 
             $especiesProdId = $data['especies_prod_id'];
@@ -118,12 +118,12 @@ class DatosgeneralesAMController extends Controller
                 'CURP' => $datosgeneralesAM->CURP,
                 'telefono' => $datosgeneralesAM->telefono,
                 'domicilio' => $datosgeneralesAM->domicilio,
-                'region_id' => $datosgeneralesAM->region->nombre_region,
-                'distrito_id' => $datosgeneralesAM->distrito->nombre_distrito,
-                'muni_id' => $datosgeneralesAM->municipio->nombre_municipio,
-                'local_id' => $datosgeneralesAM->localidad->nombre_localidad,
+                'region_id' => $datosgeneralesAM->region->id,
+                'distrito_id' => $datosgeneralesAM->distrito->id,
+                'muni_id' => $datosgeneralesAM->municipio->id,
+                'local_id' => $datosgeneralesAM->localidad->id,
                 'email' => $datosgeneralesAM->email,
-                'especies_prod_id' => $datosgeneralesAM->especies_producen->nombre_especie,
+                'especies_prod_id' => $datosgeneralesAM->especies_producen->id,
                 'etnia_id' => $datosgeneralesAM->etnias->id,
                 'socios' => $datosgeneralesAM->socios,
                 'cuenta_siscuarente' => $datosgeneralesAM->cuenta_siscuarente ? 'Sí': 'NO',
@@ -160,7 +160,7 @@ class DatosgeneralesAMController extends Controller
                 'etnia_id' => 'required',
                 'socios' => 'required|string|max:255',
                 'cuenta_siscuarente' => 'required|boolean',
-                'motivo_no_cuenta' => 'required|string|max:255',
+                'motivo_no_cuenta' => 'nullable|string|max:255',
             ]);
 
             $existeDatosGeneralesAM = datosgenerales_AM::where('id', '!=', $id)

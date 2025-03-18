@@ -19,8 +19,8 @@ class registro_dattececon_AM extends Model
         'capturacosecha_anio',
         'capturacos_anio_peso',
         'captcosanio_mortalidad',
-        'destino_autoconsumo',
-        'destino_comercial',
+        'destino_autoconsimo',
+        'destino_comercializacio',
         'destino_otro',
         'tipo_mercado_local',
         'tipo_mercado_estatal',
@@ -34,7 +34,7 @@ class registro_dattececon_AM extends Model
         'enhielado_preciokilo',
         'otro',
         'otro_preciokilo',
-        'fuenfianza_programa',
+        'fuenfinanza_programa',
         'fuentefianza_anio',
         'costogasto_anualprod'
     ];

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('datos_generales_pm', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('oficregis_id');
             $table->string('razon_social');
             $table->string('RFC');
             $table->string('CURP');
@@ -41,11 +42,11 @@ return new class extends Migration
             $table->integer('cant_motor_me')->nullable();
             $table->string('tipos_motores_me')->nullable();
 
+            $table->foreign('oficregis_id')->references('id')->on('oficinas');
             $table->foreign('region_id')->references('id')->on('regiones');
             $table->foreign('distrito_id')->references('id')->on('distritos');
             $table->foreign('municipio_id')->references('id')->on('municipios');
             $table->foreign('localidad_id')->references('id')->on('localidades');
-
             $table->foreign('etnia_id')->references('id')->on('etnias');
             $table->timestamps();
         });

@@ -11,6 +11,7 @@ class datosgenerales_AM extends Model
     protected $table = 'datos_generales_am';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'oficregis_id',
         'razon_social',
         'RFC',
         'CURP',
@@ -28,6 +29,10 @@ class datosgenerales_AM extends Model
         'motivo_no_cuenta'
     ];
     public $timestamps = true;
+
+    public function Oficina(){
+        return $this->belongsTo(oficina::class, 'oficregis_id', 'id');
+    }
 
     public function region(){
         return $this->belongsTo(region::class, 'region_id', 'id');

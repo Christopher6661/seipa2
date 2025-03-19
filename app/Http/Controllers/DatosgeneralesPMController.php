@@ -21,6 +21,7 @@ class DatosgeneralesPMController extends Controller
             $result = $datosgeneralesPM->map(function ($item){
                 return [
                     'id' => $item->id,
+                    'oficregis_id' => $item->Oficina->nombre_oficina,
                     'razon_social' => $item->razon_social,
                     'RFC' => $item->RFC,
                     'CURP' => $item->CURP,
@@ -65,6 +66,7 @@ class DatosgeneralesPMController extends Controller
     {
         try {
             $data = $request->validate([
+                'oficregis_id' => 'required|exists:oficina,id',
                 'razon_social' => 'required|string|max:250',
                 'RFC' => 'required|string|max:12',
                 'CURP' => 'required|string|max:18',
@@ -129,7 +131,8 @@ class DatosgeneralesPMController extends Controller
         try {
             $datosgeneralesPM = datosgenerales_PM::findOrFail($id);
             $result = [
-                'id' => $datosgeneralesPM->id,
+                    'id' => $datosgeneralesPM->id,
+                    'oficregis_id' => $datosgeneralesPM->Oficina->id,
                     'razon_social' => $datosgeneralesPM->razon_social,
                     'RFC' => $datosgeneralesPM->RFC,
                     'CURP' => $datosgeneralesPM->CURP,
@@ -175,6 +178,7 @@ class DatosgeneralesPMController extends Controller
     {
         try {
             $data = $request->validate([
+                'oficregis_id' => 'required',
                 'razon_social' => 'required|string|max:250',
                 'RFC' => 'required|string|max:12',
                 'CURP' => 'required|string|max:18',

@@ -21,6 +21,7 @@ class DatosgeneralesAFController extends Controller
             $result = $datosgeneralesAF->map(function ($item){
                 return [
                     'id' => $item->id,
+                    'oficregis_id' => $item->Oficina->nombre_oficina,
                     'nombres' => $item->nombres,
                     'apellido_pa' => $item->apellido_pa,
                     'apellido_ma' => $item->apellido_ma,
@@ -55,6 +56,7 @@ class DatosgeneralesAFController extends Controller
     {
         try {
             $data = $request->validate([
+                'oficregis_id' => 'required|exists:oficina,id',
                 'nombres' => 'required|string|max:40',
                 'apellido_pa' => 'required|string|max:30',
                 'apellido_ma' => 'required|string|max:30',
@@ -116,7 +118,8 @@ class DatosgeneralesAFController extends Controller
         try {
             $datosgeneralesAF = datosgenerales_AF::findOrFail($id);
             $result = [
-                'id' => $datosgeneralesAF->id,
+                    'id' => $datosgeneralesAF->id,
+                    'oficregis_id' => $datosgeneralesAF->Oficina->id,
                     'nombres' => $datosgeneralesAF->nombres,
                     'apellido_pa' => $datosgeneralesAF->apellido_pa,
                     'apellido_ma' => $datosgeneralesAF->apellido_ma,
@@ -152,6 +155,7 @@ class DatosgeneralesAFController extends Controller
     {
         try {
             $data = $request->validate([
+                'oficregis_id' => 'required',
                 'nombres' => 'required|string|max:40',
                 'apellido_pa' => 'required|string|max:30',
                 'apellido_ma' => 'required|string|max:30',

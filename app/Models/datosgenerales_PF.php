@@ -11,6 +11,7 @@ class datosgenerales_PF extends Model
     protected $table = 'datos_generales_pf';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'oficregis_id',
         'nombres',
         'apellido_pa',
         'apellido_ma',
@@ -43,6 +44,10 @@ class datosgenerales_PF extends Model
         'tipos_motores_me'
     ];
     public $timestamps = true;
+
+    public function Oficina(){
+        return $this->belongsTo(oficina::class, 'oficregis_id', 'id');
+    }
 
     public function Region(){
         return $this->belongsTo(region::class, 'region_id', 'id');

@@ -11,6 +11,7 @@ class datosgenerales_AF extends Model
     protected $table = 'datos_generales_af';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'oficregis_id',
         'nombres',
         'apellido_pa',
         'apellido_ma',
@@ -30,6 +31,10 @@ class datosgenerales_AF extends Model
         'motivo_no_cuenta'
     ];
     public $timestamps = true;
+
+    public function Oficina(){
+        return $this->belongsTo(oficina::class, 'oficregis_id', 'id');
+    }
 
     public function localidad(){
         return $this->belongsTo(localidad::class, 'localidad_id', 'id');

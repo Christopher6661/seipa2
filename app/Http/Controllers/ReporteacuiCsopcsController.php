@@ -220,7 +220,7 @@ class ReporteacuiCsopcsController extends Controller
                 'unidad_procedencia' => 'required|string|max:50',
                 'certificado_sanitario' => 'required|string|max:255',
                 'guia_pesca' => 'required|string|max:50',
-                'valor_lote' => 'required|float',
+                'valor_lote' => 'required|numeric',
                 'metodo_traslado' => 'required|string|max:50',
                 'criasemilla_dia' => 'required|string|max:50',
                 'criasemilla_mes' => 'required|string|max:50',

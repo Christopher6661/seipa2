@@ -36,6 +36,7 @@ return new class extends Migration
             $table->string('certificado_sanitario');
             $table->string('guia_pesca');
             $table->float('valor_lote');
+            $table->string('metodo_traslado');
             $table->string('criasemilla_dia');
             $table->string('criasemilla_mes');
             $table->string('criasemilla_anio');

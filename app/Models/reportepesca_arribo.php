@@ -22,7 +22,7 @@ class reportepesca_arribo extends Model
         'embarcacion',
         'arte_pesca',
         'metodo_traslado',
-        'pesca_accidental',
+        'pesca_incidental',
         'quien_hizo_reporte',
         'nombre_hizo_rep'
     ];

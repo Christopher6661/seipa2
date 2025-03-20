@@ -32,7 +32,7 @@ class ReportepescaArriboController extends Controller
                     'embarcacion' => $item->embarcacion,
                     'arte_pesca' => $item->arte_pesca,
                     'metodo_traslado' => $item->metodo_traslado,
-                    'pesca_accidental' => $item->pesca_accidental ? '1' : '0',
+                    'pesca_incidental' => $item->pesca_incidental == 'Sí' ? 'Sí' : ($item->pesca_incidental == 'No' ? 'No' : 'Si'),
                     'quien_hizo_reporte' => $item->quien_hizo_reporte == 'Representante' ? 'Representante' :
                     ($item->quien_hizo_reporte == 'Socio' ? 'Socio' : 'Representante'),
                     'nombre_hizo_rep' => $item->nombre_hizo_reporte,
@@ -64,7 +64,7 @@ class ReportepescaArriboController extends Controller
                 'embarcacion' => 'required|string|max:50',
                 'arte_pesca' => 'required|string|max:50',
                 'metodo_traslado' => 'required|string|max:50',
-                'pesca_accidental' => 'required|boolean',
+                'pesca_incidental' => 'required|in:Sí,No',
                 'quien_hizo_reporte' => 'required|in:Representante,Socio',
                 'nombre_hizo_rep' => 'required|string|max:50'
             ]);
@@ -118,7 +118,7 @@ class ReportepescaArriboController extends Controller
                 'embarcacion' => $ReportesPescaArribo->embarcacion,
                 'arte_pesca' => $ReportesPescaArribo->arte_pesca,
                 'metodo_traslado' => $ReportesPescaArribo->metodo_traslado,
-                'pesca_accidental' => $ReportesPescaArribo->pesca_accidental ? '1' : '0',
+                'pesca_incidental' => $ReportesPescaArribo->pesca_incidental == 'Sí' ? 'Sí' : ($ReportesPescaArribo->pesca_incidental == 'No' ? 'No' : 'Si'),
                 'quien_hizo_reporte' => $ReportesPescaArribo->quien_hizo_reporte == 'Representante' ? 'Representante' :
                 ($ReportesPescaArribo->quien_hizo_reporte == 'Socio' ? 'Socio' : 'Representante'),
                 'nombre_hizo_rep' => $ReportesPescaArribo->nombre_hizo_rep
@@ -149,7 +149,7 @@ class ReportepescaArriboController extends Controller
                 'embarcacion' => 'required|string|max:50',
                 'arte_pesca' => 'required|string|max:50',
                 'metodo_traslado' => 'required|string|max:50',
-                'pesca_accidental' => 'required|boolean',
+                'pesca_incidental' => 'required|in:Sí,No',
                 'quien_hizo_reporte' => 'required|in:Representante,Socio',
                 'nombre_hizo_rep' => 'required|string|max:50'
             ]);

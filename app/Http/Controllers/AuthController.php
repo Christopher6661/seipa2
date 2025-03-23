@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Responses\ApiResponse;
 use App\Models\User;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -13,6 +16,26 @@ class AuthController extends Controller
     /**
      * registrar usuario.
      */
+    public function index()
+    {
+        try {
+            $user = User::all();
+            $result = $user->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'email' => $item->email,
+                    'password' => $item->password,
+                    'role' => $item->role,
+                ];
+            });
+            return ApiResponse::success('Lista de usuarios registrados', 200, $result);
+        } catch (Exception $e) {
+            return ApiResponse::error('Error al obtener la lista de usuarios registrados: ' .$e->getMessage(), 500);
+        }
+    }
+
+
     public function register(Request $request)
     {
         $request->validate([
@@ -59,11 +82,27 @@ class AuthController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Mostrar un usuario en especifico.
      */
     public function show(string $id)
     {
-        //
+        try {
+            $user = User::findOrFail($id);
+            $result = [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'password' => $user->password,
+                'role' => $user->role,
+                'created_at' => $user->created_at,
+                'updated_at' => $user->updated_at,
+            ];
+            return ApiResponse::success('Usuario obtenido exitosamente', 200, $result);
+        } catch (ModelNotFoundException $e) {
+            return ApiResponse::error('Usuario no encontrado', 404);
+        } catch (Exception $e) {
+            return ApiResponse::error('Error al obtener al usuario: ' .$e->getMessage(), 500);
+        }
     }
 
     //Editar usuario.
@@ -85,10 +124,15 @@ class AuthController extends Controller
     //Eliminar usuario
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
-
-        return response()->json(['message' => 'Usuario eliminado exitosamente']);
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+            return response()->json(['message' => 'Usuario eliminado exitosamente']);
+        } catch (ModelNotFoundException $e) {
+            return ApiResponse::error('Usuario no encontrado', 404);
+        } catch (Exception $e) {
+            return ApiResponse::error('Error al eliminar al usuario: ' .$e->getMessage(), 500);
+        }
     }
 
     //Cerrar sesión

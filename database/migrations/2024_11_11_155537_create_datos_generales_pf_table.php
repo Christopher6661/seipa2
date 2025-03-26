@@ -44,7 +44,7 @@ return new class extends Migration
             $table->integer('cant_emb_me')->nullable();
             $table->integer('cant_motores_me')->nullable();
             $table->string('tipos_motores_me')->nullable();
-            
+        
             $table->foreign('oficregis_id')->references('id')->on('oficinas');
             $table->foreign('localidad_id')->references('id')->on('localidades');
             $table->foreign('municipio_id')->references('id')->on('municipios');

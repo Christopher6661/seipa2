@@ -11,6 +11,7 @@ class registro_artepesca_PF extends Model
     protected $table = 'registro_artepesca_pf';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'userprofile_id',
         'tipo_artepesca_id',
         'medidas_metros',
         'longitud',
@@ -18,6 +19,10 @@ class registro_artepesca_PF extends Model
         'luz_malla'
     ];
     public $timestamps = true;
+
+    public function perfil_usuario(){
+        return $this->belongsTo(User::class, 'userprofile_id', 'id');
+    }
 
     public function arte_pesca(){
         return $this->belongsTo(arte_pesca::class, 'tipo_artepesca_id', 'id');

@@ -23,6 +23,7 @@ class RegistroArtepescaPFController extends Controller
             $result = $ArtePescaPF->map(function ($item) {
                 return [
                     'id' => $item->id,
+                    'userprofile_id' => $item->perfil_usuario->name,
                     'tipo_artepesca_id' => $item->arte_pesca->nombre_artpesca,
                     'medidas_metros' => $item->medidas_metros,
                     'longitud' => $item->longitud,
@@ -47,6 +48,7 @@ class RegistroArtepescaPFController extends Controller
     public function store(Request $request) {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required|exists:users,id',
                 'tipo_artepesca_id' => 'required|exists:arte_pesca,id',
                 'medidas_metros' => 'required|numeric',
                 'longitud' => 'required|numeric',
@@ -90,6 +92,7 @@ class RegistroArtepescaPFController extends Controller
     
             $result = [
                 'id' => $artePesca->id,
+                'userprofile_id' => $artePesca->perfil_usuario->id,
                 'tipo_artepesca_id' => $artePesca->arte_pesca->id,
                 'medidas_metros' => $artePesca->medidas_metros,
                 'longitud' => $artePesca->longitud,
@@ -116,6 +119,7 @@ class RegistroArtepescaPFController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required',
                 'tipo_artepesca_id' => 'required',
                 'medidas_metros' => 'required|numeric',
                 'longitud' => 'required|numeric',

@@ -11,6 +11,7 @@ class registro_ubifisica_AF extends Model
     protected $table = 'registro_ubfisica_af';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'userprofile_id',
         'nombres',
         'RNPA',
         'domicilio',
@@ -26,6 +27,10 @@ class registro_ubifisica_AF extends Model
         'fuente_agua'
     ];
     public $timestamps = true;
+
+    public function perfil_usuario(){
+        return $this->belongsTo(User::class, 'userprofile_id', 'id');
+    }
 
     public function Region(){
         return $this->belongsTo(region::class, 'region_id', 'id');

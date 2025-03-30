@@ -21,6 +21,7 @@ class RegistroUbifisicaAMController extends Controller
             $result = $UbicacionFisicaAM->map(function ($item){
                 return [
                     'id' => $item->id,
+                    'userprofile_id' => $item->perfil_usuario->name,
                     'razon_social' => $item->razon_social,
                     'RNPA' => $item->RNPA,
                     'domicilio' => $item->domicilio,
@@ -51,6 +52,7 @@ class RegistroUbifisicaAMController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required|exists:users,id',
                 'razon_social' => 'required|string|max:250',
                 'RNPA' => 'required|string|max:50',
                 'domicilio' => 'required|string|max:250',
@@ -94,6 +96,7 @@ class RegistroUbifisicaAMController extends Controller
             $UbicacionFisicaAM = registro_ubifisica_AM::findOrFail($id);
             $result = [
                 'id' => $UbicacionFisicaAM->id,
+                'userprofile_id' => $UbicacionFisicaAM->perfil_usuario->id,
                 'razon_social' => $UbicacionFisicaAM->razon_social,
                 'RNPA' => $UbicacionFisicaAM->RNPA,
                 'domicilio' => $UbicacionFisicaAM->domicilio,
@@ -125,6 +128,7 @@ class RegistroUbifisicaAMController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required',
                 'razon_social' => 'required|string|max:250',
                 'RNPA' => 'required|string|max:50',
                 'domicilio' => 'required|string|max:250',

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('registro_ubfisica_am', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('userprofile_id');
             $table->string('razon_social');
             $table->string('RNPA');
             $table->string('domicilio');
@@ -27,6 +28,7 @@ return new class extends Migration
             $table->string('coordenadas_map');
             $table->string('fuente_agua');
 
+            $table->foreign('userprofile_id')->references('id')->on('users');
             $table->foreign('region_id')->references('id')->on('regiones');
             $table->foreign('distr_id')->references('id')->on('distritos');
             $table->foreign('muni_id')->references('id')->on('municipios');

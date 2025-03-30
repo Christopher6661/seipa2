@@ -21,6 +21,7 @@ class DatosgeneralesPMController extends Controller
             $result = $datosgeneralesPM->map(function ($item){
                 return [
                     'id' => $item->id,
+                    'userprofile_id' => $item->perfil_usuario->name,
                     'oficregis_id' => $item->Oficina->nombre_oficina,
                     'razon_social' => $item->razon_social,
                     'RFC' => $item->RFC,
@@ -66,6 +67,7 @@ class DatosgeneralesPMController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required|exists:users,id',
                 'oficregis_id' => 'required|exists:oficina,id',
                 'razon_social' => 'required|string|max:250',
                 'RFC' => 'required|string|max:12',
@@ -132,6 +134,7 @@ class DatosgeneralesPMController extends Controller
             $datosgeneralesPM = datosgenerales_PM::findOrFail($id);
             $result = [
                     'id' => $datosgeneralesPM->id,
+                    'userprofile_id' => $datosgeneralesPM->perfil_usuario->id,
                     'oficregis_id' => $datosgeneralesPM->Oficina->id,
                     'razon_social' => $datosgeneralesPM->razon_social,
                     'RFC' => $datosgeneralesPM->RFC,
@@ -178,6 +181,7 @@ class DatosgeneralesPMController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required',
                 'oficregis_id' => 'required',
                 'razon_social' => 'required|string|max:250',
                 'RFC' => 'required|string|max:12',

@@ -11,6 +11,7 @@ class registro_artepesca_PM extends Model
     protected $table = 'registro_artepesca_pm';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'userprofile_id',
         'tipo_artepesca_id',
         'medida_largo',
         'medida_ancho',
@@ -20,6 +21,10 @@ class registro_artepesca_PM extends Model
     ];
     public $timestamps = true;
 
+    public function perfil_usuario(){
+        return $this->belongsTo(User::class, 'userprofile_id', 'id');
+    }
+    
     public function arte_pesca(){
         return $this->belongsTo(arte_pesca::class, 'tipo_artepesca_id', 'id');
     }

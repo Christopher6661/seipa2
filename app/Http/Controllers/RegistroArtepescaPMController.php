@@ -22,6 +22,7 @@ class RegistroArtepescaPMController extends Controller
             $result = $ArtePescaPM->map(function ($item){
                 return [
                     'id' => $item->id,
+                    'userprofile_id' => $item->perfil_usuario->name,
                     'tipo_artepesca_id' => $item->arte_pesca->nombre_artpesca,
                     'medida_largo' => $item->medida_largo,
                     'medida_ancho' => $item->medida_ancho,
@@ -45,6 +46,7 @@ class RegistroArtepescaPMController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required|exists:users,id',
                 'tipo_artepesca_id' => 'required|exists:arte_pesca,id',
                 'medida_largo' => 'required|numeric',
                 'medida_ancho' => 'required|numeric',
@@ -87,6 +89,7 @@ class RegistroArtepescaPMController extends Controller
             $ArtePescaPM = registro_artepesca_PM::with('esp_objetivo')->findOrFail($id);
             $result = [
                 'id' => $ArtePescaPM->id,
+                'userprofile_id' => $ArtePescaPM->perfil_usuario->id,
                 'tipo_artepesca_id' => $ArtePescaPM->arte_pesca->id,
                 'medida_largo' => $ArtePescaPM->medida_largo,
                 'medida_ancho' => $ArtePescaPM->medida_ancho,
@@ -111,6 +114,7 @@ class RegistroArtepescaPMController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required',
                 'tipo_artepesca_id' => 'required',
                 'medida_largo' => 'required|numeric',
                 'medida_ancho' => 'required|numeric',

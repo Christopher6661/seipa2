@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('datos_generales_af', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('userprofile_id');
             $table->unsignedBigInteger('oficregis_id');
             $table->string('nombres');
             $table->string('apellido_pa');
@@ -31,6 +32,7 @@ return new class extends Migration
             $table->boolean('cuenta_siscaptura')->default(false);
 	        $table->string('motivo_no_cuenta');
 
+            $table->foreign('userprofile_id')->references('id')->on('users');
             $table->foreign('oficregis_id')->references('id')->on('oficinas');
             $table->foreign('localidad_id')->references('id')->on('localidades');
             $table->foreign('municipio_id')->references('id')->on('municipios');

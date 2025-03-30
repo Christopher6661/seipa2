@@ -11,6 +11,7 @@ class datosgenerales_AM extends Model
     protected $table = 'datos_generales_am';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'userprofile_id',
         'oficregis_id',
         'razon_social',
         'RFC',
@@ -29,6 +30,10 @@ class datosgenerales_AM extends Model
         'motivo_no_cuenta'
     ];
     public $timestamps = true;
+
+    public function perfil_usuario(){
+        return $this->belongsTo(User::class, 'userprofile_id', 'id');
+    }
 
     public function Oficina(){
         return $this->belongsTo(oficina::class, 'oficregis_id', 'id');

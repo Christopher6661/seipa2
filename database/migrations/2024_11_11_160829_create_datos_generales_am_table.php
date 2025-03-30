@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('datos_generales_am', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('userprofile_id');
             $table->unsignedBigInteger('oficregis_id');
             $table->string('razon_social');
             $table->string('RFC');
@@ -29,6 +30,7 @@ return new class extends Migration
             $table->boolean('cuenta_siscuarente')->default(false);
             $table->string('motivo_no_cuenta');
 
+            $table->foreign('userprofile_id')->references('id')->on('users');
             $table->foreign('oficregis_id')->references('id')->on('oficinas');
             $table->foreign('region_id')->references('id')->on('regiones');
             $table->foreign('distrito_id')->references('id')->on('distritos');

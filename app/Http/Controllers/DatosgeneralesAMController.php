@@ -21,6 +21,7 @@ class DatosgeneralesAMController extends Controller
             $result = $datosgeneralesAM->map(function ($item){
                 return [
                     'id' => $item->id,
+                    'userprofile_id' => $item->perfil_usuario->name,
                     'oficregis_id' => $item->Oficina->nombre_oficina,
                     'razon_social' => $item->razon_social,
                     'RFC' => $item->RFC,
@@ -54,6 +55,7 @@ class DatosgeneralesAMController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required|exists:users,id',
                 'oficregis_id' => 'required|exists:oficina,id',
                 'razon_social' => 'required|string|max:250',
                 'RFC' => 'required|string|max:12',
@@ -115,6 +117,7 @@ class DatosgeneralesAMController extends Controller
             $datosgeneralesAM = datosgenerales_AM::findOrFail($id);
             $result = [
                 'id' => $datosgeneralesAM->id,
+                'userprofile_id' => $datosgeneralesAM->perfil_usuario->id,
                 'oficregis_id' => $datosgeneralesAM->Oficina->id,
                 'razon_social' => $datosgeneralesAM->razon_social,
                 'RFC' => $datosgeneralesAM->RFC,
@@ -149,6 +152,7 @@ class DatosgeneralesAMController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required',
                 'oficregis_id' => 'required',
                 'razon_social' => 'required|string|max:250',
                 'RFC' => 'required|string|max:12',

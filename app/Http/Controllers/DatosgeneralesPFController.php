@@ -21,6 +21,7 @@ class DatosgeneralesPFController extends Controller
             $result = $datosgeneralesPF->map(function ($item) {
                 return [
                     'id' => $item->id,
+                    'userprofile_id' => $item->perfil_usuario->name,
                     'oficregis_id' => $item->Oficina->nombre_oficina,
                     'nombres' => $item->nombres,
                     'apellido_pa' => $item->apellido_pa,
@@ -69,6 +70,7 @@ class DatosgeneralesPFController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required|exists:users,id',
                 'oficregis_id' => 'required|exists:oficina,id',
                 'nombres' => 'required|string|max:40',
                 'apellido_pa' => 'required|string|max:30',
@@ -138,6 +140,7 @@ class DatosgeneralesPFController extends Controller
             $datosgeneralesPF = datosgenerales_PF::findOrFail($id);
             $result = [
                 'id' => $datosgeneralesPF->id,
+                'userprofile_id' => $datosgeneralesPF->perfil_usuario->id,
                 'oficregis_id' => $datosgeneralesPF->Oficina->id,
                 'nombres' => $datosgeneralesPF->nombres,
                 'apellido_pa' => $datosgeneralesPF->apellido_pa,
@@ -187,6 +190,7 @@ class DatosgeneralesPFController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required',
                 'oficregis_id' => 'required',
                 'nombres' => 'required|string|max:40',
                 'apellido_pa' => 'required|string|max:30',

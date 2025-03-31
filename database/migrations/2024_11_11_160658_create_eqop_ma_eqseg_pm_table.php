@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('eqop_ma_eqseg_pm', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('userprofile_id');
             $table->unsignedBigInteger('emb_pertenece_id');
             $table->boolean('cuenta_eqseguridad')->default(false);
             $table->string('equipo_seguiridad');
             $table->integer('eqseg_cant');
             $table->unsignedBigInteger('eqseg_tipo_id');
 
+            $table->foreign('userprofile_id')->references('id')->on('users');
             $table->foreign('emb_pertenece_id')->references('id')->on('registroemb_ma_pm');
             $table->foreign('eqseg_tipo_id')->references('id')->on('tipo_equipo_seg');
             $table->timestamps();

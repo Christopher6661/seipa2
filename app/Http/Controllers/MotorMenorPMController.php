@@ -21,6 +21,7 @@ class MotorMenorPMController extends Controller
             $result = $motorMenor_PM->map(function ($item){
                 return [
                     'id' => $item->id,
+                    'userprofile_id' => $item->perfil_usuario->name,
                     'emb_pertenece_id' => $item->EmbarcacionPertenece->nombre_emb,
                     'marca_motor' => $item->marca_motor,
                     'modelo_motor' => $item->modelo_motor,
@@ -48,6 +49,7 @@ class MotorMenorPMController extends Controller
     {
         try{
           $data = $request->validate([
+            'userprofile_id' => 'required|exists:users,id',
             'emb_pertenece_id' => 'required|exists:registroemb_me_pm,id',
             'marca_motor' => 'required|string|max:30',
             'modelo_motor' => 'required|string|max:30',
@@ -87,6 +89,7 @@ class MotorMenorPMController extends Controller
             $motorMenor_PM = MotorMenor_PM::findOrFail($id);
             $result = [
                 'id' => $motorMenor_PM->id,
+                'userprofile_id' => $motorMenor_PM->perfil_usuario->id,
                 'emb_pertenece_id' => $motorMenor_PM->EmbarcacionPertenece->id,
                 'marca_motor' => $motorMenor_PM->marca_motor,
                 'modelo_motor' => $motorMenor_PM->modelo_motor,
@@ -115,6 +118,7 @@ class MotorMenorPMController extends Controller
     {
         try {
             $request->validate([
+                'userprofile_id' => 'required',
                 'emb_pertenece_id' => 'required',
                 'marca_motor' => 'required|string|max:30',
                 'modelo_motor' => 'required|string|max:30',

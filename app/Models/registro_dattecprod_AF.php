@@ -11,6 +11,7 @@ class registro_dattecprod_AF extends Model
     protected $table = 'registro_dattecprod_af';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'userprofile_id',
         'area_total',
         'area_total_actacu',
         'uso_arearestante',
@@ -38,4 +39,8 @@ class registro_dattecprod_AF extends Model
         'aliment_balanceados'
     ];
     public $timestamps = true;
+
+    public function perfil_usuario(){
+        return $this->belongsTo(User::class, 'userprofile_id', 'id');
+    }
 }

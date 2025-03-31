@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('registro_dattecprod_am', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('userprofile_id');
             $table->float('area_total');
             $table->float('area_total_actacu');
             $table->float('uso_arearestante');
@@ -38,6 +39,8 @@ return new class extends Migration
             $table->boolean('hormonados_genetica')->default(false);
             $table->boolean('medicam_quimicos')->default(false);
             $table->boolean('aliment_balanceados')->default(false);
+
+            $table->foreign('userprofile_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

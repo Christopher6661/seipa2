@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('registro_permisos_pf', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('userprofile_id');
             $table->string('folio_permiso');
             $table->string('pesqueria');
             $table->date('vigencia_permiso_ini');
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('tipo_permiso_id');
             $table->enum('tipo_embarcacion', ['Mayor', 'Menor']);
 
+            $table->foreign('userprofile_id')->references('id')->on('users');
             $table->foreign('tipo_permiso_id')->references('id')->on('tipo_permisos');
             $table->timestamps();
         });

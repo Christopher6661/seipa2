@@ -11,11 +11,14 @@ class socio_pm extends Model
     protected $table = 'socios_pm';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'userprofile_id',
         'CURP',
         'tipo'
     ];
     public $timestamps = true;
 
-  
+    public function perfil_usuario(){
+        return $this->belongsTo(User::class, 'userprofile_id', 'id');
+    }
     
 }

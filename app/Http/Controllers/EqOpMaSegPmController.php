@@ -21,6 +21,7 @@ class EqOpMaSegPmController extends Controller
             $result = $EqOpMaSegPm->map(function ($item){
                 return [
                     'id' => $item->id,
+                    'userprofile_id' => $item->perfil_usuario->name,
                     'emb_pertenece_id' => $item->registroemb_ma_pm->id,
                     'cuenta_eqseguridad' => $item->cuenta_eqseguridad ? 'Sí' : 'No',
                     'equipo_seguiridad' => $item->equipo_seguiridad,
@@ -43,6 +44,7 @@ class EqOpMaSegPmController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required|exists:users,id',
                 'emb_pertenece_id' => 'required|exists:registroemb_ma_pm,id',
                 'cuenta_eqseguridad' => 'required|boolean',
                 'equipo_seguiridad' => 'required|string|max:50',
@@ -72,6 +74,7 @@ class EqOpMaSegPmController extends Controller
             $EqOpMaSegPm = EqOpMaSegPm::findOrFail($id);
             $result = [
                 'id' => $EqOpMaSegPm->id,
+                'userprofile_id' => $EqOpMaSegPm->perfil_usuario->id,
                 'emb_pertenece_id' => $EqOpMaSegPm->registroemb_ma_pm->id,
                 'cuenta_eqseguridad' => $EqOpMaSegPm->cuenta_eqseguridad ? 'Sí' : 'No',
                 'equipo_seguiridad' => $EqOpMaSegPm->equipo_seguiridad,
@@ -95,6 +98,7 @@ class EqOpMaSegPmController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required',
                 'emb_pertenece_id' => 'required',
                 'cuenta_eqseguridad' => 'required|boolean',
                 'equipo_seguiridad' => 'required|string|max:50',

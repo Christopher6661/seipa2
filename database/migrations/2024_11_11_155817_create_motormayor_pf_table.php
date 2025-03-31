@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('motormayor_pf', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('userprofile_id');
             $table->unsignedBigInteger('emb_pertenece_id');
             $table->string('marca_motor');
             $table->string('modelo_motor');
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->string('vida_util_anio');
             $table->string('doc_propiedad');
 
+            $table->foreign('userprofile_id')->references('id')->on('users');
             $table->foreign('emb_pertenece_id')->references('id')->on('registroemb_ma_pf');
             $table->timestamps();
         });

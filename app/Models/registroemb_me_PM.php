@@ -11,6 +11,7 @@ class registroemb_me_PM extends Model
     protected $table = 'registroemb_me_pm';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'userprofile_id',
         'nombre_emb',
         'matricula',
         'RNP',
@@ -28,4 +29,8 @@ class registroemb_me_PM extends Model
         'movilidad_emb'
     ];
     public $timestamps = true;
+
+    public function perfil_usuario(){
+        return $this->belongsTo(User::class, 'userprofile_id', 'id');
+    }
 }

@@ -11,6 +11,7 @@ class EqOpMeSegPm extends Model
     protected $table = 'eqop_me_eqseg_pm';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'userprofile_id',
         'emb_pertenece_id',
         'cuenta_eqseguridad',
         'equipo_seguiridad',
@@ -18,6 +19,10 @@ class EqOpMeSegPm extends Model
         'eqseg_tipo_id'
     ];
     public $timestamps = true;
+
+    public function perfil_usuario(){
+        return $this->belongsTo(User::class, 'userprofile_id', 'id');
+    }
 
     public function EmbarcacionPertenece(){
         return $this->belongsTo(registroemb_me_PM::class, 'emb_pertenece_id', 'id');

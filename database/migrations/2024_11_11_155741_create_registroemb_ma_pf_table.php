@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('registroemb_ma_pf', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('userprofile_id');
             $table->string('nombre_emb_ma');
             $table->string('captura_rnpa');
             $table->string('matricula');
@@ -37,6 +38,7 @@ return new class extends Migration
             $table->float('capacidad_tanque');
             $table->string('certificado_seguridad');
 
+            $table->foreign('userprofile_id')->references('id')->on('users');
             $table->foreign('tipo_cubierta_id')->references('id')->on('tipo_cubierta');
             $table->foreign('material_casco_id')->references('id')->on('material_casco');
             $table->timestamps();

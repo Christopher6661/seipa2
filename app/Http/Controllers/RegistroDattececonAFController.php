@@ -21,6 +21,7 @@ class RegistroDattececonAFController extends Controller
             $result = $DatosTecnicoEconomicosAF->map(function ($item){
                 return [
                     'id' => $item->id,
+                    'userprofile_id' => $item->perfil_usuario->name,
                     'prodprom_x_mes' => $item->prodprom_x_mes,
                     'prodpromx_mes_peso' => $item->prodpromx_mes_peso === 'Kilogramo' ? 'Kilogramo' : 'Tonelada',
                     'prodprom_mes_talla' => $item->prodprom_mes_talla, 
@@ -64,6 +65,7 @@ class RegistroDattececonAFController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required|exists:users,id',
                 'prodprom_x_mes' => 'required|numeric',
                 'prodpromx_mes_peso' => 'required|in:Kilogramo,Tonelada',
                 'prodprom_mes_talla' => 'required|numeric', 
@@ -110,6 +112,7 @@ class RegistroDattececonAFController extends Controller
             $DatosTecnicoEconomicosAF = registro_dattececon_AF::findOrFail($id);
             $result = [
                 'id' => $DatosTecnicoEconomicosAF->id,
+                'userprofile_id' => $DatosTecnicoEconomicosAF->perfil_usuario->id,
                 'prodprom_x_mes' => $DatosTecnicoEconomicosAF->prodprom_x_mes,
                 'prodpromx_mes_peso' => $DatosTecnicoEconomicosAF->prodpromx_mes_peso === 'Kilogramo' ? 'Kilogramo' : 'Tonelada',
                 'prodprom_mes_talla' => $DatosTecnicoEconomicosAF->prodprom_mes_talla, 
@@ -154,6 +157,7 @@ class RegistroDattececonAFController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required',
                 'prodprom_x_mes' => 'required|numeric',
                 'prodpromx_mes_peso' => 'required|in:Kilogramo,Tonelada',
                 'prodprom_mes_talla' => 'required|numeric', 

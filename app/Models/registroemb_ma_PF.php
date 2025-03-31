@@ -11,6 +11,7 @@ class registroemb_ma_PF extends Model
     protected $table = 'registroemb_ma_pf';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'userprofile_id',
         'nombre_emb_ma',
         'captura_rnpa',
         'matricula',
@@ -36,6 +37,10 @@ class registroemb_ma_PF extends Model
         'certificado_seguridad'
     ];
     public $timestamps = true;
+
+    public function perfil_usuario(){
+        return $this->belongsTo(User::class, 'userprofile_id', 'id');
+    }
 
     public function tipocubierta(){
         return $this->belongsTo(tipo_cubierta::class, 'tipo_cubierta_id', 'id');

@@ -11,6 +11,7 @@ class EqOpMeRadComPm extends Model
     protected $table = 'eqop_me_eqradcom_pm';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'userprofile_id',
         'emb_pertenece_id',
         'cuenta_eqradiocom',
         'equipo_radiocomun',
@@ -18,6 +19,10 @@ class EqOpMeRadComPm extends Model
         'eqradiocom_tipo_id'
     ];
     public $timestamps = true;
+
+    public function perfil_usuario(){
+        return $this->belongsTo(User::class, 'userprofile_id', 'id');
+    }
 
     public function EmbarcacionPertenece(){
         return $this->belongsTo(registroemb_me_PM::class, 'emb_pertenece_id', 'id');

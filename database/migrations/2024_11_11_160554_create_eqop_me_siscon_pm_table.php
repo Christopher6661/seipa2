@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('eqop_me_siscon_pm', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('userprofile_id');
             $table->unsignedBigInteger('emb_pertenece_id');
             $table->boolean('cuenta_siscon')->default(false);
             $table->string('sistema_conserva');
             $table->integer('siscon_cant');
             $table->unsignedBigInteger('siscon_tipo_id');
 
+            $table->foreign('userprofile_id')->references('id')->on('users');
             $table->foreign('emb_pertenece_id')->references('id')->on('registroemb_me_pm');
             $table->foreign('siscon_tipo_id')->references('id')->on('tipo_sistconservacion');
             $table->timestamps();

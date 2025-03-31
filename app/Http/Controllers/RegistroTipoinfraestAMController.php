@@ -21,6 +21,7 @@ class RegistroTipoinfraestAMController extends Controller
             $result = $TipoInfraestructuraAM->map(function ($item){
                 return [
                     'id' => $item->id,
+                    'userprofile_id' => $item->perfil_usuario->name,
                     'estanque_rustico_sup' => $item->estanque_rustico_sup,
                     'estanque_rustico_vol' => $item->estanque_rustico_vol,
                     'estanque_rustico_can' => $item->estanque_rustico_can,
@@ -61,6 +62,7 @@ class RegistroTipoinfraestAMController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required|exists:users,id',
                 'estanque_rustico_sup' => 'required|numeric',
                 'estanque_rustico_vol' => 'required|numeric',
                 'estanque_rustico_can' => 'required|string|max:50',
@@ -105,6 +107,7 @@ class RegistroTipoinfraestAMController extends Controller
             $TipoInfraestructuraAM = registro_tipoinfraest_AM::findOrFail($id);
             $result = [
                 'id' => $TipoInfraestructuraAM->id,
+                'userprofile_id' => $TipoInfraestructuraAM->perfil_usuario->id,
                 'estanque_rustico_sup' => $TipoInfraestructuraAM->estanque_rustico_sup,
                 'estanque_rustico_vol' => $TipoInfraestructuraAM->estanque_rustico_vol,
                 'estanque_rustico_can' => $TipoInfraestructuraAM->estanque_rustico_can,
@@ -147,6 +150,7 @@ class RegistroTipoinfraestAMController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required',
                 'estanque_rustico_sup' => 'required|numeric',
                 'estanque_rustico_vol' => 'required|numeric',
                 'estanque_rustico_can' => 'required|string|max:50',

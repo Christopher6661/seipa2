@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('registroemb_me_pf', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('userprofile_id');
             $table->string('nombre_emb')->unique();
             $table->string('matricula');
             $table->string('RNP');
@@ -28,6 +29,8 @@ return new class extends Migration
             $table->float('puntal_metros');
             $table->string('certificado_seg_mar');
             $table->string('movilidad_emb');
+
+            $table->foreign('userprofile_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

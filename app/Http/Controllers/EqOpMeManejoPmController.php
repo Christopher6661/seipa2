@@ -21,6 +21,7 @@ class EqOpMeManejoPmController extends Controller
             $result = $EqOpMeManejoPm->map(function ($item){
                 return [
                     'id' => $item->id,
+                    'userprofile_id' => $item->perfil_usuario->name,
                     'emb_pertenece_id' => $item->registroemb_me_pm->id,
                     'cuenta_eqmanejo' => $item->cuenta_eqmanejo ? 'Sí' : 'No',
                     'equipo_manejo' => $item->equipo_manejo,
@@ -42,6 +43,7 @@ class EqOpMeManejoPmController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required|exists:users,id',
                 'emb_pertenece_id' => 'required|exists:registroemb_me_pm,id',
                 'cuenta_eqmanejo' => 'required|boolean',
                 'equipo_manejo' => 'required|string|max:50',
@@ -71,6 +73,7 @@ class EqOpMeManejoPmController extends Controller
             $EqOpMeManejoPm = EqOpMeManejoPm::findOrFail($id);
             $result = [
                 'id' => $EqOpMeManejoPm->id,
+                'userprofile_id' => $EqOpMeManejoPm->perfil_usuario->id,
                 'emb_pertenece_id' => $EqOpMeManejoPm->registroemb_me_pm->id,
                 'cuenta_eqmanejo' => $EqOpMeManejoPm->cuenta_eqmanejo ? 'Sí' : 'No',
                 'equipo_manejo' => $EqOpMeManejoPm->equipo_manejo,
@@ -93,6 +96,7 @@ class EqOpMeManejoPmController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required',
                 'emb_pertenece_id' => 'required',
                 'cuenta_eqmanejo' => 'required|boolean',
                 'equipo_manejo' => 'required|string|max:50',

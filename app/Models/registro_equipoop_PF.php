@@ -11,6 +11,7 @@ class registro_equipoop_PF extends Model
     protected $table = 'registro_equipoop_pf';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'userprofile_id',
         'emb_pertenece_id',
         'cuenta_sistema_cons',
         'sistema_conserva',
@@ -30,6 +31,10 @@ class registro_equipoop_PF extends Model
         'equipman_tipo'
     ];
     public $timestamps = true;
+
+    public function perfil_usuario(){
+        return $this->belongsTo(User::class, 'userprofile_id', 'id');
+    }
 
     public function EmbarcacionPertenece(){
         return $this->belongsTo(registroemb_me_PF::class, '');

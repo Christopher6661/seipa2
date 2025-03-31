@@ -11,6 +11,7 @@ class registro_tipoinfraest_AF extends Model
     protected $table = 'registro_tipoinfraest_af';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'userprofile_id',
         'estanque_rustico_sup',
         'estanque_rustico_vol',
         'estanque_rustico_can',
@@ -37,4 +38,8 @@ class registro_tipoinfraest_AF extends Model
         'otro_cantidad'
     ];
     public $timestamps = true;
+
+    public function perfil_usuario(){
+        return $this->belongsTo(User::class, 'userprofile_id', 'id');
+    }
 }

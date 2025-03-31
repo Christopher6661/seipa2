@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('registro_tipoinfraest_am', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('userprofile_id');
             $table->float('estanque_rustico_sup');
             $table->float('estanque_rustico_vol');
             $table->string('estanque_rustico_can');
@@ -37,6 +38,8 @@ return new class extends Migration
             $table->float('otro_superficie');
             $table->float('otro_volumen');
             $table->string('otro_cantidad');
+
+            $table->foreign('userprofile_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

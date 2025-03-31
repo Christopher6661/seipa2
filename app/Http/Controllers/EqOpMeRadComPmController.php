@@ -21,6 +21,7 @@ class EqOpMeRadComPmController extends Controller
             $result = $EqOpMeRadComPm->map(function ($item){
                 return [
                     'id' => $item->id,
+                    'userprofile_id' => $item->perfil_usuario->name,
                     'emb_pertenece_id' => $item->registroemb_me_pm->id,
                     'cuenta_eqradiocom' => $item->cuenta_eqradiocom ? 'Sí' : 'No',
                     'equipo_radiocomun' => $item->equipo_radiocomun,
@@ -42,6 +43,7 @@ class EqOpMeRadComPmController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required|exists:users,id',
                 'emb_pertenece_id' => 'required|exists:registroemb_me_pm,id',
                 'cuenta_eqradiocom' => 'required|boolean',
                 'equipo_radiocomun' => 'required|string|max:50',
@@ -71,6 +73,7 @@ class EqOpMeRadComPmController extends Controller
             $EqOpMeRadComPm = EqOpMeRadComPm::findOrFail($id);
             $result = [
                 'id' => $EqOpMeRadComPm->id,
+                'userprofile_id' => $EqOpMeRadComPm->perfil_usuario->id,
                 'emb_pertenece_id' => $EqOpMeRadComPm->registroemb_me_pm->id,
                 'cuenta_eqradiocom' => $EqOpMeRadComPm->cuenta_eqradiocom ? 'Sí' : 'No',
                 'equipo_radiocomun' => $EqOpMeRadComPm->equipo_radiocomun,
@@ -93,6 +96,7 @@ class EqOpMeRadComPmController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required',
                 'emb_pertenece_id' => 'required',
                 'cuenta_eqradiocom' => 'required|boolean',
                 'equipo_radiocomun' => 'required|string|max:50',

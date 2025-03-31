@@ -11,6 +11,7 @@ class registro_dattececon_AF extends Model
     protected $table = 'registro_dattececon_af';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'userprofile_id',
         'prodprom_x_mes',
         'prodpromx_mes_peso',
         'prodprom_mes_talla',
@@ -39,4 +40,8 @@ class registro_dattececon_AF extends Model
         'costogasto_anualprod'
     ];
     public $timestamps = true;
+
+    public function perfil_usuario(){
+        return $this->belongsTo(User::class, 'userprofile_id', 'id');
+    }
 }

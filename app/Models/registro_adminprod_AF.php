@@ -11,6 +11,7 @@ class registro_adminprod_AF extends Model
     protected $table = 'registro_adminprod_af';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'userprofile_id',
         'num_familias',
         'num_mujeres',
         'num_hombres',
@@ -18,4 +19,8 @@ class registro_adminprod_AF extends Model
         'tipo_tenencia_ua'
     ]; 
     public $timestamps = true;
+
+    public function perfil_usuario(){
+        return $this->belongsTo(User::class, 'userprofile_id', 'id');
+    }
 }

@@ -21,6 +21,7 @@ class RegistroPermisoPMController extends Controller
             $result = $permisoPM->map(function ($item) {
                 return [
                     'id' => $item->id,
+                    'userprofile_id' => $item->perfil_usuario->name,
                     'folio_permiso' => $item->folio_permiso,
                     'pesqueria' => $item->pesqueria,
                     'vigencia_permiso_ini' => $item->vigencia_permiso_ini,
@@ -45,6 +46,7 @@ class RegistroPermisoPMController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required|exists:users,id',
                 'folio_permiso' => 'required|string|max:12',
                 'pesqueria' => 'required|string|max:40',
                 'vigencia_permiso_ini' => 'required|date',
@@ -81,6 +83,7 @@ class RegistroPermisoPMController extends Controller
             $permisoPM = registro_permiso_PM::findOrFail($id);
             $result = [
                 'id' => $permisoPM->id,
+                'userprofile_id' => $permisoPM->perfil_usuario->id,
                 'folio_permiso' => $permisoPM->folio_permiso,
                 'pesqueria' => $permisoPM->pesqueria,
                 'vigencia_permiso_ini' => $permisoPM->vigencia_permiso_ini,
@@ -106,6 +109,7 @@ class RegistroPermisoPMController extends Controller
     {
         try {
             $request->validate([
+                'userprofile_id' => 'required',
                 'folio_permiso' => 'required|string|max:12',
                 'pesqueria' => 'required|string|max:40',
                 'vigencia_permiso_ini' => 'required|date',

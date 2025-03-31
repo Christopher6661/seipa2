@@ -21,6 +21,7 @@ class RegistroDattecprodAFController extends Controller
             $result = $registroDatTecProdAF->map(function ($item){
                 return [
                     'id' => $item->id,
+                    'userprofile_id' => $item->perfil_usuario->name,
                     'area_total' => $item->area_total,
                     'area_total_actacu' => $item->area_total_actacu,
                     'uso_arearestante' => $item->uso_arearestante,
@@ -63,6 +64,7 @@ class RegistroDattecprodAFController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required|exists:users,id',
                 'area_total' => 'required|numeric',
                 'area_total_actacu' => 'required|numeric',
                 'uso_arearestante' => 'required|numeric',
@@ -108,6 +110,7 @@ class RegistroDattecprodAFController extends Controller
             $registroDatTecProdAF = registro_dattecprod_AF::findOrFail($id);
             $result = [
                 'id' => $registroDatTecProdAF->id,
+                'userprofile_id' => $registroDatTecProdAF->perfil_usuario->id,
                 'area_total' => $registroDatTecProdAF->area_total,
                 'area_total_actacu' => $registroDatTecProdAF->area_total_actacu,
                 'uso_arearestante' => $registroDatTecProdAF->uso_arearestante,
@@ -151,6 +154,7 @@ class RegistroDattecprodAFController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required',
                 'area_total' => 'required|numeric',
                 'area_total_actacu' => 'required|numeric',
                 'uso_arearestante' => 'required|numeric',

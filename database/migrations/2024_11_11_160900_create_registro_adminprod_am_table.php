@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('registro_adminprod_am', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('userprofile_id');
             $table->integer('num_familias');
             $table->integer('num_mujeres');
             $table->integer('num_hombres');
             $table->integer('total_integrantes');
             $table->string('tipo_tenencia_ua');
+
+            $table->foreign('userprofile_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

@@ -27,6 +27,7 @@ return new class extends Migration
             $table->enum('pesca_incidental', ['Sí', 'No']);
             $table->enum('quien_hizo_reporte', ['Representante', 'Socio']);
             $table->string('nombre_hizo_rep');
+
             $table->timestamps();
         });
     }

@@ -21,6 +21,7 @@ class RegistroembMePMController extends Controller
             $result = $embarcacionMePM->map(function ($item){
                 return [
                     'id' => $item->id,
+                    'userprofile_id' => $item->perfil_usuario->name,
                     'nombre_emb' => $item->nombre_emb,
                     'matricula' => $item->matricula,
                     'RNP' => $item->RNP,
@@ -53,6 +54,7 @@ class RegistroembMePMController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required|exists:users,id',
                 'nombre_emb' => 'required|string|max:30',
                 'matricula' => 'required|string|max:30',
                 'RNP' => 'required|string|max:12',
@@ -107,6 +109,7 @@ class RegistroembMePMController extends Controller
             $embarcacionMePM = registroemb_me_PM::findOrFail($id);
             $result = [
                 'id' => $embarcacionMePM->id,
+                'userprofile_id' => $embarcacionMePM->perfil_usuario->id,
                 'nombre_emb' => $embarcacionMePM->nombre_emb,
                 'matricula' => $embarcacionMePM->matricula,
                 'RNP' => $embarcacionMePM->RNP,
@@ -140,6 +143,7 @@ class RegistroembMePMController extends Controller
     {
         try {
             $request->validate([
+                'userprofile_id' => 'required',
                 'nombre_emb' => 'required|string|max:30',
                 'matricula' => 'required|string|max:30',
                 'RNP' => 'required|string|max:12',

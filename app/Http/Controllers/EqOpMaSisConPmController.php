@@ -21,6 +21,7 @@ class EqOpMaSisConPmController extends Controller
             $result = $EqOpMaSisConPm->map(function ($item){
                 return [
                     'id' => $item->id,
+                    'userprofile_id' => $item->perfil_usuario->name,
                     'emb_pertenece_id' => $item->EmbarcacionPertenece->nombre_emb_ma,
                     'cuenta_siscon' => $item->cuenta_siscon ? 'Sí' : 'No',
                     'sistema_conserva' => $item->sistema_conserva,
@@ -43,6 +44,7 @@ class EqOpMaSisConPmController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required|exists:users,id',
                 'emb_pertenece_id' => 'required|exists:registroemb_ma_pm,id',
                 'cuenta_siscon' => 'required|boolean',
                 'sistema_conserva' => 'required|string|max:50',
@@ -72,6 +74,7 @@ class EqOpMaSisConPmController extends Controller
             $EqOpMaSisConPm = EqOpMaSisConPm::findOrFail($id);
             $result = [
                 'id' => $EqOpMaSisConPm->id,
+                'userprofile_id' => $EqOpMaSisConPm->perfil_usuario->id,
                 'emb_pertenece_id' => $EqOpMaSisConPm->registroemb_ma_pm->id,
                 'cuenta_siscon' => $EqOpMaSisConPm->cuenta_siscon ? 'Sí' : 'No',
                 'sistema_conserva' => $EqOpMaSisConPm->sistema_conserva,
@@ -95,6 +98,7 @@ class EqOpMaSisConPmController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required',
                 'emb_pertenece_id' => 'required',
                 'cuenta_siscon' => 'required|boolean',
                 'sistema_conserva' => 'required|string|max:50',

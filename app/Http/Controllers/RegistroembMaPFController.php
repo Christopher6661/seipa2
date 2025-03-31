@@ -21,6 +21,7 @@ class RegistroembMaPFController extends Controller
             $result = $embMayorPF->map(function ($item){
                 return [
                     'id' => $item->id,
+                    'userprofile_id' => $item->perfil_usuario->name,
                     'nombre_emb_ma' => $item->nombre_emb_ma,
                     'captura_rnpa' => $item->captura_rnpa,
                     'matricula' => $item->matricula,
@@ -61,6 +62,7 @@ class RegistroembMaPFController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required|exists:users,id',
                 'nombre_emb_ma' => 'required|string|max:30',
                 'captura_rnpa' => 'required|string|max:30',
                 'matricula' => 'required|string|max:20',
@@ -117,6 +119,7 @@ class RegistroembMaPFController extends Controller
             $embMayorPF = registroemb_ma_PF::findOrFail($id);
             $result = [
                 'id' => $embMayorPF->id,
+                'userprofile_id' => $embMayorPF->perfil_usuario->id,
                 'nombre_emb_ma' => $embMayorPF->nombre_emb_ma,
                 'captura_rnpa' => $embMayorPF->captura_rnpa,
                 'matricula' => $embMayorPF->matricula,
@@ -158,6 +161,7 @@ class RegistroembMaPFController extends Controller
     {
         try {
             $request->validate([
+                'userprofile_id' => 'required',
                 'nombre_emb_ma' => 'required|string|max:30',
                 'captura_rnpa' => 'required|string|max:30',
                 'matricula' => 'required|string|max:20',

@@ -47,6 +47,7 @@ return new class extends Migration
             $table->string('talla_salida');
             $table->string('destino_prod');
             $table->float('valor_produccion');
+
             $table->timestamps();
         });
     }

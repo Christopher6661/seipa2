@@ -11,6 +11,7 @@ class MotorMenor_PM extends Model
     protected $table = 'motormenor_pm';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'userprofile_id',
         'emb_pertenece_id',
         'marca_motor',
         'modelo_motor',
@@ -23,6 +24,10 @@ class MotorMenor_PM extends Model
         'doc_propiedad'
     ];
     public $timestamps = true;
+
+    public function perfil_usuario(){
+        return $this->belongsTo(User::class, 'userprofile_id', 'id');
+    }
 
     public function EmbarcacionPertenece(){
         return $this->belongsTo(registroemb_me_PM::class, 'emb_pertenece_id', 'id');

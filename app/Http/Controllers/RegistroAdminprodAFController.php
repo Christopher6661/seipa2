@@ -21,6 +21,7 @@ class RegistroAdminprodAFController extends Controller
             $result = $registroAdminProdAF->map(function ($item){
                 return [
                     'id' => $item->id,
+                    'userprofile_id' => $item->perfil_usuario->name,
                     'num_familias' => $item->num_familias,
                     'num_mujeres' => $item->num_mujeres,
                     'num_hombres' => $item->num_hombres,
@@ -43,6 +44,7 @@ class RegistroAdminprodAFController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required|exists:users,id',
                 'num_familias' => 'required|integer',
                 'num_mujeres' => 'required|integer',
                 'num_hombres' => 'required|integer',
@@ -68,6 +70,7 @@ class RegistroAdminprodAFController extends Controller
             $registroAdminProdAF = registro_adminprod_AF::findOrFail($id);
             $result = [
                 'id' => $registroAdminProdAF->id,
+                'userprofile_id' => $registroAdminProdAF->perfil_usuario->id,
                 'num_familias' => $registroAdminProdAF->num_familias,
                 'num_mujeres' => $registroAdminProdAF->num_mujeres,
                 'num_hombres' => $registroAdminProdAF->num_hombres,
@@ -91,6 +94,7 @@ class RegistroAdminprodAFController extends Controller
     {
         try {
             $data = $request->validate([
+                'userprofile_id' => 'required',
                 'num_familias' => 'required|integer',
                 'num_mujeres' => 'required|integer',
                 'num_hombres' => 'required|integer',

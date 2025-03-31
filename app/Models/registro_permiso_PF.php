@@ -11,6 +11,7 @@ class registro_permiso_PF extends Model
     protected $table = 'registro_permisos_pf';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'userprofile_id',
         'folio_permiso',
         'pesqueria',
         'vigencia_permiso_ini',
@@ -20,6 +21,10 @@ class registro_permiso_PF extends Model
         'tipo_embarcacion'
     ];
     public $timestamps = true;
+
+    public function perfil_usuario(){
+        return $this->belongsTo(User::class, 'userprofile_id', 'id');
+    }
 
     public function permiso(){
         return $this->belongsTo(tipo_permiso::class, 'tipo_permiso_id', 'id');

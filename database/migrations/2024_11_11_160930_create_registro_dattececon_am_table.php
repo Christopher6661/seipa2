@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('registro_dattececon_am', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('userprofile_id');
             $table->float('prodprom_x_mes');
             $table->enum('prodpromx_mes_peso', ['Kilogramo', 'Tonelada']);
             $table->float('prodprom_mes_talla');
@@ -39,6 +40,8 @@ return new class extends Migration
             $table->string('fuenfinanza_programa');
             $table->float('fuentefianza_anio');
             $table->decimal('costogasto_anualprod', 8,2)->nullable();
+
+            $table->foreign('userprofile_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

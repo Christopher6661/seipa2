@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArtePescaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DatosgeneralesAFController;
+use App\Http\Controllers\DatosgeneralesAMController;
 use App\Http\Controllers\DatosgeneralesPFController;
 use App\Http\Controllers\DatosgeneralesPMController;
 use App\Http\Controllers\DistritoController;
@@ -56,6 +57,7 @@ use App\Http\Controllers\ReporteacuiCsopcsController;
 use App\Http\Controllers\ReportepescaArriboController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\SocioController;
+use App\Http\Controllers\SocioPmController;
 use App\Http\Controllers\TipoCubiertaController;
 use App\Http\Controllers\TipoEqManejoController;
 use App\Http\Controllers\TipoEqRadComController;
@@ -89,6 +91,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user', [AuthController::class, 'userProfile']);
     Route::put('/user/{id}', [AuthController::class, 'update'])->middleware('role:admin');
     Route::delete('/user/{id}', [AuthController::class, 'destroy'])->middleware('role:admin');
+});
+
+Route::middleware(['auth:api', 'role:personal,admin'])->group(function () {
+    Route::get('/usuarios', [AuthController::class, 'index']);
 });
 
 //ruta de las tablas
@@ -145,7 +151,7 @@ Route::apiResource('registro_adminprod_af', RegistroAdminprodAFController::class
 Route::apiResource('registro_dattecprod_af', RegistroDattecprodAFController::class);
 Route::apiResource('registro_tipoinfraest_af', RegistroTipoinfraestAFController::class);
 Route::apiResource('registro_dattececon_af', RegistroDattececonAFController::class);
-Route::apiResource('datos_generales_am', DatosgeneralesAFController::class);
+Route::apiResource('datos_generales_am', DatosgeneralesAMController::class);
 Route::apiResource('socios', SocioController::class);
 Route::apiResource('registro_ubfisica_am', RegistroUbifisicaAMController::class);
 Route::apiResource('registro_adminprod_am', RegistroAdminprodAMController::class);
@@ -154,3 +160,4 @@ Route::apiResource('registro_tipoinfraest_am', RegistroTipoinfraestAMController:
 Route::apiResource('registro_dattececon_am', RegistroDattececonAMController::class);
 Route::apiResource('reportepesca_arribo', ReportepescaArriboController::class);
 Route::apiResource('reporteacui_csopcs', ReporteacuiCsopcsController::class);
+Route::apiResource('socios_pm', SocioPmController::class);

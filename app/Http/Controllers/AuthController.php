@@ -52,7 +52,13 @@ class AuthController extends Controller
             'role' => $request->role,
         ]);
 
-        return response()->json(['message' => 'Usuario registrado con éxito', 'user' => $user], 201);
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Usuario registrado con éxito', 
+            'token' => $token,
+            'user' => $user
+        ], 201);
     }
 
     //Inicio de Sesión
@@ -63,16 +69,17 @@ class AuthController extends Controller
             'password' => 'required|string'
         ]);
 
-        if (!Auth::attempt($request->only('email', 'password'))) {
-            return response()->json(['message' => 'Credenciales incorrectas'], 401);
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['Las credenciales no son correctas.'],
+            ]);
         }
 
-        $user = Auth::user();
+        $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json([
-            'message' => 'Inicio de sesión exitoso',
-            'user' => $user
-        ]);
+        return response()->json(['token' => $token, 'user' => $user], 200);
     }
 
     //Obtener usuario autenticado

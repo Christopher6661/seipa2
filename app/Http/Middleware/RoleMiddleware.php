@@ -16,8 +16,12 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, $role): Response
     {
-        if (!Auth::check() || Auth::user()->role !== $role) {
-            return response()->json(['message' => 'Acceso no autorizado'], 403);
+        if (!Auth::check()) {
+            return response()->json(['message' => 'No autenticado'], 401);
+        }
+
+        if (Auth::user()->role !== $role) {
+            return response()->json(['message' => 'No tienes permiso para acceder'], 403);
         }
         
         return $next($request);

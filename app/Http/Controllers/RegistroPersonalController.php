@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Responses\ApiResponse;
 use App\Models\registro_personal;
+use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 class RegistroPersonalController extends Controller
@@ -21,7 +23,7 @@ class RegistroPersonalController extends Controller
             $result = $personal->map(function ($item) {
                 return [
                     'id' => $item->id,
-                    'nombres' => $item->nombres,
+                    'nombres' => $item->nombres, 
                     'apellido_pa' => $item->apellido_pa,
                     'apellido_ma' => $item->apellido_ma,
                     'usuario' => $item->usuario,
@@ -57,6 +59,20 @@ class RegistroPersonalController extends Controller
                 'password' => 'required|string|max:8',
                 'rol_id' => 'required|exists:roles,id'
             ]);
+
+            $personal = registro_personal::create([
+                ...$data,
+                'password' => Hash::make($data['password'])
+            ]);
+            User::create([
+                'name' => $data['nombres'],
+                'email' => $data['email'],
+                'password' => hash::make($data['password']),
+                'role' => 'personal'
+            ]);
+
+            return response()->json(['message' => 'Personal y User creados correctamente'], 201);
+
             $existePersonal = registro_personal::where($data)->exists();
             if ($existePersonal) {
                 return ApiResponse::error('El personal ya esta registrado.', 422);
@@ -116,6 +132,29 @@ class RegistroPersonalController extends Controller
                 'rol_id' => 'required'
             ]);
 
+            $personal = registro_personal::find($id);
+            if (!$personal) {
+                return response()->json(['error' => 'Usuario no encontrado en Personal'], 404);
+            }
+            $user = User::where('email', $personal->email)->first();
+            if ($user) {
+                $personal->update([
+                    'nombres' => $data['nombres'],
+                    'apellido_pa' => $data['apellido_pa'],
+                    'apellido_ma' => $data['apellido_ma'],
+                    'usuario' => $data['usuario'],
+                    'telefono_prin' => $data['telefono_prin'],
+                    'telefono_secun' => $data['telefono_secun'],
+                    'email' => $data['email'],
+                    'password' => isset($data['password']) ? Hash::make($data['password']) : $personal->password,
+                    'rol_id' => $data['nombres']
+                ]);
+                $user->update([
+                    'name' => $data['nombres'],
+                    'email' => $data['email'],
+                    'password' => isset($data['password']) ? Hash::make($data['password']) : $user->password,
+                ]);
+            }
             $existePersonal = registro_personal::where($data)->exists();
             if ($existePersonal) {
                 return ApiResponse::error('El personal ya esta registrado.', 422);
@@ -139,13 +178,21 @@ class RegistroPersonalController extends Controller
     public function destroy($id)
     {
         try {
-            $personal = registro_personal::findOrFail($id);
-            $personal->delete();
-            return ApiResponse::success('Personal de registro eliminado exitosamente', 200, $personal);
-        } catch (ModelNotFoundException $e) {
-            return ApiResponse::error('Personal no encontrado', 404);
-        } catch (Exception $e) {
-            return ApiResponse::error('Error al eliminar al personal de registro: ' .$e->getMessage(), 500);
+            $personal = registro_personal::find($id);
+            if (!$personal) {
+                return response()->json(['error' => 'Usuario no encontrado en Personal'], 404);
+            }
+            $user = User::where('name', $personal->nombres)
+                        ->where('email', $personal->email)
+                        ->first();
+                        if ($user) {
+                            $user->forceDelete();
+            }
+            $personal->forceDelete();
+
+            return response()->json(['message' => 'Usuario eliminado correctamente'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al eliminar usuario', 'detalles' => $e->getMessage()], 500);
         }
     }
 }

@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('acta_constitutiva');
             $table->integer('socios');
             $table->boolean('cuenta_permiso')->default(false);
-            $table->string('motivo_no_cuenta');
+            $table->string('motivo_no_cuenta')->nullable();
             $table->boolean('cuentaemb_ma')->default(false);
             $table->string('motivono_cuenta_embma')->nullable();
             $table->integer('cant_emb_ma')->nullable();

@@ -30,7 +30,7 @@ return new class extends Migration
             $table->boolean('rio_cuenca')->default(false);
             $table->boolean('arroyo_manantial')->default(false);
             $table->string('otro')->nullable();
-            $table->string('especificar_otro');
+            $table->string('especificar_otro')->nullable();
             $table->enum('forma_alimentacion', ['Bombeo', 'Pozo']);
             $table->decimal('aliment_agua_caudad', 10,2);
             $table->string('desc_equip_acuicola');

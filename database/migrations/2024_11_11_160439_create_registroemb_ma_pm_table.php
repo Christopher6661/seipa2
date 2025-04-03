@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('captura_rnpa');
             $table->string('matricula');
             $table->string('puerto_base');
-            $table->date('año_construccion');
+            $table->string('año_construccion');
             $table->unsignedBigInteger('tipo_cubierta_id');
             $table->unsignedBigInteger('material_casco_id');
             $table->string('tipo_actividad_pesca');

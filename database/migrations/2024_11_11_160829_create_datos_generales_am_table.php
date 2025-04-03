@@ -28,7 +28,7 @@ return new class extends Migration
             $table->unsignedBigInteger('etnia_id');
             $table->string('socios');
             $table->boolean('cuenta_siscuarente')->default(false);
-            $table->string('motivo_no_cuenta');
+            $table->string('motivo_no_cuenta')->nullable();
 
             $table->foreign('userprofile_id')->references('id')->on('users');
             $table->foreign('oficregis_id')->references('id')->on('oficinas');

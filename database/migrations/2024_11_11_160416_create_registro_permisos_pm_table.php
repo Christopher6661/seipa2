@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('vigencia_permiso_fin');
             $table->string('RNPA');
             $table->unsignedBigInteger('tipo_permiso_id');
-            $table->boolean('tipo_emb')->default(false);
+            $table->enum('tipo_emb', ['Mayor', 'Menor']);
 
             $table->foreign('userprofile_id')->references('id')->on('users');
             $table->foreign('tipo_permiso_id')->references('id')->on('tipo_permisos');

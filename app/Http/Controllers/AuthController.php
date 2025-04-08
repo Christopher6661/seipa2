@@ -13,9 +13,7 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    /**
-     * registrar usuario.
-     */
+    //Mostrar todos los usuarios registrados
     public function index()
     {
         try {
@@ -34,7 +32,10 @@ class AuthController extends Controller
             return ApiResponse::error('Error al obtener la lista de usuarios registrados: ' .$e->getMessage(), 500);
         }
     }
-
+    
+    /**
+     * registrar usuario.
+    */
 
     public function register(Request $request)
     {
@@ -64,22 +65,29 @@ class AuthController extends Controller
     //Inicio de Sesión
     public function login(Request $request) 
     {
-        $request->validate([
+        $credentials = $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string'
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $credentials['email'])->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['Las credenciales no son correctas.'],
-            ]);
+        if (!$user || !Hash::check($credentials['password'], $user->password)) {
+            return response()->json(['message' => 'Credenciales incorrectas'], 401);
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json(['token' => $token, 'user' => $user], 200);
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->role,
+            ]
+        ]);
     }
 
     //Obtener usuario autenticado
@@ -131,21 +139,22 @@ class AuthController extends Controller
     //Eliminar usuario
     public function destroy($id)
     {
-        try {
-            $user = User::findOrFail($id);
-            $user->delete();
-            return response()->json(['message' => 'Usuario eliminado exitosamente']);
-        } catch (ModelNotFoundException $e) {
-            return ApiResponse::error('Usuario no encontrado', 404);
-        } catch (Exception $e) {
-            return ApiResponse::error('Error al eliminar al usuario: ' .$e->getMessage(), 500);
-        }
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return response()->json(['message' => 'Usuario eliminado exitosamente']);
     }
 
     //Cerrar sesión
     public function logout(Request $request)
     {
-        Auth::logout();
-        return response()->json(['message' => 'Sesión cerrada con éxito']);
+        $user = $request->user();//obtiene el usuario autenticado
+
+        if ($user) {
+            $user->tokens()->delete();//Revoca todos los tokens activos
+            return response()->json(['message' => 'Sesión cerrada con éxito']);
+        }
+
+        return response()->json(['message' => 'No se encontro el usuario autenticado'], 401);
     }
 }

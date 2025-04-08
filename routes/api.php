@@ -84,10 +84,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 //Rutas protegidas según el rol del usuario
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [AuthController::class, 'userProfile']);
     Route::put('/user/{id}', [AuthController::class, 'update'])->middleware('role:admin');
     Route::delete('/user/{id}', [AuthController::class, 'destroy'])->middleware('role:admin');

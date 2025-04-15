@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
+use Carbon\Carbon;
+
 class ReportepescaArriboController extends Controller
 {
     /**
@@ -19,6 +21,7 @@ class ReportepescaArriboController extends Controller
         try {
             $ReportesPescaArribo = reportepesca_arribo::all();
             $result = $ReportesPescaArribo->map(function ($item){
+            $horasTranscurridas = \Carbon\Carbon::parse($item->created_at)->diffInHours(now());
                 return [
                     'id' => $item->id,
                     'dia' => $item->dia,
@@ -37,7 +40,8 @@ class ReportepescaArriboController extends Controller
                     ($item->quien_hizo_reporte == 'Socio' ? 'Socio' : 'Representante'),
                     'nombre_hizo_rep' => $item->nombre_hizo_reporte,
                     'created_at' => $item->created_at,
-                    'updated_at' => $item->updated_at
+                    'updated_at' => $item->updated_at,
+                    'editable' => $horasTranscurridas < 24,
                 ];
             });
             return ApiResponse::success('Lista de reportes de pesca de arribo', 200, $result);
@@ -69,25 +73,26 @@ class ReportepescaArriboController extends Controller
                 'nombre_hizo_rep' => 'required|string|max:50'
             ]);
 
-            $existeReporteArribo = reportepesca_arribo::where(function ($query) use ($data){
-                $query->where('dia', $data['dia'])
-                ->orWhere('mes', $data['mes'])
-                ->orWhere('anio', $data['anio']);
-            })->first();
+            //
+            $cantidadReportes = reportepesca_arribo::where('mes', $data['mes'])
+                ->where('anio', $data['anio'])
+                ->count();
+
+                if ($cantidadReportes >=2) {
+                    return ApiResponse::error('Solo se permiten hasta 2 reportes por mes.', 422);
+                }
+
+            $existeReporteArribo = reportepesca_arribo::where('dia', $data['dia'])
+                ->where('mes', $data['mes'])
+                ->where('anio', $data['anio'])
+                ->first();
 
             if ($existeReporteArribo) {
                 $errors = [];
-                if ($existeReporteArribo->dia === $data['dia']) {
-                    $errors['dia'] = 'El dia del registro ya existe.';
-                }
-                if ($existeReporteArribo->mes === $data['mes']) {
-                    $errors['mes'] = 'El mes del registro ya existe.';
-                }
-                if ($existeReporteArribo->anio === $data['anio']) {
-                    $errors['anio'] = 'El año del registro ya existe.';
-                }
-                return ApiResponse::error('Este reporte ya esta registrado', 422, $errors);
-            }
+                $errors['fecha'] = 'Ya existe un reporte con el mismo dia, mes y año';
+
+                return ApiResponse::error('Repore ya registrado.', 422, $errors);
+            }//
 
             $ReportesPescaArribo = reportepesca_arribo::create($data);
             return ApiResponse::success('Reporte de pesca de arribo creado exitosamente', 201, $ReportesPescaArribo);
@@ -137,6 +142,18 @@ class ReportepescaArriboController extends Controller
     public function update(Request $request, $id)
     {
         try {
+
+            $ReportesPescaArribo = reportepesca_arribo::findOrFail($id);
+
+            //Calcular si han pasado más de 24 horas desde la creación
+            $tiempoLimite = 24;
+            $fechaCreacion = new Carbon($ReportesPescaArribo->created_at);
+            $ahora = Carbon::now();
+
+            if ($fechaCreacion->diffInHours($ahora) > $tiempoLimite) {
+                return ApiResponse::error('Este reporte ya no puede ser actualizado. Ha pasado el tiempo permitido de edicion (24 horas).', 403);
+            }
+
             $data = $request->validate([
                 'dia' => 'required|string|max:50',
                 'mes' => 'required|string|max:50',
@@ -154,28 +171,30 @@ class ReportepescaArriboController extends Controller
                 'nombre_hizo_rep' => 'required|string|max:50'
             ]);
 
-            $existeReporteArribo = reportepesca_arribo::where(function ($query) use ($data, $id) {
-                $query->where('dia', $data['dia'])
-                ->orWhere('mes', $data['mes'])
-                ->orWhere('anio', $data['anio']);
-            })->where('id', '!=', $id)->first();
+            //
+            $cantidadReportes = reportepesca_arribo::where('mes', $data['mes'])
+                ->where('anio', $data['anio'])
+                ->where('id', '!=', $id)
+                ->count();
+
+                if ($cantidadReportes >=2) {
+                    return ApiResponse::error('Solo se permiten hasta 2 reportes por mes.', 422);
+                }
+
+            $existeReporteArribo = reportepesca_arribo::where('dia', $data['dia'])
+                ->where('mes', $data['mes'])
+                ->where('anio', $data['anio'])
+                ->where('id', '!=', $id)
+                ->first();
 
             if ($existeReporteArribo) {
                 $errors = [];
-                if ($existeReporteArribo->dia === $request->dia) {
-                    $errors['dia'] = 'El dia del registro del reporte ya esta existe.';
-                }
-                if ($existeReporteArribo->mes === $request->mes) {
-                    $errors['mes'] = 'El mes del registro del reporte ya esta existe.';
-                }
-                if ($existeReporteArribo->anio === $request->anio) {
-                    $errors['anio'] = 'El año del registro del reporte ya esta registrado.';
-                }
+                $errors['fecha'] = 'Ya existe otro reporte con el mismo día, mes y año.';
                 return ApiResponse::error('El reporte de pesca de arribo ya existe', 422, $errors);
-            }
+            }//
 
-            $ReportesPescaArribo = reportepesca_arribo::findOrFail($id);
             $ReportesPescaArribo->update($data);
+            
             return ApiResponse::success('Reporte de pesca de arribo actualizado exitosamente', 200, $ReportesPescaArribo);
         } catch (ModelNotFoundException $e) {
             return ApiResponse::error('Reporte de pesca de arribo no encontrado', 404);

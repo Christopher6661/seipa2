@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Carbon\Carbon;
 
 class ReporteacuiCsopcsController extends Controller
 {
@@ -19,6 +20,7 @@ class ReporteacuiCsopcsController extends Controller
         try {
             $ReporteacuiCsopcs = reporteacui_csopcs::all();
             $result = $ReporteacuiCsopcs->map(function ($item){
+                $horasTranscurridas = \Carbon\Carbon::parse($item->created_at)->diffInHours(now());
                 return [
                     'id' => $item->id,
                     'dia' => $item->dia,
@@ -53,10 +55,11 @@ class ReporteacuiCsopcsController extends Controller
                     'periodo_prod_fin' => $item->periodo_prod_fin,
                     'estadio_salida' => $item->estadio_salida,
                     'talla_salida' => $item->talla_salida,
-                    'detino_prod' => $item->detino_prod,
+                    'detino_prod' => $item->destino_prod,
                     'valor_produccion' => $item->valor_produccion,
                     'created_at' => $item->created_at,
-                    'updated_at' => $item->updated_at
+                    'updated_at' => $item->updated_at,
+                    'editable' => $horasTranscurridas < 24,
                 ];
             });
             return ApiResponse::success('Lista de reportes de acuicultura', 200, $result);
@@ -108,25 +111,26 @@ class ReporteacuiCsopcsController extends Controller
                 'valor_produccion' => 'required|numeric'
             ]);
 
-            $existeReporteacuiCsopcs = reporteacui_csopcs::where(function ($query) use ($data){
-                $query->where('dia', $data['dia'])
-                ->orWhere('mes', $data['mes'])
-                ->orWhere('anio', $data['anio']);
-            })->first();
+            //
+            $cantidadReportes = reporteacui_csopcs::where('mes', $data['mes'])
+                ->where('anio', $data['anio'])
+                ->count();
+
+                if ($cantidadReportes >= 2) {
+                    return ApiResponse::error('Solo se permiten hasta 2 reportes por mes.', 422);
+                }
+
+            $existeReporteacuiCsopcs = reporteacui_csopcs::where('dia', $data['dia'])
+                ->where('mes', $data['mes'])
+                ->where('anio', $data['anio'])
+                ->first();
 
             if ($existeReporteacuiCsopcs) {
                 $errors = [];
-                if ($existeReporteacuiCsopcs->dia === $data['dia']) {
-                    $errors['dia'] = 'El dia del registro ya existe.';
-                }
-                if ($existeReporteacuiCsopcs->mes === $data['mes']) {
-                    $errors['mes'] = 'El mes del registro ya existe.';
-                }
-                if ($existeReporteacuiCsopcs->anio === $data['anio']) {
-                    $errors['anio'] = 'El año del registro ya existe.';
-                }
-                return ApiResponse::error('Este reporte ya esta registrado', 422, $errors);
-            }
+                $errors['fecha'] = 'Ya existe un reporte con el mismo dia, mes y año.';
+                
+                return ApiResponse::error('Reporte ya registrado', 422, $errors);
+            } //
 
             $ReporteacuiCsopcs = reporteacui_csopcs::create($data);
             return ApiResponse::success('Reporte de acuicultura creado exitosamente', 201, $ReporteacuiCsopcs);
@@ -197,6 +201,18 @@ class ReporteacuiCsopcsController extends Controller
     public function update(Request $request, $id)
     {
         try {
+
+            $ReporteacuiCsopcs = reporteacui_csopcs::findOrFail($id);
+
+            //Calcular si han pasado más de 24 horas desde la creación
+            $tiempoLimite = 24;
+            $fechaCreacion = new Carbon($ReporteacuiCsopcs->created_at);
+            $ahora = Carbon::now();
+
+            if ($fechaCreacion->diffInHours($ahora) > $tiempoLimite) {
+                return ApiResponse::error('Este reporte ya no puede ser actualizado. Ha pasado el tiempo permitido de edicion (24 horas).', 403);
+            }
+
             $data = $request->validate([
                 'dia' => 'required|string|max:50',
                 'mes' => 'required|string|max:50',
@@ -234,25 +250,27 @@ class ReporteacuiCsopcsController extends Controller
                 'valor_produccion' => 'required|numeric'
             ]);
 
-            $existeReporteacuiCsopcs = reporteacui_csopcs::where(function ($query) use ($data, $id) {
-                $query->where('dia', $data['dia'])
-                ->orWhere('mes', $data['mes'])
-                ->orWhere('anio', $data['anio']);
-            })->where('id', '!=', $id)->first();
+            //
+            $cantidadReportes = reporteacui_csopcs::where('mes', $data['mes'])
+                ->where('anio', $data['anio'])
+                ->where('id', '!=', $id)
+                ->count();
+
+                if ($cantidadReportes >=2) {
+                    return ApiResponse::error('Solo se permiten hasta 2 reportes por mes.', 422);
+                }
+
+            $existeReporteacuiCsopcs = reporteacui_csopcs::where('dia', $data['dia'])
+                ->where('mes', $data['mes'])
+                ->where('anio', $data['anio'])
+                ->where('id', '!=', $id)
+                ->first();
 
             if ($existeReporteacuiCsopcs) {
                 $errors = [];
-                if ($existeReporteacuiCsopcs->dia === $request->dia) {
-                    $errors['dia'] = 'El dia del registro del reporte ya esta existe.';
-                }
-                if ($existeReporteacuiCsopcs->mes === $request->mes) {
-                    $errors['mes'] = 'El mes del registro del reporte ya esta existe.';
-                }
-                if ($existeReporteacuiCsopcs->anio === $request->anio) {
-                    $errors['anio'] = 'El año del registro del reporte ya esta registrado.';
-                }
-                return ApiResponse::error('El reporte de acuicultura ya existe', 422, $errors);
-            }
+                $errors['fecha'] = 'Ya existe otro reporte con el mismo día, mes y año.';
+                return ApiResponse::error('Reporte duplicado.', 422, $errors);
+            }//
 
             $ReporteacuiCsopcs = reporteacui_csopcs::findOrFail($id);
             $ReporteacuiCsopcs->update($data);

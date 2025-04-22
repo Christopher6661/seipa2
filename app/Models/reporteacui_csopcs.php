@@ -11,6 +11,7 @@ class reporteacui_csopcs extends Model
     protected $table = 'reporteacui_csopcs';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'usuario_id', //
         'dia',
         'mes',
         'anio',
@@ -47,4 +48,9 @@ class reporteacui_csopcs extends Model
         'valor_produccion'
     ];
     public $timestamps = true;
+
+    //
+    public function usuario() {
+        return $this->belongsTo(User::class, 'usuario_id');
+    }
 }

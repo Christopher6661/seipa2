@@ -19,7 +19,9 @@ class ReportepescaArriboController extends Controller
     public function index()
     {
         try {
-            $ReportesPescaArribo = reportepesca_arribo::all();
+            $usuarioId = auth()->id(); //
+
+            $ReportesPescaArribo = reportepesca_arribo::where('usuario_id', $usuarioId)->get();//
             $result = $ReportesPescaArribo->map(function ($item){
             $horasTranscurridas = \Carbon\Carbon::parse($item->created_at)->diffInHours(now());
                 return [
@@ -41,6 +43,7 @@ class ReportepescaArriboController extends Controller
                     'nombre_hizo_rep' => $item->nombre_hizo_reporte,
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
+                    'reportepesca_usuario' => $item->usuario->name ?? null, //
                     'editable' => $horasTranscurridas < 24,
                 ];
             });
@@ -74,8 +77,11 @@ class ReportepescaArriboController extends Controller
             ]);
 
             //
+            $usuario = auth()->user();
+
             $cantidadReportes = reportepesca_arribo::where('mes', $data['mes'])
                 ->where('anio', $data['anio'])
+                ->where('usuario_id', auth()->id())//
                 ->count();
 
                 if ($cantidadReportes >=2) {
@@ -85,6 +91,7 @@ class ReportepescaArriboController extends Controller
             $existeReporteArribo = reportepesca_arribo::where('dia', $data['dia'])
                 ->where('mes', $data['mes'])
                 ->where('anio', $data['anio'])
+                ->where('usuario_id', auth()->id())//
                 ->first();
 
             if ($existeReporteArribo) {
@@ -92,7 +99,9 @@ class ReportepescaArriboController extends Controller
                 $errors['fecha'] = 'Ya existe un reporte con el mismo dia, mes y año';
 
                 return ApiResponse::error('Repore ya registrado.', 422, $errors);
-            }//
+            }
+
+            $data['usuario_id'] = auth()->id();//
 
             $ReportesPescaArribo = reportepesca_arribo::create($data);
             return ApiResponse::success('Reporte de pesca de arribo creado exitosamente', 201, $ReportesPescaArribo);
@@ -142,8 +151,13 @@ class ReportepescaArriboController extends Controller
     public function update(Request $request, $id)
     {
         try {
-
             $ReportesPescaArribo = reportepesca_arribo::findOrFail($id);
+
+            //Verificar que el usuario solo pueda editar el reporte
+            $user = auth()->user();
+            if ($ReportesPescaArribo->usuario_id !== $user->id) {
+                return ApiResponse::error('No tienes permiso para editar este reporte.', 403);
+            }
 
             //Calcular si han pasado más de 24 horas desde la creación
             $tiempoLimite = 24;
@@ -171,10 +185,10 @@ class ReportepescaArriboController extends Controller
                 'nombre_hizo_rep' => 'required|string|max:50'
             ]);
 
-            //
             $cantidadReportes = reportepesca_arribo::where('mes', $data['mes'])
                 ->where('anio', $data['anio'])
                 ->where('id', '!=', $id)
+                ->where('usuario_id', auth()->id()) //
                 ->count();
 
                 if ($cantidadReportes >=2) {
@@ -185,13 +199,14 @@ class ReportepescaArriboController extends Controller
                 ->where('mes', $data['mes'])
                 ->where('anio', $data['anio'])
                 ->where('id', '!=', $id)
+                ->where('usuario_id', auth()->id()) //
                 ->first();
 
             if ($existeReporteArribo) {
                 $errors = [];
                 $errors['fecha'] = 'Ya existe otro reporte con el mismo día, mes y año.';
                 return ApiResponse::error('El reporte de pesca de arribo ya existe', 422, $errors);
-            }//
+            }
 
             $ReportesPescaArribo->update($data);
             
@@ -211,7 +226,10 @@ class ReportepescaArriboController extends Controller
     public function destroy($id)
     {
         try {
-            $ReportesPescaArribo = reportepesca_arribo::findOrFail($id);
+            $ReportesPescaArribo = reportepesca_arribo::where('id', $id) //
+            ->where('usuario_id', auth()->id())
+            ->firstOrFail();
+
             $ReportesPescaArribo->delete();
             return ApiResponse::success('Reporte de pesca de arribo eliminado exitosamente', 200);
         } catch (ModelNotFoundException $e) {

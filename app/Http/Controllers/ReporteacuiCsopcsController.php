@@ -18,11 +18,14 @@ class ReporteacuiCsopcsController extends Controller
     public function index()
     {
         try {
-            $ReporteacuiCsopcs = reporteacui_csopcs::all();
+            $userId = auth()->id();//
+
+            $ReporteacuiCsopcs = reporteacui_csopcs::where('usuario_id', $userId)->get();//
             $result = $ReporteacuiCsopcs->map(function ($item){
                 $horasTranscurridas = \Carbon\Carbon::parse($item->created_at)->diffInHours(now());
                 return [
                     'id' => $item->id,
+                    'reporteacui_usuario' => $item->usuario->name ?? null, //
                     'dia' => $item->dia,
                     'mes' => $item->mes,
                     'anio' => $item->anio,
@@ -112,8 +115,11 @@ class ReporteacuiCsopcsController extends Controller
             ]);
 
             //
+            $usuario = auth()->user();
+
             $cantidadReportes = reporteacui_csopcs::where('mes', $data['mes'])
                 ->where('anio', $data['anio'])
+                ->where('usuario_id', auth()->id()) //
                 ->count();
 
                 if ($cantidadReportes >= 2) {
@@ -123,6 +129,7 @@ class ReporteacuiCsopcsController extends Controller
             $existeReporteacuiCsopcs = reporteacui_csopcs::where('dia', $data['dia'])
                 ->where('mes', $data['mes'])
                 ->where('anio', $data['anio'])
+                ->where('usuario_id', auth()->id()) //
                 ->first();
 
             if ($existeReporteacuiCsopcs) {
@@ -130,7 +137,9 @@ class ReporteacuiCsopcsController extends Controller
                 $errors['fecha'] = 'Ya existe un reporte con el mismo dia, mes y año.';
                 
                 return ApiResponse::error('Reporte ya registrado', 422, $errors);
-            } //
+            } 
+
+            $data['usuario_id'] = auth()->id();// agrega el id del usuario al arreglo de datos
 
             $ReporteacuiCsopcs = reporteacui_csopcs::create($data);
             return ApiResponse::success('Reporte de acuicultura creado exitosamente', 201, $ReporteacuiCsopcs);
@@ -201,8 +210,12 @@ class ReporteacuiCsopcsController extends Controller
     public function update(Request $request, $id)
     {
         try {
-
             $ReporteacuiCsopcs = reporteacui_csopcs::findOrFail($id);
+            //Verifica que el usuario solo pueda editar el reporte
+            $user = auth()->user();
+            if ($ReporteacuiCsopcs->usuario_id !== $user->id) {
+                return ApiResponse::error('No tienes permiso para editar este reporte.', 403);
+            }
 
             //Calcular si han pasado más de 24 horas desde la creación
             $tiempoLimite = 24;
@@ -249,11 +262,11 @@ class ReporteacuiCsopcsController extends Controller
                 'detino_prod' => 'required|string|max:50',
                 'valor_produccion' => 'required|numeric'
             ]);
-
-            //
+            
             $cantidadReportes = reporteacui_csopcs::where('mes', $data['mes'])
                 ->where('anio', $data['anio'])
                 ->where('id', '!=', $id)
+                ->where('usuario_id', auth()->id())//
                 ->count();
 
                 if ($cantidadReportes >=2) {
@@ -264,6 +277,7 @@ class ReporteacuiCsopcsController extends Controller
                 ->where('mes', $data['mes'])
                 ->where('anio', $data['anio'])
                 ->where('id', '!=', $id)
+                ->where('usuario_id', auth()->id()) //
                 ->first();
 
             if ($existeReporteacuiCsopcs) {
@@ -290,7 +304,10 @@ class ReporteacuiCsopcsController extends Controller
     public function destroy($id)
     {
         try {
-            $ReporteacuiCsopcs = reporteacui_csopcs::findOrFail($id);
+            $ReporteacuiCsopcs = reporteacui_csopcs::where('id', $id) //
+            ->where('usuario_id', auth()->id())
+            ->firstOrFail();
+
             $ReporteacuiCsopcs->delete();
             return ApiResponse::success('Reporte de acuicultura eliminado exitosamente', 200);
         } catch (ModelNotFoundException $e) {

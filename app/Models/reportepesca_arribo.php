@@ -24,7 +24,13 @@ class reportepesca_arribo extends Model
         'metodo_traslado',
         'pesca_incidental',
         'quien_hizo_reporte',
-        'nombre_hizo_rep'
+        'nombre_hizo_rep',
+        'usuario_id', //
     ];
     public $timestamps = true;
+
+    //
+    public function usuario() {
+        return $this->belongsTo(User::class, 'usuario_id');
+    }
 }

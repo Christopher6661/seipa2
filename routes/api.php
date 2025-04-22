@@ -91,6 +91,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [AuthController::class, 'userProfile']);
     Route::put('/user/{id}', [AuthController::class, 'update'])->middleware('role:admin');
     Route::delete('/user/{id}', [AuthController::class, 'destroy'])->middleware('role:admin');
+    
+    //
+    Route::apiResource('reportepesca_arribo', ReportepescaArriboController::class);
+    Route::apiResource('reporteacui_csopcs', ReporteacuiCsopcsController::class);
 });
 
 Route::middleware(['auth:api', 'role:personal,admin'])->group(function () {
@@ -158,6 +162,4 @@ Route::apiResource('registro_adminprod_am', RegistroAdminprodAMController::class
 Route::apiResource('registro_dattecprod_am', RegistroDattecprodAMController::class);
 Route::apiResource('registro_tipoinfraest_am', RegistroTipoinfraestAMController::class);
 Route::apiResource('registro_dattececon_am', RegistroDattececonAMController::class);
-Route::apiResource('reportepesca_arribo', ReportepescaArriboController::class);
-Route::apiResource('reporteacui_csopcs', ReporteacuiCsopcsController::class);
 Route::apiResource('socios_pm', SocioPmController::class);

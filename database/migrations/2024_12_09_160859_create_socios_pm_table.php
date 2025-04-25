@@ -14,12 +14,11 @@ return new class extends Migration
         Schema::create('socios_pm', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('userprofile_id');
-            $table->unsignedBigInteger('pescadormoral_id');
+    
             $table->string('CURP');
             $table->boolean('tipo')->default(false);
 
             $table->foreign('userprofile_id')->references('id')->on('users');
-            $table->foreign('pescadormoral_id')->references('id')->on('datos_generales_pm');
             $table->timestamps();
         });
     }
